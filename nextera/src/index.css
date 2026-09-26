@@ -1,0 +1,318 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   NEXTERA — DESIGN SYSTEM
+   Dark, hairline-grid, premium-editorial. Reference language: black canvas,
+   1px rules, tiny crosshair ticks, grain, gradient-faded display type.
+   ========================================================================== */
+
+@theme {
+  --font-display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+
+  /* Canvas */
+  --color-void: #000000;
+  --color-coal: #050505;
+  --color-slate1: #0a0a0a;
+  --color-slate2: #101010;
+  --color-slate3: #161616;
+
+  /* Ink */
+  --color-ink: #f4f4f2;
+  --color-ash: #a1a1a0;
+  --color-ash2: #6e6e6d;
+  --color-ash3: #454544;
+
+  /* Brand — saffron/amber (Agra, hospitality, warmth) used sparingly */
+  --color-ember: #e8922f;
+  --color-ember-soft: #f4b866;
+  --color-mint: #4fd1a5;
+  --color-sky: #5fb3f0;
+
+  /* Rules & glass */
+  --color-rule: rgba(255, 255, 255, 0.075);
+  --color-rule-strong: rgba(255, 255, 255, 0.14);
+  --color-rule-faint: rgba(255, 255, 255, 0.04);
+
+  --radius-card: 18px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  * {
+    border-color: var(--color-rule);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    font-variant-ligatures: contextual;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    line-height: 1.02;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: #000;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e1e1e;
+    border-radius: 99px;
+    border: 3px solid #000;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2c2c2c;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---------- Utilities ---------- */
+@layer utilities {
+  .shell {
+    width: 100%;
+    max-width: 1360px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 40px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 56px;
+    }
+  }
+
+  /* Section gutters */
+  .band {
+    padding-block: 96px;
+  }
+  @media (min-width: 768px) {
+    .band {
+      padding-block: 140px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .band {
+      padding-block: 168px;
+    }
+  }
+
+  /* Display type sizes.
+     vw is wrong for these: a headline inside a narrow grid column would scale
+     off the viewport, not off the space it actually occupies. Every display
+     heading below is therefore sized against its own container (see .cq-wrap). */
+  .t-hero {
+    font-size: clamp(2.6rem, 7.2vw, 6.1rem);
+  }
+  .t-h2 {
+    font-size: clamp(1.95rem, 7.4cqi, 3.9rem);
+  }
+  .t-h3 {
+    font-size: clamp(1.45rem, 3.1cqi, 2.05rem);
+  }
+  .t-h4 {
+    font-size: clamp(1.25rem, 2.4cqi, 1.6rem);
+  }
+
+  /* Establishes the query container for the cqi units above. */
+  .cq-wrap {
+    container-type: inline-size;
+  }
+
+  /* Second line of a display headline — gradient fade to muted */
+  .fade-line {
+    background: linear-gradient(96deg, #d9d9d6 0%, #6a6a68 55%, #2a2a29 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .micro {
+    font-size: 10px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .glass {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .card-dark {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0) 42%),
+      #060606;
+    border: 1px solid var(--color-rule);
+  }
+
+  .hairline-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.11) 0px,
+      rgba(255, 255, 255, 0.11) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  }
+
+  .glow-ember {
+    box-shadow:
+      0 0 0 1px rgba(232, 146, 47, 0.28),
+      0 0 34px -6px rgba(232, 146, 47, 0.34);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------- Animations ---------- */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.65;
+  }
+  88% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(420px);
+    opacity: 0;
+  }
+}
+@keyframes dashDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.anim-rise {
+  animation: riseIn 0.85s var(--ease-out-expo) both;
+}
+.anim-fade {
+  animation: fadeIn 0.9s var(--ease-out-expo) both;
+}
+.anim-marquee {
+  animation: marquee 38s linear infinite;
+}
+.anim-pulse {
+  animation: pulseDot 2.1s ease-in-out infinite;
+}
+.anim-drift {
+  animation: drift 6s ease-in-out infinite;
+}
+.anim-scan {
+  animation: scanLine 5.5s ease-in-out infinite;
+}
