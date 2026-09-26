@@ -375,6 +375,12 @@ function Comparison() {
         </Reveal>
 
         <Reveal delay={120} className="mt-12">
+          <p className="mb-3 flex items-center gap-2 text-[12px] text-ash3 md:hidden">
+            <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
+              <path d="M2.5 8h11M10 4.5 13.5 8 10 11.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Swipe sideways to compare all three
+          </p>
           <div className="overflow-x-auto rounded-2xl border border-rule">
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>

@@ -19,6 +19,12 @@ npm run build    # production bundle → dist/
 npm run preview  # serve the built bundle locally
 ```
 
+```bash
+npm test         # 33 assertions over the calculator engine (node:test, no deps)
+npm run smoke    # server-renders every route and checks the tools page output
+npm run check    # tests + production build
+```
+
 ---
 
 ## 2. Before you publish — required changes
@@ -101,6 +107,7 @@ touch a component to change a price, a feature list or a FAQ.
 | `FAQS` | Home accordion |
 | `TRUST_FOOTNOTES` | `/about` integrity section |
 | `FOOTER_LINKS` | Footer link columns |
+| `TOOLS` | `/tools` page copy, assumptions, FAQ, home teaser |
 
 ### Adding a service
 
@@ -146,7 +153,9 @@ collapse to zero width.
 
 ```
 src/
-  lib/content.js          ← all copy, prices, services, FAQ
+  lib/content.js          ← all copy, prices, services, FAQ, tools wording
+  lib/calculator.js       ← the calculation engine (pure functions, no React)
+  lib/calculator.test.mjs ← node:test suite for that engine
   components/
     Layout.jsx            ← page shell, scroll manager, per-route <head>
     Navbar.jsx            ← desktop nav + mobile sheet + WhatsApp glyph
@@ -160,12 +169,99 @@ src/
       Reveal.jsx          ← scroll-triggered fade + lift
       Marquee.jsx         ← infinite ticker
       Primitives.jsx      ← Grain, PageFrame, Rule, SectionHead, hooks
+    tools/
+      CalcForm.jsx        ← the input side, generated from FIELD_GROUPS
+      CalcResults.jsx     ← P&L, leaks, break-even, gap, recommendations
+      Levers.jsx          ← the what-if panel
+      QuickTools.jsx      ← three small standalone calculators
+      fields.jsx          ← shared inputs, rows, meters, tiles
   pages/
-    Home.jsx  Services.jsx  Pricing.jsx
+    Home.jsx  Services.jsx  Pricing.jsx  Tools.jsx
     Process.jsx  About.jsx  Contact.jsx  NotFound.jsx
+scripts/
+  ssr-smoke.jsx           ← renders all 8 routes to string and asserts content
 ```
 
 ---
+
+## 5.1 The free tools page (`/tools`)
+
+Four tools, all client-side, nothing uploaded.
+
+| Tool | What it answers |
+|---|---|
+| Profit & leak engine | Net profit, gross/operating margin, revenue leaked to commission, gateway, cancellations and discounts, revenue never billed, break-even, gap to target |
+| What-if panel | What one change does — recover leaks, move bookings direct, change price, change fixed cost, answer more enquiries |
+| Break-even in units | Sales per month/day before the month stops losing money |
+| Price for a margin | What to charge so the margin survives the platform cut |
+| Ignored-enquiry cost | What slow replies cost in rupees, on your own conversion rate |
+
+**Everything numeric lives in `src/lib/calculator.js`** — pure functions, no
+React, no DOM. The page only renders what that module returns. That is why the
+engine has its own test suite (`npm test`, 33 assertions) and why a change to
+the maths cannot silently disagree with the numbers on screen.
+
+The model, in order:
+
+1. `capacity × utilisation × period` → billable units
+2. `units × price + other billing` → gross revenue
+3. platform commission, gateway fee, cancellations, discounts (each a % of
+   gross) → **net revenue**; the four are also reported individually as *leaks*
+4. enquiries nobody answered × conversion × price → **missed revenue**, reported
+   separately because it was never billed
+5. variable cost (% of net revenue), fixed cost lines, depreciation
+6. gross profit → EBITDA → EBIT → tax → **net profit** → retained after owner draw
+7. break-even = cash fixed cost (less the contribution from non-unit billing)
+   ÷ **marginal** contribution per unit
+8. gap to target, with four costed routes to close it
+
+The assumptions behind all of it are printed on the page itself
+(`TOOLS.assumptions`), including the two choices that make this break-even
+differ from an accountant's: depreciation is excluded from the cash cost base,
+and non-unit billing is credited against fixed cost first.
+
+To add a field: append it to the right group in `FIELD_GROUPS`, add a value for
+it to every entry in `BUSINESS_TYPES`, and use it in `computeMetrics`. The form
+picks the new field up automatically; per-type wording goes in that type's
+`labels` / `hints` maps.
+
+**Privacy:** inputs are stored in `localStorage` under `nextera.tools.v1` and
+nowhere else. The only thing that can leave the device is a WhatsApp message the
+founder deliberately sends, which contains the printed summary.
+
+## 5.2 Responsive behaviour
+
+The site is mobile-first and the layout is verified at three widths: phone
+(≤640px), tablet (640–1279px) and desktop (≥1280px).
+
+| Concern | Rule used |
+|---|---|
+| Container | `.shell` — 20px gutters, 40px from 768px, 56px from 1280px |
+| Display type | `cqi` container units, not `vw`, so a headline sizes to its column |
+| Wide tables | `overflow-x-auto` wrapper + `min-w-[720px]` table, with a "swipe sideways" hint below `md` |
+| Mobile nav sheet | `.sheet-scroll` caps it at the viewport and lets it scroll (`100dvh` with a `100vh` fallback) — a seventh nav item no longer clips the buttons on a short phone |
+| Form inputs | 16px below 640px so iOS Safari does not zoom the page on focus; 14px above |
+| Tap targets | 46px fields, 48px sheet buttons |
+| Fixed bottom bar (`/tools`) | `xl:hidden`, `env(safe-area-inset-bottom)` padding, plus a spacer so it never covers the footer |
+| Calculator results | sticky right column from `xl`, single column with a live summary bar below it |
+| Chip rows | horizontal scroll with `snap-x` on a phone, `flex-wrap` from `sm` |
+
+Two checks guard this without a browser:
+
+```bash
+npm run check     # 33 engine tests + production build + CSS class coverage
+npm run check:css # builds, then proves every utility class in src/ exists in
+                  # the emitted stylesheet (a typo renders as a silent no-op)
+npm run smoke     # server-renders all eight routes and asserts: the tools page
+                  # contains its numbers and sections, every route has exactly
+                  # one <h1>, every input has a label, every button has an
+                  # accessible name, and the nav/footer/home all link to /tools
+```
+
+Those two checks cover the ways a responsive layout usually dies without a
+console error: a class that was never generated, and a component that throws
+before it paints. Neither replaces looking at the site on a phone — the numbers
+and the copy are still worth reading at 375px.
 
 ## 6. How the enquiry form works
 
@@ -231,6 +327,9 @@ the service catalogue.
 - Keyboard focus rings on the brand accent.
 - Skip-free but semantically correct: one `h1` per page, ordered headings,
   `aria-expanded` on the FAQ and mobile menu, `aria-pressed` on chips.
+- Form controls keep real `<label>`/`htmlFor` pairs, `aria-expanded` on every
+  disclosure, `aria-pressed` on chips and levers, and sliders duplicate their
+  number box so a keyboard user is never trapped on a range input.
 - Mockup visuals are real DOM, not images — they stay sharp at any resolution.
 - The grain overlay is an inline SVG filter: no image request.
 - Route-level code splitting — each page is its own chunk (~2–4 kB gzipped).

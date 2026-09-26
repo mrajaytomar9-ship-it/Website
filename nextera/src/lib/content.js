@@ -46,6 +46,8 @@ export const ENQUIRY_MESSAGES = {
     "Hi Nextera Solution, I'd like details about the Presence Foundation package (multi-page website + Google Business Profile).",
   care:
     "Hi Nextera Solution, I have an existing website and I'm interested in Care & Presence (monthly maintenance).",
+  tools:
+    "Hi Nextera Solution — I ran my numbers through the free profit & leak calculator on your site. Could you sanity-check what it is telling me?",
 }
 
 /* -------------------------------------------------------------------------- */
@@ -55,6 +57,7 @@ export const NAV = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/services' },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'Tools', to: '/tools' },
   { label: 'Process', to: '/process' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
@@ -618,6 +621,15 @@ export const FOOTER_LINKS = [
     ],
   },
   {
+    heading: 'Free tools',
+    links: [
+      { label: 'Profit & leak calculator', to: '/tools#profit-engine' },
+      { label: 'What-if scenarios', to: '/tools#scenarios' },
+      { label: 'Quick calculations', to: '/tools#quick' },
+      { label: 'How the maths works', to: '/tools#method' },
+    ],
+  },
+  {
     heading: 'Terms',
     links: [
       { label: 'Pricing basis', to: '/pricing#terms' },
@@ -627,3 +639,119 @@ export const FOOTER_LINKS = [
     ],
   },
 ]
+
+/* -------------------------------------------------------------------------- */
+/* FREE TOOLS — /tools                                                        */
+/* -------------------------------------------------------------------------- */
+/* The calculator itself (fields, presets, maths) lives in src/lib/calculator.js
+   because it is logic, not copy. Everything written below is wording.        */
+
+export const TOOLS = {
+  eyebrow: 'Free tools',
+  line1: 'Do the maths',
+  line2: 'before you spend.',
+  sub: 'A calculator built for how a hotel, clinic or restaurant actually bills — platform commission, no-shows, discounts, fixed cost, depreciation and tax. Put your real numbers in and it returns the profit, the leak, the break-even, and the gap to the number you actually want.',
+  meta: [
+    { l: 'Tools on this page', v: '4' },
+    { l: 'Cost', v: 'Free' },
+    { l: 'Your numbers', v: 'Stay in your browser' },
+    { l: 'Sign-up', v: 'None' },
+  ],
+
+  calculator: {
+    eyebrow: 'The main tool',
+    title1: 'Your profit, your leak,',
+    title2: 'your gap to target.',
+    lede: 'Pick the closest business type to load realistic starting numbers, then replace them with your own. Every figure updates as you type — nothing is submitted anywhere.',
+    resetLabel: 'Reload sample numbers',
+    clearLabel: 'Clear everything',
+    savedNote: 'Saved on this device only',
+    resultTitle: 'Your month, honestly counted',
+    leakTitle: 'Where the money goes before you see it',
+    missedTitle: 'Revenue that never reached the bill',
+    breakEvenTitle: 'Break-even',
+    gapTitle: 'Gap to your target',
+    routesTitle: 'Four ways to close it',
+    adviceTitle: 'What these numbers are telling you',
+    unitTitle: 'Per-unit economics',
+  },
+
+  /* Presets are starting points, and the page says so — this is the honesty
+     line that keeps a founder from mistaking our numbers for theirs. */
+  presetNote:
+    'The starting numbers are realistic for a business of this shape in Agra. They are not your numbers — change every field that you know better.',
+
+  assumptions: [
+    {
+      t: 'Percentages move with revenue, fixed costs do not',
+      d: 'Commission, gateway fees, cancellations, discounts and variable cost are all treated as a share of billing. Rent, salaries and subscriptions are treated as due whatever happens.',
+    },
+    {
+      t: 'Contribution is measured marginally',
+      d: 'Break-even uses what one extra unit actually adds — price, minus the leak on it, minus its variable cost. Revenue that is not units × price (hotel F&B, clinic procedures) is credited against the fixed cost first.',
+    },
+    {
+      t: 'Missed demand is never counted as profit',
+      d: 'Enquiries nobody answered are shown separately, because that money was never billed. Folding it into revenue would flatter the number you are trying to check.',
+    },
+    {
+      t: 'A price rise assumes customers stay',
+      d: 'Real businesses lose some volume when they raise price, so treat the price route as an upper bound rather than a plan.',
+    },
+    {
+      t: 'Depreciation is inside profit, outside break-even',
+      d: 'It is a real cost of owning the asset, but it is not cash leaving the building this month, so the break-even line uses cash costs only.',
+    },
+    {
+      t: 'This is planning maths, not accounting',
+      d: 'It is not tax advice, not a substitute for your books, and it cannot see the cost line you forgot to enter. Check the output against one real month before you act on it.',
+    },
+  ],
+
+  faqs: [
+    {
+      q: 'Is this financial or tax advice?',
+      a: 'No. It is a planning tool that applies the arithmetic you give it. Your accountant sees your books, your depreciation schedule and your tax position — this page sees eight numbers you typed in. Use it to find the question worth asking them.',
+    },
+    {
+      q: 'Where do my numbers go?',
+      a: 'Nowhere. They are kept in your own browser’s local storage so you can come back to them, and nothing is sent to us or to anyone else. Clearing them is one button. The only thing that leaves your device is a WhatsApp message you deliberately send.',
+    },
+    {
+      q: 'Why is “missed revenue” kept separate from profit?',
+      a: 'Because it was never billed. Unanswered enquiries represent customers you did not get, not money taken out of money you received. Mixing the two would make a leaky enquiry path look like healthy demand.',
+    },
+    {
+      q: 'My break-even looks different from my accountant’s.',
+      a: 'Probably because of two choices: we exclude depreciation from the cash cost base, and we credit non-unit billing (F&B, procedures, add-ons) against fixed cost before dividing. Both are stated above, and both are defensible — just not identical to every other method.',
+    },
+    {
+      q: 'My business is seasonal.',
+      a: 'Use an average month, then run the what-if panel with a worse one — cut your utilisation and raise your cancellations. If the business only survives the good months, that is the finding, and it is better found here than in March.',
+    },
+    {
+      q: 'My business type is not listed.',
+      a: 'Choose “Something else”. The model is generic: units × price, minus what the platforms and your customers take, minus what it costs to deliver, minus what it costs to open the shutter. Every label is editable in the sense that you simply enter your own figures.',
+    },
+    {
+      q: 'Will you look at my numbers with me?',
+      a: 'Yes — that is the free audit. Send the summary the calculator produces and we will tell you which line we think is wrong, and whether a website or enquiry path would actually change it.',
+    },
+  ],
+
+  /* Home-page teaser */
+  teaser: {
+    eyebrow: 'Free tools',
+    line1: 'Know your leak',
+    line2: 'before you buy anything.',
+    sub: 'Before anyone sells you a website, an ad budget or a redesign, run your own numbers. Our free calculator shows your net profit, your platform and discount leak, your break-even and the gap to the number you want — in about four minutes.',
+    bullets: [
+      'Profit, loss and margin, line by line',
+      'Revenue leaked to commission, discounts and no-shows',
+      'Break-even in units, not in hope',
+      'Four costed routes to a target profit',
+    ],
+    cta: { label: 'Open the calculator', to: '/tools' },
+    secondary: { label: 'Or ask for the free audit', to: '/contact' },
+  },
+}

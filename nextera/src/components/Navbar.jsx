@@ -153,7 +153,7 @@ function MobileSheet({ open, isDesktop, onClose }) {
         }`}
       />
       <div
-        className={`absolute inset-x-0 top-0 origin-top border-b border-rule bg-coal px-5 pb-8 pt-[84px] transition-all duration-500 ${
+        className={`sheet-scroll absolute inset-x-0 top-0 origin-top border-b border-rule bg-coal px-5 pb-8 pt-[84px] transition-all duration-500 ${
           open ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
         }`}
         style={{ transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)' }}
@@ -183,14 +183,14 @@ function MobileSheet({ open, isDesktop, onClose }) {
             href={whatsappLink(ENQUIRY_MESSAGES.general)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-ink text-[13.5px] font-medium text-void"
+            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-ink text-[13.5px] font-medium text-void"
           >
             <WhatsAppGlyph className="h-4 w-4" />
             Get started on WhatsApp
           </a>
           <a
             href={`tel:${CONTACT_DETAILS.phoneRaw.replace(/\s/g, '')}`}
-            className="inline-flex h-12 items-center justify-center rounded-full border border-rule-strong text-[13.5px] text-ink"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-rule-strong text-[13.5px] text-ink"
           >
             {CONTACT_DETAILS.phoneDisplay}
           </a>

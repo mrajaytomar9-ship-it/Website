@@ -59,7 +59,7 @@ export default function Footer() {
           </Reveal>
 
           {/* Link columns */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
             {FOOTER_LINKS.map((col, i) => (
               <Reveal key={col.heading} delay={i * 70}>
                 <h3 className="micro mb-5 text-ink">{col.heading}</h3>

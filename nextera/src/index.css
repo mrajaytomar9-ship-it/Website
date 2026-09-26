@@ -49,6 +49,9 @@
 
   html {
     scroll-behavior: smooth;
+    /* keeps hash targets (#pilot, #profit-engine) clear of the fixed header
+       even where a component has no scroll-mt of its own */
+    scroll-padding-top: 96px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -226,6 +229,176 @@
   }
   .text-pretty {
     text-wrap: pretty;
+  }
+}
+
+/* ---------- Form controls ----------
+   Two mobile rules that matter more than they look:
+
+   1. iOS Safari zooms the page when an input's font-size is under 16px. A
+      zoomed form on a phone is unusable and the page stays zoomed after the
+      field is dismissed, so small inputs are only allowed above 640px.
+   2. Tap targets stay at least 44px tall where a finger is doing the work.
+   ------------------------------------------------------------------------ */
+@layer base {
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input,
+    select,
+    textarea {
+      font-size: 14px;
+    }
+  }
+
+  /* Number spinners are noise on a dark, hairline UI and they steal width. */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* Range inputs — used by the what-if panel, styled to match the system. */
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 22px;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  input[type='range']::-moz-range-track {
+    height: 3px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    margin-top: -6.5px;
+    border-radius: 99px;
+    background: var(--color-ink);
+    border: 3px solid #000;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+    transition: background 0.2s ease;
+  }
+  input[type='range']::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 99px;
+    background: var(--color-ink);
+    border: 3px solid #000;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+  input[type='range']:focus-visible::-webkit-slider-thumb {
+    background: var(--color-ember);
+  }
+}
+
+/* ---------- Utilities ---------- */
+@layer utilities {
+  /* The standard text field. Shared by the contact form and the calculator. */
+  .field {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 12px;
+    border: 1px solid var(--color-rule);
+    background: rgba(255, 255, 255, 0.022);
+    padding: 0.7rem 0.9rem;
+    color: var(--color-ink);
+    outline: none;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .field::placeholder {
+    color: rgba(108, 108, 107, 0.75);
+  }
+  .field:focus {
+    border-color: var(--color-rule-strong);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .field-error {
+    border-color: rgba(240, 112, 90, 0.5);
+  }
+  .field-affix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12.5px;
+    color: var(--color-ash3);
+  }
+
+  /* A dropdown sheet must never be taller than the viewport, and must scroll
+     when its content is. dvh where supported, vh as the fallback for browsers
+     that do not know it. */
+  .sheet-scroll {
+    max-height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+/* Kept outside the layer above so the minifier cannot fold the vh fallback
+   away — dvh only wins where the browser actually understands it. */
+@supports (max-height: 100dvh) {
+  .sheet-scroll {
+    max-height: 100dvh;
+  }
+  @media (min-width: 1280px) {
+    .results-scroll {
+      max-height: calc(100dvh - 7rem);
+    }
+  }
+}
+@layer utilities {
+
+  /* The calculator's results column. It is pinned on desktop, and when the
+     breakdown is taller than the viewport it scrolls inside its own box —
+     otherwise the bottom panels would be unreachable while it is stuck. */
+  @media (min-width: 1280px) {
+    .results-scroll {
+      position: sticky;
+      top: 6rem;
+      max-height: calc(100vh - 7rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding-right: 0.25rem;
+    }
+  }
+
+  /* Fixed bars on a phone must clear the home indicator. */
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 

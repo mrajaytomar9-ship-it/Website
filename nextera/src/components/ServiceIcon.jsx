@@ -97,6 +97,22 @@ export default function ServiceIcon({ name, className = 'h-5 w-5' }) {
         <path d="M8.5 15.6 20 9.3a.6.6 0 0 0 .1-1L18.4 6 6.5 10.4" {...common} />
       </>
     ),
+    /* Calculator / numbers */
+    calculator: (
+      <>
+        <rect x="5" y="2.8" width="14" height="18.4" rx="2.6" {...common} />
+        <path d="M8.2 6.6h7.6v3.2H8.2z" {...common} />
+        <path d="M8.6 13.6h.01M12 13.6h.01M15.4 13.6h.01M8.6 17.2h.01M12 17.2h.01M15.4 17.2h.01" {...common} />
+      </>
+    ),
+    /* Trend line / performance */
+    chart: (
+      <>
+        <path d="M3.5 20.5h17" {...common} />
+        <path d="M6 16.5 10.5 11l3 3 5.5-6.5" {...common} />
+        <path d="M19 7.5h-3.4M19 7.5v3.4" {...common} />
+      </>
+    ),
     /* Spark / quality */
     spark: (
       <>

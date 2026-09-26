@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { CONTACT_DETAILS, whatsappLink, ENQUIRY_MESSAGES, NAV } from '../lib/content'
 import Button from '../components/ui/Button'
 import Reveal from '../components/ui/Reveal'
@@ -60,13 +61,13 @@ export default function NotFound() {
           <Reveal delay={420} className="mt-16 w-full">
             <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-2.5">
               {NAV.map((n) => (
-                <a
+                <Link
                   key={n.to}
-                  href={n.to}
+                  to={n.to}
                   className="rounded-full border border-rule px-4 py-2.5 text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
                 >
                   {n.label}
-                </a>
+                </Link>
               ))}
             </div>
             <p className="mt-8 text-[13px] text-ash3">

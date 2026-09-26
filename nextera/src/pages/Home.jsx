@@ -8,6 +8,7 @@ import {
   FAQS,
   WORK_EXAMPLES,
   CONTACT_DETAILS,
+  TOOLS,
   whatsappLink,
   ENQUIRY_MESSAGES,
 } from '../lib/content'
@@ -25,6 +26,7 @@ import {
 } from '../components/Mockups'
 import { WhatsAppGlyph } from '../components/Navbar'
 import ServiceIcon from '../components/ServiceIcon'
+import { Meter } from '../components/tools/fields'
 import useMeta from '../hooks/useMeta'
 
 /* =============================================================== HERO ===== */
@@ -487,6 +489,127 @@ function WorkExamples() {
   )
 }
 
+/* ============================================================ FREE TOOLS === */
+function ToolsTeaser() {
+  /* Illustrative figures, labelled as such — the real ones are on /tools. */
+  const rows = [
+    { l: 'Gross billing', v: '₹6,69,960', tone: 'ink' },
+    { l: 'OTA commission (65% at 18%)', v: '−₹78,385', tone: 'ember' },
+    { l: 'Gateway, cancellations, discounts', v: '−₹83,578', tone: 'ember' },
+    { l: 'Variable cost of the stay', v: '−₹1,11,759', tone: 'muted' },
+    { l: 'Fixed cost + depreciation', v: '−₹2,62,500', tone: 'muted' },
+    { l: 'Tax on profit', v: '−₹33,434', tone: 'muted' },
+  ]
+
+  return (
+    <section className="band border-t border-rule">
+      <div className="shell">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
+          <Reveal>
+            <SectionHead eyebrow={TOOLS.teaser.eyebrow} sub={TOOLS.teaser.sub}>
+              {TOOLS.teaser.line1}
+              <br />
+              <span className="fade-line">{TOOLS.teaser.line2}</span>
+            </SectionHead>
+
+            <ul className="mt-9 flex flex-col gap-3.5">
+              {TOOLS.teaser.bullets.map((b) => (
+                <li key={b} className="flex gap-3">
+                  <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
+                    <path
+                      d="m3 8.4 3 3L13 4.6"
+                      stroke="#4fd1a5"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="text-[14px] leading-[1.55] text-ash">{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button to={TOOLS.teaser.cta.to} variant="primary" size="lg">
+                {TOOLS.teaser.cta.label}
+              </Button>
+              <Button to={TOOLS.teaser.secondary.to} variant="secondary" size="lg">
+                {TOOLS.teaser.secondary.label}
+              </Button>
+            </div>
+
+            <p className="mt-6 flex items-center gap-2.5 text-[12.5px] text-ash3">
+              <ServiceIcon name="calculator" className="h-4 w-4 shrink-0" />
+              Free, no sign-up, and your numbers never leave your own device.
+            </p>
+          </Reveal>
+
+          <Reveal delay={130}>
+            <div className="card-dark overflow-hidden rounded-[20px]">
+              <div className="flex items-center justify-between border-b border-rule px-5 py-3.5">
+                <span className="flex min-w-0 items-center gap-2.5">
+                  <ServiceIcon name="calculator" className="h-3.5 w-3.5 shrink-0 text-ash2" />
+                  <span className="truncate text-[12px] text-ink">Profit & leak calculator</span>
+                </span>
+                <span className="micro shrink-0 text-ash3">Sample</span>
+              </div>
+
+              <div className="p-5">
+                <p className="micro text-ash3">Net profit this month</p>
+                <p className="mt-2 font-display text-[34px] leading-none tracking-[-0.045em] text-ink">
+                  ₹1,00,303
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                  <span className="flex items-center gap-2 text-[12px] text-mint">
+                    <Dot tone="mint" />
+                    Healthy · 19.7% margin
+                  </span>
+                  <span className="text-[12px] text-ash3">Hotel · 14 rooms · 62% occupancy</span>
+                </div>
+
+                <div className="mt-5 flex flex-col">
+                  {rows.map((r) => (
+                    <div
+                      key={r.l}
+                      className="flex items-baseline justify-between gap-4 border-t border-rule-faint py-2.5"
+                    >
+                      <span className="min-w-0 text-[12.5px] text-ash2">{r.l}</span>
+                      <span
+                        className={`shrink-0 text-[12.5px] tabular-nums ${
+                          r.tone === 'ember'
+                            ? 'text-ember-soft'
+                            : r.tone === 'muted'
+                              ? 'text-ash3'
+                              : 'text-ink'
+                        }`}
+                      >
+                        {r.v}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-[12.5px] text-ash2">Revenue leaked before you see it</span>
+                    <span className="shrink-0 text-[12.5px] tabular-nums text-ember-soft">24.2%</span>
+                  </div>
+                  <Meter value={78} tone="ember" className="mt-2.5" />
+                </div>
+
+                <p className="mt-5 border-t border-rule pt-4 text-[11.5px] leading-[1.6] text-ash3">
+                  Illustrative figures for the shape of the output, not a claim about any business.
+                  Your own numbers go in on the tools page.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ========================================================== PRICING ======= */
 function PricingPreview() {
   return (
@@ -681,6 +804,7 @@ export default function Home() {
       <Showcase />
       <NicheSwitch />
       <WorkExamples />
+      <ToolsTeaser />
       <PricingPreview />
       <Faq />
       <CtaBand showHatch />

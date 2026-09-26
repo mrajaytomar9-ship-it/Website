@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test src/lib/*.test.mjs",
+    "check": "npm run test && npm run build && node scripts/class-check.mjs",
+    "smoke": "vite build --ssr scripts/ssr-smoke.jsx --outDir .ssr-tmp --emptyOutDir --logLevel warn && node .ssr-tmp/ssr-smoke.js && rm -rf .ssr-tmp",
+    "check:css": "vite build >/dev/null && node scripts/class-check.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
