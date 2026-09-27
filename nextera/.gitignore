@@ -10,3 +10,7 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+
+# interaction-test build output
+.itest-tmp/
+.probe-tmp/

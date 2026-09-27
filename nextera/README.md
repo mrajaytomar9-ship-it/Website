@@ -21,8 +21,9 @@ npm run preview  # serve the built bundle locally
 
 ```bash
 npm test         # 33 assertions over the calculator engine (node:test, no deps)
+npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
-npm run check    # tests + production build
+npm run check    # all of the above + production build + CSS class coverage
 ```
 
 ---
@@ -180,6 +181,9 @@ src/
     Process.jsx  About.jsx  Contact.jsx  NotFound.jsx
 scripts/
   ssr-smoke.jsx           ← renders all 8 routes to string and asserts content
+  interaction-test.jsx    ← mounts /tools in jsdom and drives it like a user
+  jsdom-setup.mjs         ← jsdom globals; must load before react-dom
+  class-check.mjs         ← every utility class in src/ exists in the built CSS
 ```
 
 ---
@@ -249,14 +253,24 @@ The site is mobile-first and the layout is verified at three widths: phone
 Two checks guard this without a browser:
 
 ```bash
-npm run check     # 33 engine tests + production build + CSS class coverage
+npm run check     # engine tests + interaction test + build + class coverage + smoke
 npm run check:css # builds, then proves every utility class in src/ exists in
                   # the emitted stylesheet (a typo renders as a silent no-op)
+npm run test:ui   # mounts the real Tools page in jsdom, types a new rate,
+                  # types garbage, switches business type, moves a what-if
+                  # lever — and asserts the numbers on screen equal the numbers
+                  # computeMetrics() returns for the same inputs
 npm run smoke     # server-renders all eight routes and asserts: the tools page
                   # contains its numbers and sections, every route has exactly
                   # one <h1>, every input has a label, every button has an
                   # accessible name, and the nav/footer/home all link to /tools
 ```
+
+`test:ui` needs `react-dom` to be imported *after* the jsdom globals exist, or
+React silently falls back to its legacy input handling and `onChange` never
+fires. `scripts/jsdom-setup.mjs` installs the globals and `interaction-test.jsx`
+imports React dynamically for exactly that reason — keep that order if you edit
+either file.
 
 Those two checks cover the ways a responsive layout usually dies without a
 console error: a class that was never generated, and a component that throws
