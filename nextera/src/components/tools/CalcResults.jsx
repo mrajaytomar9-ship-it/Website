@@ -67,7 +67,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
     <div id={id} className="scroll-mt-24">
       {/* ------------------------------------------------------ HEADLINE */}
       <div
-        className={`overflow-hidden rounded-[22px] border ${
+        className={`overflow-hidden rounded-xl border ${
           loss ? 'border-[#f0705a]/30' : 'border-rule'
         } bg-void`}
       >
@@ -76,7 +76,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
             <p className="micro text-ash3">{TOOLS.calculator.resultTitle}</p>
             <span className="flex items-center gap-2">
               <span className={`h-1.5 w-1.5 rounded-full ${TONE_BAR[metrics.verdict.tone]}`} />
-              <span className={`text-[12px] ${TONE_TEXT[metrics.verdict.tone]}`}>
+              <span className={`text-xs ${TONE_TEXT[metrics.verdict.tone]}`}>
                 {metrics.verdict.label}
               </span>
             </span>
@@ -88,13 +88,13 @@ export default function CalcResults({ metrics, id = 'result' }) {
             {loss ? 'Net loss this month' : 'Net profit this month'}
           </p>
           <p
-            className={`mt-2.5 font-display text-[38px] leading-none tracking-[-0.045em] tabular-nums sm:text-[44px] ${
+            className={`mt-2.5 font-display text-3xl leading-none tracking-[-0.045em] tabular-nums sm:text-3xl ${
               loss ? 'text-[#f0705a]' : 'text-ink'
             }`}
           >
             {formatINR(profit.netProfit)}
           </p>
-          <p className="mt-3 text-[13px] leading-[1.5] text-ash2">
+          <p className="mt-3 text-sm leading-[1.5] text-ash2">
             {formatPct(profit.netMargin)} of net revenue
             {costs.ownerDraw > 0 ? (
               <>
@@ -105,7 +105,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
               </>
             ) : null}
           </p>
-          <p className="mt-4 text-[12.5px] leading-[1.6] text-ash3 text-pretty">
+          <p className="mt-4 text-xs leading-[1.6] text-ash3 text-pretty">
             {metrics.verdict.body}
           </p>
         </div>
@@ -196,14 +196,14 @@ export default function CalcResults({ metrics, id = 'result' }) {
             aria-expanded={showFixed}
             className="mt-1 flex items-center justify-between gap-3 py-2.5 text-left"
           >
-            <span className="text-[13px] text-ash2">
+            <span className="text-sm text-ash2">
               Fixed cost
-              <span className="ml-2 text-[11px] text-ash3">
+              <span className="ml-2 text-xs text-ash3">
                 {costs.fixedLines.filter((f) => f.amount > 0).length} lines
               </span>
             </span>
             <span className="flex items-center gap-2">
-              <span className="text-[13.5px] tabular-nums text-[#f0a795]">
+              <span className="text-sm tabular-nums text-[#f0a795]">
                 −{formatINR(costs.fixedTotal)}
               </span>
               <span
@@ -218,7 +218,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
           </button>
 
           {showFixed && (
-            <div className="mb-1 rounded-xl border border-rule-faint bg-white/[0.015] px-4 py-1">
+            <div className="mb-1 rounded-md border border-rule-faint bg-white/[0.015] px-4 py-1">
               {costs.fixedLines.map((f) => (
                 <Row
                   key={f.k}
@@ -273,7 +273,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
           )}
         </div>
 
-        <p className="mt-4 border-t border-rule-faint pt-4 text-[11.5px] leading-[1.55] text-ash3">
+        <p className="mt-4 border-t border-rule-faint pt-4 text-xs leading-[1.55] text-ash3">
           Per working day: {formatINR(metrics.perDay.revenue)} net revenue ·{' '}
           {formatINR(metrics.perDay.profit)} {loss ? 'loss' : 'profit'}.
         </p>
@@ -281,7 +281,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
 
       {/* ---------------------------------------------------------- LEAKS */}
       <Panel title={TOOLS.calculator.leakTitle} step="B">
-        <p className="mb-5 text-[13px] leading-[1.6] text-ash2 text-pretty">
+        <p className="mb-5 text-sm leading-[1.6] text-ash2 text-pretty">
           {formatINR(deductions.total)} of the {formatINR(revenue.grossRevenue)} you bill never
           reaches you. Ranked, largest first.
         </p>
@@ -289,10 +289,10 @@ export default function CalcResults({ metrics, id = 'result' }) {
           {deductions.leaks.map((l) => (
             <div key={l.k}>
               <div className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 text-[13px] text-ash">{l.label}</span>
-                <span className="shrink-0 text-[13px] tabular-nums text-ink">
+                <span className="min-w-0 text-sm text-ash">{l.label}</span>
+                <span className="shrink-0 text-sm tabular-nums text-ink">
                   {formatINR(l.amount)}
-                  <span className="ml-1.5 text-[11px] text-ash3">{formatPct(l.share, 1)}</span>
+                  <span className="ml-1.5 text-xs text-ash3">{formatPct(l.share, 1)}</span>
                 </span>
               </div>
               <Meter value={l.share * 3.2} tone={LEAK_TONE[l.tone] || 'ember'} className="mt-2" />
@@ -303,12 +303,12 @@ export default function CalcResults({ metrics, id = 'result' }) {
 
       {/* -------------------------------------------------- MISSED DEMAND */}
       <Panel title={TOOLS.calculator.missedTitle} step="C">
-        <p className="text-[13px] leading-[1.62] text-ash2 text-pretty">
+        <p className="text-sm leading-[1.62] text-ash2 text-pretty">
           {formatNumber(demand.enquiries, 0)} enquiries, {formatPct(demand.replyRate, 0)} answered
           properly. The {formatNumber(demand.unanswered, 0)} that were not would have produced{' '}
           {formatNumber(demand.missedUnits, 1)} {type.unit}s at your conversion rate.
         </p>
-        <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-rule bg-rule">
+        <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-rule bg-rule">
           <StatTile label="Never billed" value={formatINR(demand.servableMissedRevenue)} tone="sky" />
           <StatTile
             label="Per enquiry ignored"
@@ -320,12 +320,12 @@ export default function CalcResults({ metrics, id = 'result' }) {
           />
         </div>
         {demand.capacityBlocked && (
-          <p className="mt-4 rounded-lg border border-rule-faint bg-white/[0.02] p-3.5 text-[12px] leading-[1.55] text-ash3">
+          <p className="mt-4 rounded-md border border-rule-faint bg-white/[0.02] p-3.5 text-xs leading-[1.55] text-ash3">
             Capped at the {formatNumber(volume.spareUnits, 0)} {type.unit}s you still have free.
             Beyond that, answering more enquiries needs more capacity, not more replies.
           </p>
         )}
-        <p className="mt-4 text-[11.5px] leading-[1.55] text-ash3">
+        <p className="mt-4 text-xs leading-[1.55] text-ash3">
           Kept out of the profit figures above on purpose: this is billing that never happened,
           not money lost from billing that did.
         </p>
@@ -336,10 +336,10 @@ export default function CalcResults({ metrics, id = 'result' }) {
         {Number.isFinite(breakEven.units) ? (
           <>
             <div className="flex items-baseline gap-3">
-              <p className="font-display text-[30px] leading-none tracking-[-0.04em] tabular-nums text-ink">
+              <p className="font-display text-2xl leading-none tracking-[-0.04em] tabular-nums text-ink">
                 {formatNumber(breakEven.units, 0)}
               </p>
-              <p className="text-[13.5px] text-ash2">
+              <p className="text-sm text-ash2">
                 {type.unit}s a month · {formatPct(breakEven.utilisation)} utilisation
               </p>
             </div>
@@ -348,14 +348,14 @@ export default function CalcResults({ metrics, id = 'result' }) {
               tone={breakEven.reached ? 'mint' : 'red'}
               className="mt-5"
             />
-            <div className="mt-3 flex items-center justify-between text-[11.5px] text-ash3">
+            <div className="mt-3 flex items-center justify-between text-xs text-ash3">
               <span>Break-even</span>
               <span>
                 You sell {formatNumber(volume.units, 0)} · {formatPct(volume.utilisation, 0)}
               </span>
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-rule bg-rule">
+            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-rule bg-rule">
               <StatTile
                 label="Contribution per unit"
                 value={formatINR(unit.contributionPerUnit)}
@@ -368,7 +368,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
                 sub={`${formatPct(Math.abs(breakEven.safetyPct), 0)} of current volume`}
               />
             </div>
-            <p className="mt-4 text-[11.5px] leading-[1.55] text-ash3">
+            <p className="mt-4 text-xs leading-[1.55] text-ash3">
               Cash fixed cost {formatINR(breakEven.cashFixed)}
               {breakEven.otherContribution > 0
                 ? `, less ${formatINR(breakEven.otherContribution)} contributed by non-unit billing`
@@ -377,7 +377,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
             </p>
           </>
         ) : (
-          <p className="text-[13px] leading-[1.62] text-ash2">
+          <p className="text-sm leading-[1.62] text-ash2">
             Break-even does not exist at these numbers: one {type.unit} does not cover the leak and
             variable cost attached to it, so volume cannot fix this. Price or cost has to move
             first.
@@ -391,14 +391,14 @@ export default function CalcResults({ metrics, id = 'result' }) {
           <div className="flex items-baseline justify-between gap-4">
             <div>
               <p className="micro text-ash3">Target</p>
-              <p className="mt-2 font-display text-[24px] leading-none tracking-[-0.035em] tabular-nums text-ink">
+              <p className="mt-2 font-display text-xl leading-none tracking-[-0.035em] tabular-nums text-ink">
                 {formatINR(target.target)}
               </p>
             </div>
             <div className="text-right">
               <p className="micro text-ash3">{target.met ? 'Ahead by' : 'Short by'}</p>
               <p
-                className={`mt-2 font-display text-[24px] leading-none tracking-[-0.035em] tabular-nums ${
+                className={`mt-2 font-display text-xl leading-none tracking-[-0.035em] tabular-nums ${
                   target.met ? 'text-mint' : 'text-ember-soft'
                 }`}
               >
@@ -408,22 +408,22 @@ export default function CalcResults({ metrics, id = 'result' }) {
           </div>
 
           {target.met ? (
-            <p className="mt-5 text-[13px] leading-[1.62] text-ash2 text-pretty">
+            <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
               You are past the target on these numbers. The useful question becomes what it takes to
               keep it there in your worst month — use the what-if panel below.
             </p>
           ) : (
             <>
-              <p className="mt-5 text-[13px] leading-[1.62] text-ash2 text-pretty">
+              <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
                 {TOOLS.calculator.routesTitle}. Each one is costed on your own figures.
               </p>
               <div className="mt-5 flex flex-col gap-3">
                 {target.routes.map((r) => (
-                  <div key={r.k} className="rounded-xl border border-rule bg-white/[0.015] p-4">
+                  <div key={r.k} className="rounded-md border border-rule bg-white/[0.015] p-4">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                      <span className="text-[13.5px] text-ink">{r.label}</span>
+                      <span className="text-sm text-ink">{r.label}</span>
                       <span
-                        className={`text-[14px] tabular-nums ${
+                        className={`text-sm tabular-nums ${
                           r.feasible ? 'text-ember-soft' : 'text-ash3'
                         }`}
                       >
@@ -432,14 +432,14 @@ export default function CalcResults({ metrics, id = 'result' }) {
                           : `${formatNumber(r.value, r.value < 10 ? 1 : 0)} ${r.suffix}`}
                       </span>
                     </div>
-                    <p className="mt-2 text-[12px] leading-[1.55] text-ash3">{r.detail}</p>
+                    <p className="mt-2 text-xs leading-[1.55] text-ash3">{r.detail}</p>
                     {r.k === 'price' && r.asPct !== null && r.feasible && (
-                      <p className="mt-1.5 text-[12px] text-ash2">
+                      <p className="mt-1.5 text-xs text-ash2">
                         That is {formatPct(r.asPct, 1)} on today’s average price.
                       </p>
                     )}
                     {r.note && (
-                      <p className="mt-2 border-t border-rule-faint pt-2 text-[11.5px] leading-[1.55] text-ember-soft">
+                      <p className="mt-2 border-t border-rule-faint pt-2 text-xs leading-[1.55] text-ember-soft">
                         {r.note}
                       </p>
                     )}
@@ -457,10 +457,10 @@ export default function CalcResults({ metrics, id = 'result' }) {
           <div className="flex flex-col gap-4">
             {recommendations.map((r) => (
               <div key={r.title} className="border-l border-rule pl-4">
-                <p className={`text-[13.5px] leading-[1.5] ${TONE_TEXT[r.tone]}`}>{r.title}</p>
-                <p className="mt-1.5 text-[12.5px] leading-[1.6] text-ash2 text-pretty">{r.body}</p>
+                <p className={`text-sm leading-[1.5] ${TONE_TEXT[r.tone]}`}>{r.title}</p>
+                <p className="mt-1.5 text-xs leading-[1.6] text-ash2 text-pretty">{r.body}</p>
                 {r.impact > 0 && r.impactLabel && (
-                  <p className="mt-2 text-[11.5px] text-ash3">
+                  <p className="mt-2 text-xs text-ash3">
                     Worth about {formatINR(r.impact)} a month — {r.impactLabel}.
                   </p>
                 )}
@@ -476,7 +476,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
           <button
             type="button"
             onClick={copy}
-            className="inline-flex h-11 items-center justify-center rounded-full border border-rule-strong text-[13px] text-ink transition-colors hover:bg-white/[0.06]"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-rule-strong text-sm text-ink transition-colors hover:bg-white/[0.06]"
           >
             {copied ? 'Copied' : 'Copy the summary'}
           </button>
@@ -484,7 +484,7 @@ export default function CalcResults({ metrics, id = 'result' }) {
             href={whatsappLink(`${ENQUIRY_MESSAGES.tools}\n\n${summary}`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink text-[13px] font-medium text-void transition-colors hover:bg-white"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink text-sm font-medium text-void transition-colors hover:bg-white"
           >
             <WhatsAppGlyph className="h-3.5 w-3.5" />
             Send it to us
@@ -492,17 +492,17 @@ export default function CalcResults({ metrics, id = 'result' }) {
           <button
             type="button"
             onClick={downloadCsv}
-            className="inline-flex h-11 items-center justify-center rounded-full border border-rule text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink sm:col-span-2"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-rule text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink sm:col-span-2"
           >
             Download as CSV
           </button>
         </div>
         {copyFailed && (
-          <p className="mt-3 text-[12px] text-[#f0705a]">
+          <p className="mt-3 text-xs text-[#f0705a]">
             Your browser blocked the clipboard. Select the summary text manually, or use the CSV.
           </p>
         )}
-        <p className="mt-4 text-[11.5px] leading-[1.6] text-ash3">
+        <p className="mt-4 text-xs leading-[1.6] text-ash3">
           Nothing here is sent anywhere unless you press “Send it to us”, which opens WhatsApp with
           the summary already written. Your inputs stay in this browser.
         </p>
@@ -514,9 +514,9 @@ export default function CalcResults({ metrics, id = 'result' }) {
 /* -------------------------------------------------------------------------- */
 function Panel({ title, step, children }) {
   return (
-    <section className="mt-5 overflow-hidden rounded-[20px] border border-rule bg-void">
+    <section className="mt-5 overflow-hidden rounded-xl border border-rule bg-void">
       <header className="flex items-center justify-between gap-3 border-b border-rule px-5 py-3.5">
-        <h3 className="text-[14px] tracking-[-0.01em] text-ink">{title}</h3>
+        <h3 className="text-sm tracking-[-0.01em] text-ink">{title}</h3>
         {step && <span className="micro text-ash3">{step}</span>}
       </header>
       <div className="p-5">{children}</div>

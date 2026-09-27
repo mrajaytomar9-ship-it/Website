@@ -1,4 +1,8 @@
-@import 'tailwindcss';
+/* source(none) turns off Tailwind's automatic content detection: left on, it
+   also scans scripts/ and README.md, so a class name mentioned in a comment
+   silently ships a utility. Everything styled lives in src/. */
+@import 'tailwindcss' source(none);
+@source './**/*.{js,jsx}';
 
 /* ==========================================================================
    NEXTERA — DESIGN SYSTEM
@@ -36,7 +40,24 @@
   --color-rule-strong: rgba(255, 255, 255, 0.14);
   --color-rule-faint: rgba(255, 255, 255, 0.04);
 
-  --radius-card: 18px;
+  /* Type scale — seven fixed steps, used everywhere through Tailwind's
+     text-xs … text-3xl utilities. Display headings (.t-hero/.t-h2/.t-h3) are
+     the only sizes allowed outside this scale, which keeps the page to ten
+     rendered sizes in total. Do not add a one-off text-[Npx] value. */
+  --text-xs: 12px; /* micro labels, footnotes, table rows */
+  --text-sm: 13px; /* list items, chips, buttons, secondary copy */
+  --text-base: 16px; /* body copy, form inputs */
+  --text-lg: 18px; /* lead / section sub-headings */
+  --text-xl: 22px; /* card titles */
+  --text-2xl: 30px; /* large figures */
+  --text-3xl: 40px; /* display figures */
+
+  /* Radius scale — four steps plus full. Same rule: no one-off values. */
+  --radius-sm: 6px; /* ticks, chips, inset corners */
+  --radius-md: 12px; /* inputs, small panels */
+  --radius-lg: 16px; /* cards */
+  --radius-xl: 20px; /* large panels, pricing */
+  --radius-card: 16px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -84,7 +105,7 @@
   :focus-visible {
     outline: 2px solid var(--color-ember);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   /* Scrollbar */
@@ -97,7 +118,7 @@
   }
   ::-webkit-scrollbar-thumb {
     background: #1e1e1e;
-    border-radius: 99px;
+    border-radius: 9999px;
     border: 3px solid #000;
   }
   ::-webkit-scrollbar-thumb:hover {
@@ -157,35 +178,43 @@
   .t-hero {
     font-size: clamp(2.6rem, 7.2vw, 6.1rem);
   }
+  .t-page {
+    font-size: clamp(2.4rem, 5.8vw, 4.6rem);
+  }
   .t-h2 {
     font-size: clamp(1.95rem, 7.4cqi, 3.9rem);
   }
   .t-h3 {
     font-size: clamp(1.45rem, 3.1cqi, 2.05rem);
   }
-  .t-h4 {
-    font-size: clamp(1.25rem, 2.4cqi, 1.6rem);
-  }
+  /* These four plus the seven text-* steps are the whole type system.
+     A one-off text-[Npx] or text-[clamp(...)] in a component breaks that. */
 
   /* Establishes the query container for the cqi units above. */
   .cq-wrap {
     container-type: inline-size;
   }
 
-  /* Second line of a display headline — gradient fade to muted */
+  /* Second line of a display headline — gradient fade to muted.
+     The end stop is deliberately light: an earlier version faded to #2a2a29,
+     which reads as disabled text and let half a headline disappear. */
   .fade-line {
-    background: linear-gradient(96deg, #d9d9d6 0%, #6a6a68 55%, #2a2a29 100%);
+    background: linear-gradient(96deg, #ededeb 0%, #a8a8a6 52%, #6d6d6b 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
 
+  /* Sentence case, not uppercase: these labels run long enough ("Hotels &
+     Homestays", "What stays out of scope") that all-caps slows reading down.
+     12px is the floor for any text on the page. */
   .micro {
-    font-size: 10px;
-    letter-spacing: 0.19em;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-size: var(--text-xs);
+    letter-spacing: 0.055em;
+    text-transform: none;
+    font-weight: 600;
+    line-height: 1.35;
   }
 
   .glass {
@@ -233,11 +262,12 @@
 }
 
 /* ---------- Form controls ----------
-   Two mobile rules that matter more than they look:
+   Two rules that matter more than they look:
 
-   1. iOS Safari zooms the page when an input's font-size is under 16px. A
-      zoomed form on a phone is unusable and the page stays zoomed after the
-      field is dismissed, so small inputs are only allowed above 640px.
+   1. Inputs stay at 16px at every width. iOS Safari zooms the page when a
+      field's font-size is under 16px, and the page stays zoomed after the
+      field is dismissed. It is also the body size in the type scale, so the
+      form does not need its own step-down value.
    2. Tap targets stay at least 44px tall where a finger is doing the work.
    ------------------------------------------------------------------------ */
 @layer base {
@@ -251,14 +281,7 @@
   input,
   select,
   textarea {
-    font-size: 16px;
-  }
-  @media (min-width: 640px) {
-    input,
-    select,
-    textarea {
-      font-size: 14px;
-    }
+    font-size: var(--text-base);
   }
 
   /* Number spinners are noise on a dark, hairline UI and they steal width. */
@@ -283,12 +306,12 @@
   }
   input[type='range']::-webkit-slider-runnable-track {
     height: 3px;
-    border-radius: 99px;
+    border-radius: 9999px;
     background: rgba(255, 255, 255, 0.12);
   }
   input[type='range']::-moz-range-track {
     height: 3px;
-    border-radius: 99px;
+    border-radius: 9999px;
     background: rgba(255, 255, 255, 0.12);
   }
   input[type='range']::-webkit-slider-thumb {
@@ -297,7 +320,7 @@
     height: 16px;
     width: 16px;
     margin-top: -6.5px;
-    border-radius: 99px;
+    border-radius: 9999px;
     background: var(--color-ink);
     border: 3px solid #000;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
@@ -306,7 +329,7 @@
   input[type='range']::-moz-range-thumb {
     height: 16px;
     width: 16px;
-    border-radius: 99px;
+    border-radius: 9999px;
     background: var(--color-ink);
     border: 3px solid #000;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
@@ -322,7 +345,7 @@
   .field {
     width: 100%;
     min-height: 46px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--color-rule);
     background: rgba(255, 255, 255, 0.022);
     padding: 0.7rem 0.9rem;
@@ -347,7 +370,7 @@
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     color: var(--color-ash3);
   }
 

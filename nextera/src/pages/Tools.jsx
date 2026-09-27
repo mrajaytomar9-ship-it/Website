@@ -100,7 +100,7 @@ export default function Tools() {
             <a
               key={c.href}
               href={c.href}
-              className="rounded-full border border-rule px-4 py-2.5 text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+              className="rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
             >
               {c.label}
             </a>
@@ -134,7 +134,7 @@ export default function Tools() {
             <Reveal delay={120}>
               <div className="results-scroll">
                 <CalcResults metrics={metrics} />
-                <p className="mt-5 flex items-start gap-2.5 text-[11.5px] leading-[1.6] text-ash3">
+                <p className="mt-5 flex items-start gap-2.5 text-xs leading-[1.6] text-ash3">
                   <Dot tone="mint" className="mt-[6px] shrink-0" />
                   {TOOLS.calculator.savedNote}. Nothing is uploaded, and no account is involved.
                 </p>
@@ -212,12 +212,12 @@ export default function Tools() {
               </SectionHead>
             </Reveal>
 
-            <div className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-2">
+            <div className="grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2">
               {TOOLS.assumptions.map((a, i) => (
                 <Reveal key={a.t} delay={i * 70}>
                   <div className="h-full bg-void p-7">
-                    <p className="text-[15px] leading-[1.4] text-ink">{a.t}</p>
-                    <p className="mt-3 text-[13px] leading-[1.62] text-ash2 text-pretty">{a.d}</p>
+                    <p className="text-base leading-[1.4] text-ink">{a.t}</p>
+                    <p className="mt-3 text-sm leading-[1.62] text-ash2 text-pretty">{a.d}</p>
                   </div>
                 </Reveal>
               ))}
@@ -236,7 +236,7 @@ export default function Tools() {
                 <br />
                 <span className="fade-line">worth knowing.</span>
               </SectionHead>
-              <p className="mt-7 max-w-sm text-[14.5px] leading-[1.6] text-ash2">
+              <p className="mt-7 max-w-sm text-sm leading-[1.6] text-ash2">
                 If a number looks wrong, it probably is — and the reason is usually one field. Send
                 it to us and we will look at it with you.
               </p>
@@ -267,12 +267,12 @@ export default function Tools() {
             <div className="min-w-0">
               <p className="micro text-ash3">{loss ? 'Net loss / month' : 'Net profit / month'}</p>
               <p
-                className={`mt-1 font-display text-[19px] leading-none tracking-[-0.03em] tabular-nums ${
+                className={`mt-1 font-display text-lg leading-none tracking-[-0.03em] tabular-nums ${
                   loss ? 'text-[#f0705a]' : 'text-ink'
                 }`}
               >
                 {formatINR(metrics.profit.netProfit)}
-                <span className="ml-2 text-[11.5px] tracking-normal text-ash3">
+                <span className="ml-2 text-xs tracking-normal text-ash3">
                   {formatPct(metrics.profit.netMargin)}
                 </span>
               </p>
@@ -280,7 +280,7 @@ export default function Tools() {
             <button
               type="button"
               onClick={scrollToResult}
-              className="shrink-0 rounded-full bg-ink px-5 py-3 text-[13px] font-medium text-void transition-colors hover:bg-white"
+              className="shrink-0 rounded-full bg-ink px-5 py-3 text-sm font-medium text-void transition-colors hover:bg-white"
             >
               Full breakdown
             </button>
@@ -308,7 +308,7 @@ function ToolsFaq() {
               className="flex w-full items-start justify-between gap-6 py-5 text-left"
             >
               <span
-                className={`text-[15px] leading-[1.45] transition-colors duration-300 ${
+                className={`text-base leading-[1.45] transition-colors duration-300 ${
                   isOpen ? 'text-ink' : 'text-ash hover:text-ink'
                 }`}
               >
@@ -332,7 +332,7 @@ function ToolsFaq() {
               }}
             >
               <div className="overflow-hidden">
-                <p className="max-w-2xl pb-6 pr-6 text-[14px] leading-[1.68] text-ash2 text-pretty">
+                <p className="max-w-2xl pb-6 pr-6 text-sm leading-[1.68] text-ash2 text-pretty">
                   {f.a}
                 </p>
               </div>

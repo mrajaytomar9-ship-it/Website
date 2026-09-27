@@ -12,13 +12,13 @@ import { WhatsAppGlyph } from './Navbar'
 export function MockFrame({ label, meta, children, className = '', padded = true }) {
   return (
     <div
-      className={`card-dark relative overflow-hidden rounded-[20px] ${className}`}
+      className={`card-dark relative overflow-hidden rounded-xl ${className}`}
     >
       {/* window chrome */}
       <div className="flex items-center justify-between border-b border-rule px-5 py-3.5">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="h-2 w-2 shrink-0 rounded-full bg-ember/80" />
-          <span className="truncate text-[12px] font-medium tracking-[-0.01em] text-ink">
+          <span className="truncate text-xs font-medium tracking-[-0.01em] text-ink">
             {label}
           </span>
         </div>
@@ -59,13 +59,13 @@ export function AuditMockup() {
       <div className="flex items-baseline justify-between">
         <div>
           <p className="micro mb-2.5 text-ash3">Issues found</p>
-          <p className="font-display text-[40px] leading-none tracking-[-0.04em] text-ink">
+          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-ink">
             6
           </p>
         </div>
         <div className="text-right">
           <p className="micro mb-2.5 text-ash3">Fixed by Pilot</p>
-          <p className="font-display text-[40px] leading-none tracking-[-0.04em] text-mint">4</p>
+          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">4</p>
         </div>
       </div>
 
@@ -75,10 +75,10 @@ export function AuditMockup() {
             <div className="flex items-center justify-between gap-3">
               <div className="flex min-w-0 items-center gap-2.5">
                 <Dot tone="ink" className="shrink-0" />
-                <span className="truncate text-[13px] text-ink">{r.label}</span>
+                <span className="truncate text-sm text-ink">{r.label}</span>
               </div>
               <span
-                className="shrink-0 rounded-full px-2 py-[3px] text-[10px] font-medium tracking-[0.04em]"
+                className="shrink-0 rounded-full px-2 py-[3px] text-xs font-medium tracking-[0.04em]"
                 style={{
                   color: SEV[r.sev].color,
                   background: `${SEV[r.sev].color}1a`,
@@ -88,7 +88,7 @@ export function AuditMockup() {
                 {SEV[r.sev].label}
               </span>
             </div>
-            <p className="mt-1.5 pl-[14px] text-[12px] text-ash3">{r.detail}</p>
+            <p className="mt-1.5 pl-[14px] text-xs text-ash3">{r.detail}</p>
             <div className="mt-2 ml-[14px] h-[3px] w-full overflow-hidden rounded-full bg-white/[0.055]">
               <div
                 className="h-full rounded-full"
@@ -116,7 +116,7 @@ export function EnquiryMockup() {
         <div className="border-b border-rule p-5 sm:border-b-0 sm:border-r">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-mint anim-pulse" />
-            <span className="text-[11.5px] text-ash2">Landing page loaded</span>
+            <span className="text-xs text-ash2">Landing page loaded</span>
           </div>
 
           <div className="mt-4 space-y-2.5">
@@ -127,7 +127,7 @@ export function EnquiryMockup() {
             ].map((s) => (
               <div
                 key={s.t}
-                className="flex items-center gap-2.5 rounded-lg border border-rule-faint bg-white/[0.02] px-3 py-2.5"
+                className="flex items-center gap-2.5 rounded-md border border-rule-faint bg-white/[0.02] px-3 py-2.5"
               >
                 <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-mint/15">
                   <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
@@ -140,14 +140,14 @@ export function EnquiryMockup() {
                     />
                   </svg>
                 </span>
-                <span className="text-[12.5px] text-ash">{s.t}</span>
+                <span className="text-xs text-ash">{s.t}</span>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 flex items-center gap-2.5 rounded-lg border border-rule bg-white/[0.03] px-3 py-3">
+          <div className="mt-4 flex items-center gap-2.5 rounded-md border border-rule bg-white/[0.03] px-3 py-3">
             <WhatsAppGlyph className="h-4 w-4 shrink-0 text-mint" />
-            <span className="text-[12.5px] text-ink">Message on WhatsApp</span>
+            <span className="text-xs text-ink">Message on WhatsApp</span>
             <span className="ml-auto micro text-ash3">1 tap</span>
           </div>
         </div>
@@ -159,24 +159,24 @@ export function EnquiryMockup() {
               <WhatsAppGlyph className="h-3.5 w-3.5 text-mint" />
             </span>
             <div className="min-w-0">
-              <p className="truncate text-[12px] text-ink">Guest House Taj View</p>
-              <p className="text-[10.5px] text-ash3">Online now</p>
+              <p className="truncate text-xs text-ink">Guest House Taj View</p>
+              <p className="text-xs text-ash3">Online now</p>
             </div>
           </div>
 
           <div className="mt-3.5 flex flex-1 flex-col gap-2.5">
             <div
-              className="ml-auto max-w-[88%] rounded-[12px_12px_4px_12px] px-3 py-2 text-[11.5px] leading-[1.5] text-black"
+              className="ml-auto max-w-[88%] rounded-md rounded-br-sm px-3 py-2 text-xs leading-[1.5] text-black"
               style={{ background: 'linear-gradient(135deg,#5fe0b0,#3fc794)' }}
             >
               Hi — I saw your Stay Options page. Is a room available this weekend for 2 guests?
             </div>
-            <div className="max-w-[86%] rounded-[12px_12px_12px_4px] border border-rule bg-white/[0.045] px-3 py-2 text-[11.5px] leading-[1.5] text-ash">
+            <div className="max-w-[86%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-xs leading-[1.5] text-ash">
               Namaste! Let me check with the front desk and confirm.
             </div>
           </div>
 
-          <div className="mt-3.5 flex items-center gap-1.5 border-t border-rule-faint pt-3 text-[10px] text-ash3">
+          <div className="mt-3.5 flex items-center gap-1.5 border-t border-rule-faint pt-3 text-xs text-ash3">
             <span className="h-1 w-1 rounded-full bg-mint" />
             Delivered · 4:41 PM
           </div>
@@ -200,16 +200,16 @@ export function ProfileMockup() {
   return (
     <MockFrame label="Google Business Profile" meta="Authorised changes">
       <div className="flex items-start gap-4">
-        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-rule bg-gradient-to-br from-ember/25 to-ember/5">
-          <div className="flex h-full items-center justify-center font-display text-[19px] text-ember-soft">
+        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md border border-rule bg-gradient-to-br from-ember/25 to-ember/5">
+          <div className="flex h-full items-center justify-center font-display text-lg text-ember-soft">
             GT
           </div>
         </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate font-display text-[17px] tracking-[-0.02em] text-ink">
+          <p className="truncate font-display text-lg tracking-[-0.02em] text-ink">
             Guest House Taj View
           </p>
-          <p className="mt-1 text-[12px] text-ash2">Guest house · Agra, Uttar Pradesh</p>
+          <p className="mt-1 text-xs text-ash2">Guest house · Agra, Uttar Pradesh</p>
           <div className="mt-2.5 flex items-center gap-2.5">
             <span className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((i) => (
@@ -218,7 +218,7 @@ export function ProfileMockup() {
                 </svg>
               ))}
             </span>
-            <span className="text-[11.5px] text-ash2">4.6 · 214 reviews</span>
+            <span className="text-xs text-ash2">4.6 · 214 reviews</span>
           </div>
         </div>
       </div>
@@ -226,9 +226,9 @@ export function ProfileMockup() {
       <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5 border-t border-rule pt-4">
         {rows.map((r) => (
           <div key={r.k} className="flex items-center justify-between gap-2">
-            <span className="text-[12px] text-ash3">{r.k}</span>
+            <span className="text-xs text-ash3">{r.k}</span>
             <span
-              className={`flex items-center gap-1.5 text-[11.5px] ${
+              className={`flex items-center gap-1.5 text-xs ${
                 r.good === true ? 'text-mint' : r.good === false ? 'text-ember-soft' : 'text-ash3'
               }`}
             >
@@ -265,7 +265,7 @@ export function DeliveryMockup() {
             <div className="mb-2.5 flex items-center gap-1.5">
               <Dot tone={s.done ? 'mint' : s.active ? 'ember' : 'ink'} />
               <span
-                className={`text-[11px] font-medium tracking-[0.02em] ${
+                className={`text-xs font-medium tracking-[0.02em] ${
                   s.done || s.active ? 'text-ink' : 'text-ash3'
                 }`}
               >
@@ -276,7 +276,7 @@ export function DeliveryMockup() {
               {s.items.map((it) => (
                 <div
                   key={it}
-                  className={`rounded-md border px-2 py-1.5 text-[10.5px] leading-[1.35] ${
+                  className={`rounded-sm border px-2 py-1.5 text-xs leading-[1.35] ${
                     s.done
                       ? 'border-mint/20 bg-mint/[0.06] text-mint'
                       : s.active
@@ -308,7 +308,7 @@ export function DeliveryMockup() {
         ].map((s) => (
           <div key={s.l}>
             <p className="micro mb-1.5 text-ash3">{s.l}</p>
-            <p className="font-display text-[15px] tracking-[-0.02em] text-ink">{s.v}</p>
+            <p className="font-display text-base tracking-[-0.02em] text-ink">{s.v}</p>
           </div>
         ))}
       </div>
@@ -330,7 +330,7 @@ export function CareMockup() {
       <div className="flex items-center justify-between">
         <div>
           <p className="micro mb-2 text-ash3">Allowance used</p>
-          <p className="font-display text-[30px] leading-none tracking-[-0.04em] text-ink">
+          <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
             7<span className="text-ash3">/12</span>
           </p>
         </div>
@@ -349,8 +349,8 @@ export function CareMockup() {
         {CARE_ROWS.map((r, i) => (
           <div key={r.l}>
             <div className="flex items-baseline justify-between gap-3">
-              <span className="truncate text-[12.5px] text-ash">{r.l}</span>
-              <span className="shrink-0 text-[12px] tabular-nums text-ink">
+              <span className="truncate text-xs text-ash">{r.l}</span>
+              <span className="shrink-0 text-xs tabular-nums text-ink">
                 {r.v}
                 <span className="text-ash3"> / {r.max}</span>
               </span>
@@ -369,9 +369,9 @@ export function CareMockup() {
         ))}
       </div>
 
-      <div className="mt-5 rounded-lg border border-rule-faint bg-white/[0.02] p-3.5">
+      <div className="mt-5 rounded-md border border-rule-faint bg-white/[0.02] p-3.5">
         <p className="micro mb-2 text-ash3">Next recommendation</p>
-        <p className="text-[12.5px] leading-[1.55] text-ash">
+        <p className="text-xs leading-[1.55] text-ash">
           Add four room photos to the listing — the two most-requested stay types still have no
           image on the Google profile.
         </p>
@@ -384,10 +384,10 @@ export function CareMockup() {
 export function PhoneMockup({ title, lines, accent = 'mint' }) {
   return (
     <div className="relative mx-auto w-full max-w-[268px]">
-      <div className="rounded-[30px] border border-rule-strong bg-coal p-2 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]">
-        <div className="overflow-hidden rounded-[23px] bg-black">
+      <div className="rounded-xl border border-rule-strong bg-coal p-2 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]">
+        <div className="overflow-hidden rounded-xl bg-black">
           {/* status bar */}
-          <div className="flex items-center justify-between px-4 pb-2 pt-3 text-[9.5px] text-ash3">
+          <div className="flex items-center justify-between px-4 pb-2 pt-3 text-xs text-ash3">
             <span>9:41</span>
             <span className="flex gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-ash3" />
@@ -401,7 +401,7 @@ export function PhoneMockup({ title, lines, accent = 'mint' }) {
               {lines.map((l, i) => (
                 <div
                   key={l}
-                  className="rounded-lg border px-3 py-2.5 text-[11.5px] leading-[1.45]"
+                  className="rounded-md border px-3 py-2.5 text-xs leading-[1.45]"
                   style={{
                     borderColor: i === 0 ? 'rgba(79,209,165,0.28)' : 'rgba(255,255,255,0.06)',
                     background: i === 0 ? 'rgba(79,209,165,0.07)' : 'rgba(255,255,255,0.02)',
@@ -413,7 +413,7 @@ export function PhoneMockup({ title, lines, accent = 'mint' }) {
               ))}
             </div>
             <div
-              className="mt-4 flex h-9 items-center justify-center gap-1.5 rounded-full text-[11.5px] font-medium text-black"
+              className="mt-4 flex h-9 items-center justify-center gap-1.5 rounded-full text-xs font-medium text-black"
               style={{ background: accent === 'ember' ? '#f4b866' : '#5fe0b0' }}
             >
               {accent === 'ember' ? 'Request a call' : 'WhatsApp us'}

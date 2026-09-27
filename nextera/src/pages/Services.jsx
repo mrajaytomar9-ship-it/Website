@@ -43,7 +43,7 @@ export default function Services() {
             <a
               key={s.id}
               href={`#${SERVICE_META[s.id].id}`}
-              className="inline-flex items-center gap-2 rounded-full border border-rule px-4 py-2.5 text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+              className="inline-flex items-center gap-2 rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
             >
               <ServiceIcon name={s.icon} className="h-3.5 w-3.5" />
               {SERVICE_META[s.id].label}
@@ -93,9 +93,9 @@ export default function Services() {
             { t: 'Never a fake review', d: 'We draft genuine replies. We do not write, buy or suppress reviews.' },
             { t: 'No ranking promises', d: 'Visibility depends on factors no agency controls, so we do not sell it as a guarantee.' },
           ].map((x) => (
-            <div key={x.t} className="rounded-xl border border-rule bg-white/[0.02] p-4">
-              <p className="text-[14px] text-ink">{x.t}</p>
-              <p className="mt-1.5 text-[12.5px] leading-[1.55] text-ash2">{x.d}</p>
+            <div key={x.t} className="rounded-md border border-rule bg-white/[0.02] p-4">
+              <p className="text-sm text-ink">{x.t}</p>
+              <p className="mt-1.5 text-xs leading-[1.55] text-ash2">{x.d}</p>
             </div>
           ))}
         </div>
@@ -103,7 +103,7 @@ export default function Services() {
 
       {/* -------------------------------------------------------- 4. CARE */}
       <ServiceSection service={SERVICES[3]} anchor="care" icon="shield" mock={<CareMockup />} flip>
-        <div className="rounded-xl border border-rule bg-white/[0.02] p-5">
+        <div className="rounded-md border border-rule bg-white/[0.02] p-5">
           <p className="micro mb-3.5 text-ash3">Entry conditions</p>
           <ul className="flex flex-col gap-2.5">
             {[
@@ -112,7 +112,7 @@ export default function Services() {
               'Existing defects reviewed before acceptance',
               'Backup and recovery feasibility understood',
             ].map((c) => (
-              <li key={c} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash2">
+              <li key={c} className="flex gap-2.5 text-sm leading-[1.5] text-ash2">
                 <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                   <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -120,7 +120,7 @@ export default function Services() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 border-t border-rule pt-4 text-[12.5px] leading-[1.6] text-ash3">
+          <p className="mt-4 border-t border-rule pt-4 text-xs leading-[1.6] text-ash3">
             A pre-existing broken website is not automatically repaired under the monthly fee.
             That gets assessed and quoted separately, before you commit to anything.
           </p>
@@ -146,14 +146,14 @@ export default function Services() {
               <Reveal key={n.id} delay={i * 110}>
                 <article
                   id={n.id}
-                  className="h-full scroll-mt-28 overflow-hidden rounded-[20px] border border-rule bg-void"
+                  className="h-full scroll-mt-28 overflow-hidden rounded-xl border border-rule bg-void"
                 >
                   <div className="border-b border-rule px-7 py-6">
                     <p className="micro text-ash3">{n.label}</p>
-                    <h3 className="mt-3.5 font-display text-[23px] tracking-[-0.03em] text-ink">
+                    <h3 className="mt-3.5 font-display text-xl tracking-[-0.03em] text-ink">
                       {n.headline}
                     </h3>
-                    <p className="mt-3.5 text-[14px] leading-[1.6] text-ash2 text-pretty">
+                    <p className="mt-3.5 text-sm leading-[1.6] text-ash2 text-pretty">
                       {n.body}
                     </p>
                   </div>
@@ -163,7 +163,7 @@ export default function Services() {
                       <p className="micro mb-3.5 text-mint">Allowed</p>
                       <ul className="flex flex-col gap-2.5">
                         {n.allowed.map((a) => (
-                          <li key={a} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash">
+                          <li key={a} className="flex gap-2.5 text-sm leading-[1.5] text-ash">
                             <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                               <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
@@ -176,7 +176,7 @@ export default function Services() {
                       <p className="micro mb-3.5 text-ember-soft">Not offered</p>
                       <ul className="flex flex-col gap-2.5">
                         {n.notAllowed.map((a) => (
-                          <li key={a} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash3">
+                          <li key={a} className="flex gap-2.5 text-sm leading-[1.5] text-ash3">
                             <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                               <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
                             </svg>
@@ -197,7 +197,7 @@ export default function Services() {
       <section className="band">
         <div className="shell">
           <Reveal>
-            <div className="grid gap-10 overflow-hidden rounded-[20px] border border-rule bg-coal p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:p-12">
+            <div className="grid gap-10 overflow-hidden rounded-xl border border-rule bg-coal p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:p-12">
               <div>
                 <p className="micro mb-4 text-ash3">Not ready to sell</p>
                 <h2 className="t-h3 text-ink">
@@ -213,8 +213,8 @@ export default function Services() {
                   { t: 'Booking engines & patient systems', d: 'These need a verified integration, their own scope, their own support plan and their own compliance review. We will say so early rather than forcing them into a package.' },
                 ].map((x) => (
                   <div key={x.t} className="border-l border-rule pl-5">
-                    <p className="text-[14.5px] text-ink">{x.t}</p>
-                    <p className="mt-1.5 text-[13px] leading-[1.6] text-ash2">{x.d}</p>
+                    <p className="text-sm text-ink">{x.t}</p>
+                    <p className="mt-1.5 text-sm leading-[1.6] text-ash2">{x.d}</p>
                   </div>
                 ))}
               </div>
@@ -245,14 +245,13 @@ function ServiceSection({ service, anchor, icon, mock, flip = false, children })
             {/* copy */}
             <Reveal className={`cq-wrap ${flip ? 'lg:order-2' : ''}`}>
               <div className="flex items-center gap-3.5">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-rule bg-white/[0.03] text-ink">
+                <span className="flex h-11 w-11 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink">
                   <ServiceIcon name={icon} className="h-5 w-5" />
                 </span>
-                <span className="micro text-ash3">{service.code}</span>
               </div>
 
               <h2 className="t-h2 mt-7 text-ink">{service.title}</h2>
-              <p className="mt-5 max-w-lg text-[16px] leading-[1.65] text-ash text-pretty">
+              <p className="mt-5 max-w-lg text-base leading-[1.65] text-ash text-pretty">
                 {service.lede}
               </p>
 
@@ -261,18 +260,18 @@ function ServiceSection({ service, anchor, icon, mock, flip = false, children })
                   <div key={p.t} className="flex gap-5 border-t border-rule py-6 last:border-b">
                     <span className="micro shrink-0 pt-1 text-ash3">0{i + 1}</span>
                     <div>
-                      <h3 className="text-[16.5px] text-ink">{p.t}</h3>
-                      <p className="mt-2 text-[14.5px] leading-[1.62] text-ash2 text-pretty">{p.d}</p>
+                      <h3 className="text-base text-ink">{p.t}</h3>
+                      <p className="mt-2 text-sm leading-[1.62] text-ash2 text-pretty">{p.d}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 rounded-xl border border-rule bg-white/[0.02] p-5">
+              <div className="mt-8 rounded-md border border-rule bg-white/[0.02] p-5">
                 <p className="micro mb-3 text-ash3">Explicitly not included</p>
                 <ul className="flex flex-col gap-2">
                   {service.notIncluded.map((x) => (
-                    <li key={x} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash3">
+                    <li key={x} className="flex gap-2.5 text-sm leading-[1.5] text-ash3">
                       <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                         <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
                       </svg>
@@ -300,7 +299,7 @@ function ServiceSection({ service, anchor, icon, mock, flip = false, children })
                   </Button>
                   <a
                     href={`tel:${CONTACT_DETAILS.phoneRaw.replace(/\s/g, '')}`}
-                    className="text-center text-[13px] text-ash3 transition-colors hover:text-ink"
+                    className="text-center text-sm text-ash3 transition-colors hover:text-ink"
                   >
                     or call {CONTACT_DETAILS.phoneDisplay}
                   </a>

@@ -29,7 +29,7 @@ export default function NotFound() {
           </Reveal>
 
           <Reveal delay={120}>
-            <h1 className="mt-9 text-[clamp(3rem,10vw,7rem)] font-medium leading-[0.95] tracking-[-0.045em] text-ink">
+            <h1 className="t-hero mt-9 font-medium leading-[0.95] tracking-[-0.045em] text-ink">
               Page not
               <br />
               <span className="fade-line">on the map.</span>
@@ -37,7 +37,7 @@ export default function NotFound() {
           </Reveal>
 
           <Reveal delay={220}>
-            <p className="mx-auto mt-8 max-w-lg text-[16.5px] leading-[1.65] text-ash text-pretty">
+            <p className="mx-auto mt-8 max-w-lg text-base leading-[1.65] text-ash text-pretty">
               This link has moved, expired, or never existed. The pages that do exist are
               listed below — including the free audit.
             </p>
@@ -64,13 +64,13 @@ export default function NotFound() {
                 <Link
                   key={n.to}
                   to={n.to}
-                  className="rounded-full border border-rule px-4 py-2.5 text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+                  className="rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
                 >
                   {n.label}
                 </Link>
               ))}
             </div>
-            <p className="mt-8 text-[13px] text-ash3">
+            <p className="mt-8 text-sm text-ash3">
               Or call {CONTACT_DETAILS.phoneDisplay} · {CONTACT_DETAILS.responseNote}
             </p>
           </Reveal>

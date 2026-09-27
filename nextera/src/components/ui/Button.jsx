@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2.5 rounded-full text-[13px] font-medium tracking-[-0.01em] transition-all duration-300 will-change-transform active:scale-[0.975]'
+  'group relative inline-flex items-center justify-center gap-2.5 rounded-full text-sm font-medium tracking-[-0.01em] transition-all duration-300 will-change-transform active:scale-[0.975]'
 
 const sizes = {
   sm: 'h-9 px-5',
   md: 'h-11 px-6',
-  lg: 'h-[52px] px-7 text-[14px]',
+  lg: 'h-[52px] px-7 text-sm',
 }
 
 const variants = {

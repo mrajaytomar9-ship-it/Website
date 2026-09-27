@@ -14,9 +14,9 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
   return (
     <div>
       {/* ------------------------------------------------- BUSINESS TYPE */}
-      <section className="overflow-hidden rounded-[20px] border border-rule bg-void">
+      <section className="overflow-hidden rounded-xl border border-rule bg-void">
         <header className="flex items-center justify-between gap-3 border-b border-rule px-5 py-3.5">
-          <h3 className="text-[14px] tracking-[-0.01em] text-ink">What kind of business?</h3>
+          <h3 className="text-sm tracking-[-0.01em] text-ink">What kind of business?</h3>
           <span className="micro text-ash3">00</span>
         </header>
 
@@ -31,7 +31,7 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
                   type="button"
                   onClick={() => onType(t.id)}
                   aria-pressed={active}
-                  className={`inline-flex shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2.5 text-[12.5px] transition-all duration-200 ${
+                  className={`inline-flex shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2.5 text-xs transition-all duration-200 ${
                     active
                       ? 'border-ember/40 bg-ember/[0.09] text-ember-soft'
                       : 'border-rule text-ash hover:border-rule-strong hover:text-ink'
@@ -44,8 +44,8 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
             })}
           </div>
 
-          <p className="mt-4 text-[12.5px] leading-[1.6] text-ash2">{type.blurb}</p>
-          <p className="mt-3 rounded-lg border border-rule-faint bg-white/[0.02] p-3.5 text-[11.5px] leading-[1.6] text-ash3">
+          <p className="mt-4 text-xs leading-[1.6] text-ash2">{type.blurb}</p>
+          <p className="mt-3 rounded-md border border-rule-faint bg-white/[0.02] p-3.5 text-xs leading-[1.6] text-ash3">
             {TOOLS.presetNote}
           </p>
 
@@ -53,14 +53,14 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
             <button
               type="button"
               onClick={onReset}
-              className="rounded-full border border-rule px-3.5 py-2 text-[12px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+              className="rounded-full border border-rule px-3.5 py-2 text-xs text-ash transition-colors hover:border-rule-strong hover:text-ink"
             >
               {TOOLS.calculator.resetLabel}
             </button>
             <button
               type="button"
               onClick={onClear}
-              className="rounded-full border border-rule px-3.5 py-2 text-[12px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+              className="rounded-full border border-rule px-3.5 py-2 text-xs text-ash transition-colors hover:border-rule-strong hover:text-ink"
             >
               {TOOLS.calculator.clearLabel}
             </button>
@@ -73,12 +73,12 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
         <section
           key={group.id}
           id={`calc-${group.id}`}
-          className="mt-5 scroll-mt-24 overflow-hidden rounded-[20px] border border-rule bg-void"
+          className="mt-5 scroll-mt-24 overflow-hidden rounded-xl border border-rule bg-void"
         >
           <header className="flex items-start justify-between gap-4 border-b border-rule px-5 py-3.5">
             <div className="min-w-0">
-              <h3 className="text-[14px] tracking-[-0.01em] text-ink">{group.title}</h3>
-              <p className="mt-1 text-[11.5px] leading-[1.5] text-ash3">{group.note}</p>
+              <h3 className="text-sm tracking-[-0.01em] text-ink">{group.title}</h3>
+              <p className="mt-1 text-xs leading-[1.5] text-ash3">{group.note}</p>
             </div>
             <span className="micro shrink-0 text-ash3">{group.n}</span>
           </header>
@@ -104,7 +104,7 @@ export default function CalcForm({ typeId, onType, values, setValue, onReset, on
                         { value: 'month', label: 'Per month' },
                       ]}
                     />
-                    <p className="mt-2 text-[11.5px] text-ash3">
+                    <p className="mt-2 text-xs text-ash3">
                       {basis === 'day'
                         ? `Monthly units = units per day × utilisation × working days.`
                         : `Monthly units = units × utilisation. Working days are not used.`}

@@ -24,7 +24,7 @@ export default function CtaBand({
 
       <div className="band">
         <div className="shell">
-          <div className="relative overflow-hidden rounded-[26px] border border-rule bg-coal px-6 py-16 text-center sm:px-12 md:py-24">
+          <div className="relative overflow-hidden rounded-xl border border-rule bg-coal px-6 py-16 text-center sm:px-12 md:py-24">
             {/* ambient */}
             <div
               aria-hidden="true"
@@ -42,7 +42,7 @@ export default function CtaBand({
                 <br />
                 <span className="fade-line">{line2}</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-xl text-[16.5px] leading-[1.62] text-ash text-pretty">
+              <p className="mx-auto mt-6 max-w-xl text-base leading-[1.62] text-ash text-pretty">
                 {sub}
               </p>
 
@@ -59,7 +59,7 @@ export default function CtaBand({
                 </Button>
               </div>
 
-              <p className="mt-7 text-[13px] text-ash3">
+              <p className="mt-7 text-sm text-ash3">
                 {CONTACT_DETAILS.responseNote} · {CONTACT_DETAILS.businessHoursLabel}
               </p>
             </Reveal>

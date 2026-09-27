@@ -13,9 +13,9 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-10">
       {/* -------------------------------------------------------- CONTROLS */}
-      <div className="overflow-hidden rounded-[20px] border border-rule bg-void">
+      <div className="overflow-hidden rounded-xl border border-rule bg-void">
         <header className="flex items-center justify-between gap-3 border-b border-rule px-5 py-3.5">
-          <h3 className="text-[14px] tracking-[-0.01em] text-ink">Move one thing at a time</h3>
+          <h3 className="text-sm tracking-[-0.01em] text-ink">Move one thing at a time</h3>
           <button
             type="button"
             onClick={onReset}
@@ -35,7 +35,7 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
             return (
               <div key={l.k} className="px-5 py-5">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                  <span className="text-[13.5px] text-ink">{l.label}</span>
+                  <span className="text-sm text-ink">{l.label}</span>
                   <span className="flex items-center gap-1.5">
                     <input
                       type="text"
@@ -45,9 +45,9 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
                       onChange={(e) =>
                         setLever(l.k, e.target.value.replace(/[^0-9.\-]/g, ''))
                       }
-                      className="w-[64px] rounded-lg border border-rule bg-white/[0.02] px-2 py-1.5 text-right text-[13px] tabular-nums text-ink outline-none focus:border-rule-strong"
+                      className="w-[64px] rounded-md border border-rule bg-white/[0.02] px-2 py-1.5 text-right text-sm tabular-nums text-ink outline-none focus:border-rule-strong"
                     />
-                    <span className="w-[46px] text-[11px] text-ash3">{l.unit}</span>
+                    <span className="w-[46px] text-xs text-ash3">{l.unit}</span>
                   </span>
                 </div>
 
@@ -62,7 +62,7 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
                   className="mt-3"
                 />
 
-                <p className="mt-1 text-[11.5px] leading-[1.5] text-ash3">{l.hint}</p>
+                <p className="mt-1 text-xs leading-[1.5] text-ash3">{l.hint}</p>
               </div>
             )
           })}
@@ -71,15 +71,15 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
 
       {/* --------------------------------------------------------- OUTCOME */}
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <div className="overflow-hidden rounded-[20px] border border-rule bg-coal">
+        <div className="overflow-hidden rounded-xl border border-rule bg-coal">
           <header className="border-b border-rule px-5 py-3.5">
-            <h3 className="text-[14px] tracking-[-0.01em] text-ink">With these changes</h3>
+            <h3 className="text-sm tracking-[-0.01em] text-ink">With these changes</h3>
           </header>
 
           <div className="px-5 py-6">
             <p className="micro text-ash3">Net profit becomes</p>
             <p
-              className={`mt-2.5 font-display text-[32px] leading-none tracking-[-0.04em] tabular-nums ${
+              className={`mt-2.5 font-display text-2xl leading-none tracking-[-0.04em] tabular-nums ${
                 scenario.profit.netProfit < 0 ? 'text-[#f0705a]' : 'text-ink'
               }`}
             >
@@ -87,7 +87,7 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
             </p>
 
             <p
-              className={`mt-3 text-[13.5px] tabular-nums ${
+              className={`mt-3 text-sm tabular-nums ${
                 improved ? 'text-mint' : delta.netProfit < 0 ? 'text-[#f0705a]' : 'text-ash2'
               }`}
             >
@@ -104,16 +104,16 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
               className="mt-5"
             />
 
-            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-rule bg-rule">
+            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-rule bg-rule">
               <div className="bg-void px-4 py-4">
                 <p className="micro text-ash3">A year of it</p>
-                <p className="mt-2 font-display text-[17px] tabular-nums text-ink">
+                <p className="mt-2 font-display text-lg tabular-nums text-ink">
                   {delta.netProfit === 0 ? '—' : formatINR(delta.netProfit * 12)}
                 </p>
               </div>
               <div className="bg-void px-4 py-4">
                 <p className="micro text-ash3">Leak change</p>
-                <p className="mt-2 font-display text-[17px] tabular-nums text-ember-soft">
+                <p className="mt-2 font-display text-lg tabular-nums text-ember-soft">
                   {delta.leak === 0 ? '—' : `${delta.leak > 0 ? '+' : '−'}${formatINR(Math.abs(delta.leak))}`}
                 </p>
               </div>
@@ -141,7 +141,7 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
               )}
             </dl>
 
-            <p className="mt-5 border-t border-rule pt-4 text-[11.5px] leading-[1.6] text-ash3">
+            <p className="mt-5 border-t border-rule pt-4 text-xs leading-[1.6] text-ash3">
               Scenarios re-run the full model, so compounding effects are included. They still assume
               customers behave the same way — a price rise that costs you bookings will not show up
               here.
@@ -156,8 +156,8 @@ export default function Levers({ levers, setLever, onReset, base, scenario }) {
 function Line({ k, v }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <dt className="text-[12.5px] text-ash3">{k}</dt>
-      <dd className="text-[12.5px] tabular-nums text-ash">{v}</dd>
+      <dt className="text-xs text-ash3">{k}</dt>
+      <dd className="text-xs tabular-nums text-ash">{v}</dd>
     </div>
   )
 }

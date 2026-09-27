@@ -34,7 +34,7 @@ export default function Grain({ opacity = 0.16 }) {
 export function PageFrame() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[55]">
-      <div className="absolute inset-[10px] sm:inset-[14px] rounded-[14px] border border-rule-faint" />
+      <div className="absolute inset-[10px] sm:inset-[14px] rounded-lg border border-rule-faint" />
       <Tick className="left-[10px] top-[10px] sm:left-[14px] sm:top-[14px]" />
       <Tick className="right-[10px] top-[10px] sm:right-[14px] sm:top-[14px]" />
       <Tick className="left-[10px] bottom-[10px] sm:left-[14px] sm:bottom-[14px]" />
@@ -81,7 +81,7 @@ export function SectionHead({ eyebrow, children, sub, align = 'left', className 
       )}
       <h2 className="t-h2 text-balance text-ink">{children}</h2>
       {sub && (
-        <p className="mt-6 max-w-2xl text-[17px] leading-[1.62] text-ash text-pretty md:text-[18px]">
+        <p className="mt-7 max-w-2xl text-lg leading-[1.72] text-ash text-pretty">
           {sub}
         </p>
       )}

@@ -14,9 +14,9 @@ export function FieldShell({ id, label, hint, error, children, className = '' })
       </label>
       {children}
       {hint && !error ? (
-        <p className="mt-2 text-[11.5px] leading-[1.5] text-ash3">{hint}</p>
+        <p className="mt-2 text-xs leading-[1.5] text-ash3">{hint}</p>
       ) : null}
-      {error ? <p className="mt-2 text-[11.5px] text-[#f0705a]">{error}</p> : null}
+      {error ? <p className="mt-2 text-xs text-[#f0705a]">{error}</p> : null}
     </div>
   )
 }
@@ -127,7 +127,7 @@ export function Segmented({ label, options, value, onChange }) {
               type="button"
               onClick={() => onChange(o.value)}
               aria-pressed={active}
-              className={`flex-1 whitespace-nowrap rounded-full px-4 py-2.5 text-[12.5px] transition-colors duration-200 sm:flex-none ${
+              className={`flex-1 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-colors duration-200 sm:flex-none ${
                 active ? 'bg-ink text-void' : 'text-ash hover:text-ink'
               }`}
             >
@@ -165,15 +165,15 @@ export function Row({
       }`}
     >
       <span
-        className={`min-w-0 text-[13px] leading-[1.45] ${
+        className={`min-w-0 text-sm leading-[1.45] ${
           strong ? 'text-ink' : 'text-ash2'
         } ${indent ? 'pl-3.5' : ''}`}
       >
         {label}
-        {note ? <span className="ml-2 text-[11px] text-ash3">{note}</span> : null}
+        {note ? <span className="ml-2 text-xs text-ash3">{note}</span> : null}
       </span>
       <span
-        className={`shrink-0 text-[13.5px] tabular-nums ${tones[tone]} ${
+        className={`shrink-0 text-sm tabular-nums ${tones[tone]} ${
           strong ? 'font-medium' : ''
         }`}
       >
@@ -219,11 +219,11 @@ export function StatTile({ label, value, sub, tone = 'default' }) {
     <div className="bg-void px-4 py-4">
       <p className="micro text-ash3">{label}</p>
       <p
-        className={`mt-2 break-words font-display text-[19px] leading-[1.15] tracking-[-0.03em] tabular-nums ${tones[tone]}`}
+        className={`mt-2 break-words font-display text-lg leading-[1.15] tracking-[-0.03em] tabular-nums ${tones[tone]}`}
       >
         {value}
       </p>
-      {sub ? <p className="mt-2 text-[11.5px] leading-[1.4] text-ash3">{sub}</p> : null}
+      {sub ? <p className="mt-2 text-xs leading-[1.4] text-ash3">{sub}</p> : null}
     </div>
   )
 }

@@ -23,7 +23,8 @@ npm run preview  # serve the built bundle locally
 npm test         # 33 assertions over the calculator engine (node:test, no deps)
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
-npm run check    # all of the above + production build + CSS class coverage
+npm run check:scale # type/radius steps stay inside their budget
+npm run check    # everything above + production build + CSS class coverage
 ```
 
 ---
@@ -131,13 +132,40 @@ Defined as Tailwind v4 `@theme` tokens in `src/index.css`.
 | `--color-mint` | `#4fd1a5` | Positive states, WhatsApp, confirmations |
 | `--color-rule` | `rgba(255,255,255,.075)` | Hairline borders |
 
+### Type scale
+
+Seven fixed steps plus four display sizes. Nothing else is allowed — a one-off
+`text-[15px]` is exactly how an interface ends up with 22 sizes on one page.
+
+| Utility | Size | Use |
+|---|---|---|
+| `text-xs` | 12px | Micro labels, footnotes, table rows. **12px is the floor** — no text on the site is smaller. |
+| `text-sm` | 13px | List items, chips, buttons, secondary copy |
+| `text-base` | 16px | Body copy and every form input |
+| `text-lg` | 18px | Lead / section sub-headings |
+| `text-xl` | 22px | Card titles |
+| `text-2xl` | 30px | Large figures |
+| `text-3xl` | 40px | Display figures |
+| `.t-hero` / `.t-page` / `.t-h2` / `.t-h3` | fluid | Home hero / inner-page hero / section heading / card heading |
+
+`.t-hero` and `.t-page` never appear on the same page, so every page renders at
+most 10 distinct sizes. `npm run smoke` measures that per route and
+`npm run check:scale` fails the build if anything drifts.
+
+### Radius scale
+
+`rounded-sm` 6px · `rounded-md` 12px · `rounded-lg` 16px · `rounded-xl` 20px ·
+`rounded-full`. Five steps, no exceptions — `rounded`, `rounded-2xl` and any
+`rounded-[Npx]` are rejected by `npm run check:scale`.
+
 Utility classes worth knowing:
 
 - `.shell` — 1360px max-width container
 - `.band` — standard section vertical rhythm
-- `.t-hero` / `.t-h2` / `.t-h3` — display type scale
+- `.t-hero` / `.t-page` / `.t-h2` / `.t-h3` — display type scale
 - `.fade-line` — gradient-faded second line of a headline
-- `.micro` — 10px uppercase letter-spaced label
+- `.micro` — 12px letter-spaced label, **sentence case** (all-caps is reserved
+  for labels short enough to read at a glance)
 - `.hatch` — diagonal stripe band (section separators)
 - `.card-dark` / `.glass` — surface treatments
 - `.cq-wrap` — establishes a container-query context for display type
@@ -310,6 +338,18 @@ projects. For other hosts add:
 ```
 /*  →  /index.html  (200 rewrite)
 ```
+
+**Netlify's "Private / Share / Make public" bar.** That floating toolbar is
+injected by Netlify on *draft/preview* deploys — it is not in this codebase
+(`index.html` is a bare SPA shell and ships no third-party script). It disappears
+when the deploy is the site's production deploy:
+
+- connect the repository so `main` builds to the production deploy, **or**
+- Site configuration → Access & security → **Site protection** → set to *Public*,
+  and publish the build as the production deploy rather than a draft.
+
+If it is still visible on the live URL, the URL being viewed is a deploy-preview
+link, not the production one.
 
 ---
 

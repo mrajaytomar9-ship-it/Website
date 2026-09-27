@@ -127,7 +127,6 @@ export const PROBLEMS = [
 export const SERVICES = [
   {
     id: 'web',
-    code: 'SVC-WEB',
     icon: 'window',
     title: 'Websites',
     lede: 'One-page presence or a proper small multi-page site, built mobile-first around a single goal: a clear, low-friction enquiry path.',
@@ -158,7 +157,6 @@ export const SERVICES = [
   },
   {
     id: 'whatsapp',
-    code: 'SVC-WA',
     icon: 'chat',
     title: 'WhatsApp enquiry setup',
     lede: 'The shortest path between a customer who has decided to enquire and a human who can answer — tested end to end before launch.',
@@ -188,7 +186,6 @@ export const SERVICES = [
   },
   {
     id: 'gbp',
-    code: 'SVC-GBP',
     icon: 'pin',
     title: 'Google Business Profile',
     lede: 'The listing most local customers actually see. We make it accurate, complete and consistent with your website.',
@@ -219,7 +216,6 @@ export const SERVICES = [
   },
   {
     id: 'care',
-    code: 'SVC-CARE',
     icon: 'shield',
     title: 'Care & Presence',
     lede: 'Monthly upkeep for a site we built, or a site you already have. Real recurring work, not a relabelled one-off project.',
@@ -258,7 +254,6 @@ export const PACKAGES = [
   {
     id: 'pilot',
     name: 'Presence Pilot',
-    code: 'PKG-PILOT-01',
     price: 6000,
     priceNote: 'one-time',
     tagline: 'For a qualified business needing a clear first improvement without a full project.',
@@ -290,7 +285,6 @@ export const PACKAGES = [
   {
     id: 'foundation',
     name: 'Presence Foundation',
-    code: 'PKG-FOUNDATION-01',
     price: 15000,
     priceNote: 'one-time',
     tagline: 'For a business that needs a more complete website and coordinated public information.',
@@ -323,7 +317,6 @@ export const PACKAGES = [
   {
     id: 'care',
     name: 'Care & Presence',
-    code: 'PKG-CARE-01',
     price: 4000,
     priceNote: 'per month',
     recurring: true,

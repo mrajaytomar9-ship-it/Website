@@ -62,7 +62,7 @@ export default function Process() {
 
                       <div className={`w-full md:w-[calc(50%-44px)] ${right ? '' : 'md:ml-auto'}`}>
                         <div
-                          className={`rounded-2xl border border-rule bg-void p-7 transition-colors duration-500 hover:bg-coal lg:p-8 ${
+                          className={`rounded-lg border border-rule bg-void p-7 transition-colors duration-500 hover:bg-coal lg:p-8 ${
                             i === 0 ? 'border-ember/30' : ''
                           }`}
                         >
@@ -75,16 +75,16 @@ export default function Process() {
                             )}
                           </div>
 
-                          <h2 className="mt-4 font-display text-[25px] tracking-[-0.03em] text-ink">
+                          <h2 className="mt-4 font-display text-xl tracking-[-0.03em] text-ink">
                             {s.title}
                           </h2>
-                          <p className="mt-3.5 text-[15px] leading-[1.65] text-ash2 text-pretty">
+                          <p className="mt-3.5 text-base leading-[1.65] text-ash2 text-pretty">
                             {s.body}
                           </p>
 
                           <div className="mt-6 flex items-start gap-2.5 border-t border-rule pt-5">
                             <Dot tone="mint" className="mt-[7px] shrink-0" />
-                            <span className="text-[13px] leading-[1.55] text-ash">{s.meta}</span>
+                            <span className="text-sm leading-[1.55] text-ash">{s.meta}</span>
                           </div>
                         </div>
                       </div>
@@ -121,7 +121,7 @@ export default function Process() {
                     <svg viewBox="0 0 16 16" fill="none" className="h-3 w-3 shrink-0">
                       <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <span className="text-[14px] text-ash">{x}</span>
+                    <span className="text-sm text-ash">{x}</span>
                   </div>
                 ))}
               </div>
@@ -156,15 +156,15 @@ export default function Process() {
             </SectionHead>
           </Reveal>
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-2">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2">
             {DIFFERENTIATORS.map((d, i) => (
               <Reveal key={d.title} delay={i * 80}>
                 <div className="cq-wrap group h-full bg-void p-8 transition-colors duration-500 hover:bg-coal lg:p-10">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
                     <ServiceIcon name={DIFF_ICONS[i]} className="h-5 w-5" />
                   </span>
                   <h3 className="t-h3 mt-6 text-ink">{d.title}</h3>
-                  <p className="mt-3.5 text-[14.5px] leading-[1.62] text-ash2 text-pretty">{d.body}</p>
+                  <p className="mt-3.5 text-sm leading-[1.62] text-ash2 text-pretty">{d.body}</p>
                 </div>
               </Reveal>
             ))}

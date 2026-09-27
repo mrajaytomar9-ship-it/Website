@@ -177,11 +177,11 @@ function EnquiryTool() {
 /* ------------------------------------------------------------------ SHARED */
 function Card({ n, title, lede, children }) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-rule bg-void">
+    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-rule bg-void">
       <header className="border-b border-rule px-5 py-4">
         <span className="micro text-ash3">{n}</span>
-        <h3 className="mt-2.5 text-[16px] tracking-[-0.02em] text-ink">{title}</h3>
-        <p className="mt-2 text-[12.5px] leading-[1.55] text-ash3">{lede}</p>
+        <h3 className="mt-2.5 text-base tracking-[-0.02em] text-ink">{title}</h3>
+        <p className="mt-2 text-xs leading-[1.55] text-ash3">{lede}</p>
       </header>
       <div className="flex flex-1 flex-col p-5">{children}</div>
     </article>
@@ -190,7 +190,7 @@ function Card({ n, title, lede, children }) {
 
 function Result({ children }) {
   return (
-    <div className="mt-6 rounded-xl border border-rule-faint bg-white/[0.02] p-4">
+    <div className="mt-6 rounded-md border border-rule-faint bg-white/[0.02] p-4">
       <div className="flex flex-col">{children}</div>
     </div>
   )
@@ -199,17 +199,17 @@ function Result({ children }) {
 function Big({ value, unit }) {
   return (
     <div className="mb-2">
-      <p className="font-display text-[27px] leading-none tracking-[-0.04em] tabular-nums text-ink">
+      <p className="font-display text-xl leading-none tracking-[-0.04em] tabular-nums text-ink">
         {value}
       </p>
-      <p className="mt-2 text-[11.5px] text-ash3">{unit}</p>
+      <p className="mt-2 text-xs text-ash3">{unit}</p>
     </div>
   )
 }
 
 function Impossible({ text }) {
   return (
-    <p className="rounded-lg border border-[#f0705a]/25 bg-[#f0705a]/[0.06] p-3.5 text-[12.5px] leading-[1.6] text-[#f0a795]">
+    <p className="rounded-md border border-[#f0705a]/25 bg-[#f0705a]/[0.06] p-3.5 text-xs leading-[1.6] text-[#f0a795]">
       {text}
     </p>
   )

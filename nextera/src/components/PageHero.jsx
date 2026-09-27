@@ -30,7 +30,7 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
           )}
 
           <Reveal delay={120}>
-            <h1 className="text-[clamp(2.4rem,5.8vw,4.6rem)] text-balance font-medium text-ink">
+            <h1 className="t-page text-balance font-medium text-ink">
               {line1}
               {line2 && (
                 <>
@@ -43,7 +43,7 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
 
           {sub && (
             <Reveal delay={220}>
-              <p className="mt-7 max-w-2xl text-[16.5px] leading-[1.65] text-ash text-pretty md:text-[17.5px]">
+              <p className="mt-7 max-w-2xl text-base leading-[1.65] text-ash text-pretty md:text-lg">
                 {sub}
               </p>
             </Reveal>
@@ -57,11 +57,11 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
 
           {meta && (
             <Reveal delay={400}>
-              <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-4">
+              <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-4">
                 {meta.map((m) => (
                   <div key={m.l} className="bg-void px-5 py-6">
                     <dt className="micro mb-2.5 text-ash3">{m.l}</dt>
-                    <dd className="font-display text-[19px] tracking-[-0.03em] text-ink">
+                    <dd className="font-display text-lg tracking-[-0.03em] text-ink">
                       {m.v}
                     </dd>
                   </div>

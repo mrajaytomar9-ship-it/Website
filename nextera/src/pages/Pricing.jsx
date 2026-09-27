@@ -41,7 +41,7 @@ export default function Pricing() {
             <a
               key={p.id}
               href={`#${p.id}`}
-              className={`rounded-full border px-4 py-2.5 text-[13px] transition-colors ${
+              className={`rounded-full border px-4 py-2.5 text-sm transition-colors ${
                 p.highlight
                   ? 'border-ember/35 bg-ember/[0.08] text-ember-soft'
                   : 'border-rule text-ash hover:border-rule-strong hover:text-ink'
@@ -52,7 +52,7 @@ export default function Pricing() {
           ))}
           <a
             href="#terms"
-            className="rounded-full border border-rule px-4 py-2.5 text-[13px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+            className="rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
           >
             Terms
           </a>
@@ -67,7 +67,7 @@ export default function Pricing() {
               <Reveal key={p.id} delay={i * 100}>
                 <article
                   id={p.id}
-                  className={`flex h-full scroll-mt-28 flex-col overflow-hidden rounded-[22px] border ${
+                  className={`flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border ${
                     p.highlight ? 'border-ember/35 bg-coal' : 'border-rule bg-void'
                   }`}
                 >
@@ -76,8 +76,7 @@ export default function Pricing() {
                   )}
 
                   <div className="flex flex-1 flex-col p-7 lg:p-8">
-                    <div className="flex items-center justify-between">
-                      <p className="micro text-ash3">{p.code}</p>
+                    <div className="flex items-center justify-end">
                       {p.highlight && (
                         <span className="rounded-full border border-ember/35 bg-ember/10 px-2.5 py-1 micro text-ember-soft">
                           Most chosen
@@ -85,30 +84,30 @@ export default function Pricing() {
                       )}
                     </div>
 
-                    <h2 className="mt-4 font-display text-[25px] tracking-[-0.03em] text-ink">
+                    <h2 className="mt-4 font-display text-xl tracking-[-0.03em] text-ink">
                       {p.name}
                     </h2>
 
                     <div className="mt-6 flex items-baseline gap-1.5">
-                      <span className="font-display text-[42px] leading-none tracking-[-0.045em] text-ink">
+                      <span className="font-display text-3xl leading-none tracking-[-0.045em] text-ink">
                         ₹{p.price.toLocaleString('en-IN')}
                       </span>
-                      <span className="text-[13.5px] text-ash3">/ {p.priceNote}</span>
+                      <span className="text-sm text-ash3">/ {p.priceNote}</span>
                     </div>
 
-                    <p className="mt-5 text-[14.5px] leading-[1.62] text-ash2 text-pretty">
+                    <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
                       {p.tagline}
                     </p>
 
-                    <div className="mt-6 rounded-lg border border-rule-faint bg-white/[0.02] px-4 py-3">
+                    <div className="mt-6 rounded-md border border-rule-faint bg-white/[0.02] px-4 py-3">
                       <p className="micro mb-1.5 text-ash3">Planning range</p>
-                      <p className="text-[13.5px] text-ink">{p.turnaround}</p>
-                      <p className="mt-1.5 text-[12px] leading-[1.5] text-ash3">
+                      <p className="text-sm text-ink">{p.turnaround}</p>
+                      <p className="mt-1.5 text-xs leading-[1.5] text-ash3">
                         {p.turnaroundNote}
                       </p>
                     </div>
 
-                    <p className="mt-6 text-[13.5px] leading-[1.6] text-ash text-pretty">
+                    <p className="mt-6 text-sm leading-[1.6] text-ash text-pretty">
                       <span className="text-ink">Best for: </span>
                       {p.for}
                     </p>
@@ -124,7 +123,7 @@ export default function Pricing() {
 
                     <button
                       onClick={() => setOpenPkg(openPkg === p.id ? null : p.id)}
-                      className="mt-3 flex items-center justify-center gap-2 py-2.5 text-[12.5px] text-ash3 transition-colors hover:text-ink"
+                      className="mt-3 flex items-center justify-center gap-2 py-2.5 text-xs text-ash3 transition-colors hover:text-ink"
                     >
                       {openPkg === p.id ? 'Hide' : 'Show'} full scope
                       <span
@@ -163,8 +162,8 @@ export default function Pricing() {
                                   key={a.k}
                                   className="flex flex-col gap-1 border-b border-rule-faint py-3 last:border-b-0"
                                 >
-                                  <span className="text-[13.5px] text-ink">{a.k}</span>
-                                  <span className="text-[12.5px] leading-[1.5] text-ash3">
+                                  <span className="text-sm text-ink">{a.k}</span>
+                                  <span className="text-xs leading-[1.5] text-ash3">
                                     {a.v}
                                   </span>
                                 </div>
@@ -176,7 +175,7 @@ export default function Pricing() {
                         <List title="What is excluded" tone="red" items={p.excludes} />
 
                         {p.copyNote && (
-                          <p className="rounded-lg border border-rule-faint bg-white/[0.02] p-4 text-[12.5px] leading-[1.62] text-ash3">
+                          <p className="rounded-md border border-rule-faint bg-white/[0.02] p-4 text-xs leading-[1.62] text-ash3">
                             {p.copyNote}
                           </p>
                         )}
@@ -190,7 +189,7 @@ export default function Pricing() {
 
           {/* add-ons */}
           <Reveal delay={140} className="mt-6">
-            <div className="rounded-[20px] border border-rule bg-coal p-7 lg:p-9">
+            <div className="rounded-xl border border-rule bg-coal p-7 lg:p-9">
               <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)]">
                 <div>
                   <p className="micro mb-4 text-ash3">Add-ons & custom work</p>
@@ -199,13 +198,13 @@ export default function Pricing() {
                     <br />
                     <span className="fade-line">outside these three?</span>
                   </h2>
-                  <p className="mt-5 text-[14px] leading-[1.62] text-ash2 text-pretty">
+                  <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
                     That is a normal conversation, not a problem. We scope it, you decide, and it
                     is quoted separately — never quietly folded into a package it does not fit.
                   </p>
                 </div>
 
-                <div className="grid gap-px overflow-hidden rounded-xl border border-rule bg-rule sm:grid-cols-2">
+                <div className="grid gap-px overflow-hidden rounded-md border border-rule bg-rule sm:grid-cols-2">
                   {[
                     'Additional standard page',
                     'Additional language',
@@ -216,7 +215,7 @@ export default function Pricing() {
                   ].map((x) => (
                     <div key={x} className="flex items-center gap-2.5 bg-void px-5 py-4">
                       <Dot tone="ember" />
-                      <span className="text-[13.5px] text-ash">{x}</span>
+                      <span className="text-sm text-ash">{x}</span>
                     </div>
                   ))}
                 </div>
@@ -243,7 +242,7 @@ export default function Pricing() {
             </SectionHead>
           </Reveal>
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-2">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2">
             {[
               { k: 'Payment', items: COMMERCIAL_TERMS.payment, tone: 'mint' },
               { k: 'Revisions', items: COMMERCIAL_TERMS.revisions, tone: 'sky' },
@@ -257,7 +256,7 @@ export default function Pricing() {
                     {g.items.map((x) => {
                       const red = g.tone === 'red'
                       return (
-                        <li key={x} className="flex gap-3 text-[14px] leading-[1.6] text-ash2">
+                        <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
                           {red ? (
                             <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
                               <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
@@ -280,7 +279,7 @@ export default function Pricing() {
           <Reveal delay={160} className="mt-8">
             <div
               id="exclusions"
-              className="scroll-mt-28 rounded-2xl border border-rule p-8"
+              className="scroll-mt-28 rounded-lg border border-rule p-8"
               style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.025), transparent)' }}
             >
               <p className="micro mb-5 text-ash3">Not sold, at any price</p>
@@ -297,7 +296,7 @@ export default function Pricing() {
                     <svg viewBox="0 0 16 16" fill="none" className="h-3 w-3 shrink-0">
                       <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
                     </svg>
-                    <span className="text-[13.5px] text-ash2">{x}</span>
+                    <span className="text-sm text-ash2">{x}</span>
                   </div>
                 ))}
               </div>
@@ -325,7 +324,7 @@ function List({ title, tone, items }) {
       <p className={`micro mb-3.5 ${red ? 'text-ember-soft' : 'text-mint'}`}>{title}</p>
       <ul className="flex flex-col gap-2.5">
         {items.map((x) => (
-          <li key={x} className="flex gap-2.5 text-[13.5px] leading-[1.55] text-ash2">
+          <li key={x} className="flex gap-2.5 text-sm leading-[1.55] text-ash2">
             {red ? (
               <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                 <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
@@ -375,17 +374,17 @@ function Comparison() {
         </Reveal>
 
         <Reveal delay={120} className="mt-12">
-          <p className="mb-3 flex items-center gap-2 text-[12px] text-ash3 md:hidden">
+          <p className="mb-3 flex items-center gap-2 text-xs text-ash3 md:hidden">
             <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
               <path d="M2.5 8h11M10 4.5 13.5 8 10 11.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Swipe sideways to compare all three
           </p>
-          <div className="overflow-x-auto rounded-2xl border border-rule">
+          <div className="overflow-x-auto rounded-lg border border-rule">
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rule bg-white/[0.015]">
-                  <th className="w-[32%] px-5 py-5 text-left text-[13px] font-normal text-ash3">
+                  <th className="w-[32%] px-5 py-5 text-left text-sm font-normal text-ash3">
                     Feature
                   </th>
                   {PACKAGES.map((p) => (
@@ -395,7 +394,7 @@ function Comparison() {
                         p.highlight ? 'text-ember-soft' : 'text-ink'
                       }`}
                     >
-                      <span className="block text-[14px] text-ink">{p.name}</span>
+                      <span className="block text-sm text-ink">{p.name}</span>
                       <span className="micro mt-1.5 block text-ash3">
                         ₹{p.price.toLocaleString('en-IN')}
                       </span>
@@ -409,7 +408,7 @@ function Comparison() {
                     key={row.k}
                     className="border-b border-rule-faint transition-colors last:border-b-0 hover:bg-white/[0.012]"
                   >
-                    <td className="px-5 py-4 text-[13.5px] text-ash2">{row.k}</td>
+                    <td className="px-5 py-4 text-sm text-ash2">{row.k}</td>
                     {row.v.map((cell, j) => (
                       <td key={j} className="px-5 py-4">
                         {cell === true ? (
@@ -419,9 +418,9 @@ function Comparison() {
                             </svg>
                           </span>
                         ) : cell === false ? (
-                          <span className="text-[15px] leading-none text-ash3">—</span>
+                          <span className="text-base leading-none text-ash3">—</span>
                         ) : (
-                          <span className="text-[13.5px] leading-[1.45] text-ash">{cell}</span>
+                          <span className="text-sm leading-[1.45] text-ash">{cell}</span>
                         )}
                       </td>
                     ))}
@@ -433,10 +432,10 @@ function Comparison() {
         </Reveal>
 
         <Reveal delay={200} className="mt-8">
-          <div className="flex flex-col items-start gap-4 rounded-2xl border border-rule bg-coal p-7 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col items-start gap-4 rounded-lg border border-rule bg-coal p-7 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[15px] text-ink">Still not sure which fits?</p>
-              <p className="mt-1.5 text-[13.5px] text-ash2">
+              <p className="text-base text-ink">Still not sure which fits?</p>
+              <p className="mt-1.5 text-sm text-ash2">
                 Tell us what the business does and we will tell you which one — or that none of
                 them is worth paying for right now.
               </p>

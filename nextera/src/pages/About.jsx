@@ -91,7 +91,7 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={120}>
-              <div className="flex flex-col gap-6 text-[16.5px] leading-[1.7] text-ash text-pretty">
+              <div className="flex flex-col gap-6 text-base leading-[1.7] text-ash text-pretty">
                 <p>
                   Most small businesses in Agra are not invisible. They are findable and
                   then unusable — a listing with old hours, a website that takes nine seconds
@@ -134,13 +134,13 @@ export default function About() {
             </SectionHead>
           </Reveal>
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2 xl:grid-cols-3">
             {PRINCIPLES.map((p, i) => (
               <Reveal key={p.n} delay={i * 70}>
                 <div className="cq-wrap group h-full bg-void p-7 transition-colors duration-500 hover:bg-coal lg:p-8">
                   <span className="micro text-ash3">{p.n}</span>
-                  <h3 className="mt-5 text-[18px] leading-[1.35] text-ink">{p.t}</h3>
-                  <p className="mt-3.5 text-[14px] leading-[1.62] text-ash2 text-pretty">{p.d}</p>
+                  <h3 className="mt-5 text-lg leading-[1.35] text-ink">{p.t}</h3>
+                  <p className="mt-3.5 text-sm leading-[1.62] text-ash2 text-pretty">{p.d}</p>
                 </div>
               </Reveal>
             ))}
@@ -161,18 +161,18 @@ export default function About() {
 
           <div className="mx-auto mt-14 grid max-w-5xl gap-6 lg:grid-cols-2">
             <Reveal>
-              <div className="h-full rounded-[20px] border border-rule bg-void p-8">
+              <div className="h-full rounded-xl border border-rule bg-void p-8">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-mint/15">
                     <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
                       <path d="m2.5 6.2 2.2 2.2L9.5 3.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
-                  <p className="text-[16px] text-ink">This tends to work well</p>
+                  <p className="text-base text-ink">This tends to work well</p>
                 </div>
                 <ul className="mt-7 flex flex-col gap-4">
                   {FIT.good.map((x) => (
-                    <li key={x} className="flex gap-3 text-[14px] leading-[1.6] text-ash2">
+                    <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
                       <Dot tone="mint" className="mt-[8px] shrink-0" />
                       {x}
                     </li>
@@ -182,18 +182,18 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={110}>
-              <div className="h-full rounded-[20px] border border-rule bg-void p-8">
+              <div className="h-full rounded-xl border border-rule bg-void p-8">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f0705a]/15">
                     <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none">
                       <path d="M3 3l6 6M9 3l-6 6" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
                     </svg>
                   </span>
-                  <p className="text-[16px] text-ink">We will politely decline</p>
+                  <p className="text-base text-ink">We will politely decline</p>
                 </div>
                 <ul className="mt-7 flex flex-col gap-4">
                   {FIT.bad.map((x) => (
-                    <li key={x} className="flex gap-3 text-[14px] leading-[1.6] text-ash2">
+                    <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
                       <Dot tone="ember" className="mt-[8px] shrink-0" />
                       {x}
                     </li>
@@ -210,7 +210,7 @@ export default function About() {
         <Marquee speed={50} reverse className="py-7">
           {NICHES.map((n) => (
             <span key={n} className="flex items-center">
-              <span className="whitespace-nowrap px-7 text-[15px] text-ash3">{n}</span>
+              <span className="whitespace-nowrap px-7 text-base text-ash3">{n}</span>
               <span className="h-1 w-1 shrink-0 rounded-full bg-ash3/40" />
             </span>
           ))}
@@ -231,9 +231,9 @@ export default function About() {
                 <span className="fade-line">never claim.</span>
               </SectionHead>
 
-              <div id="privacy" className="mt-10 scroll-mt-28 rounded-2xl border border-rule bg-coal p-7">
+              <div id="privacy" className="mt-10 scroll-mt-28 rounded-lg border border-rule bg-coal p-7">
                 <p className="micro mb-4 text-ash3">On privacy, specifically</p>
-                <p className="text-[14px] leading-[1.65] text-ash2 text-pretty">
+                <p className="text-sm leading-[1.65] text-ash2 text-pretty">
                   Enquiry forms collect only what your enquiry genuinely needs. For clinics
                   that means no patient records, no reports, no symptom histories and no
                   insurance details. We do not install tracking we cannot explain, and we do
@@ -252,11 +252,11 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={120}>
-              <div className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-2">
+              <div className="grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2">
                 {TRUST_FOOTNOTES.map((t) => (
                   <div key={t.t} className="bg-void p-7">
-                    <p className="text-[15.5px] text-ink">{t.t}</p>
-                    <p className="mt-2.5 text-[13.5px] leading-[1.6] text-ash2 text-pretty">
+                    <p className="text-base text-ink">{t.t}</p>
+                    <p className="mt-2.5 text-sm leading-[1.6] text-ash2 text-pretty">
                       {t.d}
                     </p>
                   </div>

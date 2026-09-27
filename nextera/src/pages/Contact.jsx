@@ -111,13 +111,13 @@ export default function Contact() {
                   setTouched(true)
                   window.open(waHref, '_blank', 'noopener,noreferrer')
                 }}
-                className="rounded-[22px] border border-rule bg-void p-7 lg:p-9"
+                className="rounded-xl border border-rule bg-void p-7 lg:p-9"
                 noValidate
               >
                 <div className="flex items-center justify-between gap-4 border-b border-rule pb-6">
                   <div>
-                    <h2 className="text-[19px] text-ink">Build your enquiry</h2>
-                    <p className="mt-1.5 text-[13.5px] text-ash3">
+                    <h2 className="text-lg text-ink">Build your enquiry</h2>
+                    <p className="mt-1.5 text-sm text-ash3">
                       Every field below fills a message you can see before sending.
                     </p>
                   </div>
@@ -240,13 +240,13 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="group mt-8 flex h-[52px] w-full items-center justify-center gap-2.5 rounded-full bg-ink text-[14px] font-medium text-void transition-all duration-300 hover:bg-white hover:shadow-[0_0_38px_-8px_rgba(255,255,255,0.45)] active:scale-[0.99]"
+                  className="group mt-8 flex h-[52px] w-full items-center justify-center gap-2.5 rounded-full bg-ink text-sm font-medium text-void transition-all duration-300 hover:bg-white hover:shadow-[0_0_38px_-8px_rgba(255,255,255,0.45)] active:scale-[0.99]"
                 >
                   <WhatsAppGlyph className="h-4 w-4" />
                   Send on WhatsApp
                 </button>
 
-                <p className="mt-4 text-center text-[12.5px] leading-[1.6] text-ash3">
+                <p className="mt-4 text-center text-xs leading-[1.6] text-ash3">
                   Opens WhatsApp with your message pre-filled. Nothing is stored on this page
                   and nothing is sent anywhere except to our business number.
                 </p>
@@ -256,31 +256,31 @@ export default function Contact() {
             {/* --------------------------------------------------- PREVIEW */}
             <Reveal delay={130}>
               <div className="lg:sticky lg:top-28">
-                <div className="overflow-hidden rounded-[22px] border border-rule bg-void">
+                <div className="overflow-hidden rounded-xl border border-rule bg-void">
                   {/* phone chrome */}
                   <div className="flex items-center justify-between border-b border-rule bg-coal px-5 py-3.5">
                     <div className="flex items-center gap-2.5">
                       <span className="h-2 w-2 rounded-full bg-mint anim-pulse" />
-                      <span className="text-[12.5px] text-ink">WhatsApp · Nextera Solution</span>
+                      <span className="text-xs text-ink">WhatsApp · Nextera Solution</span>
                     </div>
                     <span className="micro text-ash3">Preview</span>
                   </div>
 
                   <div className="bg-black/40 p-5">
-                    <div className="rounded-[12px_12px_4px_12px] border border-rule bg-white/[0.035] px-4 py-3.5">
-                      <pre className="whitespace-pre-wrap break-words font-sans text-[13px] leading-[1.6] text-ash">
+                    <div className="rounded-md rounded-br-sm border border-rule bg-white/[0.035] px-4 py-3.5">
+                      <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-[1.6] text-ash">
                         {message}
                       </pre>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between gap-3 border-t border-rule px-5 py-4">
-                    <span className="text-[12px] text-ash3">
+                    <span className="text-xs text-ash3">
                       {message.length} characters
                     </span>
                     <button
                       onClick={copyMessage}
-                      className="rounded-full border border-rule px-3.5 py-2 text-[12.5px] text-ash transition-colors hover:border-rule-strong hover:text-ink"
+                      className="rounded-full border border-rule px-3.5 py-2 text-xs text-ash transition-colors hover:border-rule-strong hover:text-ink"
                     >
                       {copied ? 'Copied' : 'Copy message'}
                     </button>
@@ -293,14 +293,14 @@ export default function Contact() {
                     href={waHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-3.5 rounded-2xl border border-rule bg-void p-5 transition-colors hover:border-mint/30 hover:bg-coal"
+                    className="group flex items-center gap-3.5 rounded-lg border border-rule bg-void p-5 transition-colors hover:border-mint/30 hover:bg-coal"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-rule bg-white/[0.03]">
                       <WhatsAppGlyph className="h-4 w-4 text-mint" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[14px] text-ink">WhatsApp</span>
-                      <span className="block text-[12.5px] text-ash3">{CONTACT_DETAILS.phoneDisplay}</span>
+                      <span className="block text-sm text-ink">WhatsApp</span>
+                      <span className="block text-xs text-ash3">{CONTACT_DETAILS.phoneDisplay}</span>
                     </span>
                     <span className="text-ash3 transition-transform duration-300 group-hover:translate-x-0.5">
                       <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
@@ -311,7 +311,7 @@ export default function Contact() {
 
                   <a
                     href={`tel:${CONTACT_DETAILS.phoneRaw.replace(/\s/g, '')}`}
-                    className="group flex items-center gap-3.5 rounded-2xl border border-rule bg-void p-5 transition-colors hover:border-rule-strong hover:bg-coal"
+                    className="group flex items-center gap-3.5 rounded-lg border border-rule bg-void p-5 transition-colors hover:border-rule-strong hover:bg-coal"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-rule bg-white/[0.03]">
                       <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-ash">
@@ -324,8 +324,8 @@ export default function Contact() {
                       </svg>
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[14px] text-ink">Call directly</span>
-                      <span className="block text-[12.5px] text-ash3">{CONTACT_DETAILS.businessHoursLabel}</span>
+                      <span className="block text-sm text-ink">Call directly</span>
+                      <span className="block text-xs text-ash3">{CONTACT_DETAILS.businessHoursLabel}</span>
                     </span>
                     <span className="text-ash3 transition-transform duration-300 group-hover:translate-x-0.5">
                       <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
@@ -336,7 +336,7 @@ export default function Contact() {
 
                   <a
                     href={`mailto:${CONTACT_DETAILS.email}`}
-                    className="group flex items-center gap-3.5 rounded-2xl border border-rule bg-void p-5 transition-colors hover:border-rule-strong hover:bg-coal"
+                    className="group flex items-center gap-3.5 rounded-lg border border-rule bg-void p-5 transition-colors hover:border-rule-strong hover:bg-coal"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-rule bg-white/[0.03]">
                       <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-ash">
@@ -345,8 +345,8 @@ export default function Contact() {
                       </svg>
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[14px] text-ink">Email</span>
-                      <span className="block truncate text-[12.5px] text-ash3">
+                      <span className="block text-sm text-ink">Email</span>
+                      <span className="block truncate text-xs text-ash3">
                         {CONTACT_DETAILS.email}
                       </span>
                     </span>
@@ -369,7 +369,7 @@ export default function Contact() {
             </h2>
           </Reveal>
 
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-3">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-3">
             {[
               {
                 q: 'Is the audit really free?',
@@ -386,8 +386,8 @@ export default function Contact() {
             ].map((f, i) => (
               <Reveal key={f.q} delay={i * 90}>
                 <div className="h-full bg-void p-7">
-                  <p className="text-[15.5px] text-ink">{f.q}</p>
-                  <p className="mt-3 text-[13.5px] leading-[1.62] text-ash2 text-pretty">{f.a}</p>
+                  <p className="text-base text-ink">{f.q}</p>
+                  <p className="mt-3 text-sm leading-[1.62] text-ash2 text-pretty">{f.a}</p>
                 </div>
               </Reveal>
             ))}
@@ -400,7 +400,7 @@ export default function Contact() {
 
 /* -------------------------------------------------------------------------- */
 function inputCls(hasError) {
-  return `w-full rounded-xl border bg-white/[0.022] px-4 py-3 text-[14px] text-ink placeholder:text-ash3/60 outline-none transition-colors duration-200 focus:bg-white/[0.045] ${
+  return `w-full rounded-md border bg-white/[0.022] px-4 py-3 text-sm text-ink placeholder:text-ash3/60 outline-none transition-colors duration-200 focus:bg-white/[0.045] ${
     hasError ? 'border-[#f0705a]/50' : 'border-rule focus:border-rule-strong'
   }`
 }
@@ -410,11 +410,11 @@ function Field({ label, hint, required, error, children }) {
     <label className="block">
       <span className="mb-3 flex items-baseline gap-2">
         <span className="micro text-ash2">{label}</span>
-        {required && <span className="text-[10px] text-ember">required</span>}
-        {hint && <span className="text-[11px] text-ash3">{hint}</span>}
+        {required && <span className="text-xs text-ember">required</span>}
+        {hint && <span className="text-xs text-ash3">{hint}</span>}
       </span>
       {children}
-      {error && <span className="mt-2 block text-[12px] text-[#f0705a]">{error}</span>}
+      {error && <span className="mt-2 block text-xs text-[#f0705a]">{error}</span>}
     </label>
   )
 }
@@ -425,7 +425,7 @@ function Chip({ active, onClick, children }) {
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded-full border px-3.5 py-2 text-[12.5px] transition-all duration-250 ${
+      className={`rounded-full border px-3.5 py-2 text-xs transition-all duration-250 ${
         active
           ? 'border-ink bg-ink text-void'
           : 'border-rule text-ash hover:border-rule-strong hover:text-ink'

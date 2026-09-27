@@ -116,6 +116,53 @@ function audit(path, markup) {
 
 for (const [path, markup] of rendered) audit(path, markup).forEach((p) => failures.push(p))
 
+/* --------------------------------------------------------------------------
+   Per-page design budgets — the same two numbers a usability audit reports:
+   distinct font sizes and distinct corner radii on the rendered page.
+   Measured from the markup each route actually produces, so a one-off value
+   anywhere in that page's tree shows up here.
+   -------------------------------------------------------------------------- */
+const BUDGET_SIZES = 10
+const BUDGET_RADII = 6
+const stripVariant = (c) => c.replace(/^(?:[a-z0-9-]+:)*/, '')
+/* corner classes -> the scale step they resolve to */
+const RADIUS_STEP = {
+  '-sm': 'sm',
+  '-md': 'md',
+  '-lg': 'lg',
+  '-xl': 'xl',
+  '-full': 'full',
+  '-br-sm': 'sm',
+  '-bl-sm': 'sm',
+}
+
+console.log('\nper-page scale usage')
+for (const [path, markup] of rendered) {
+  const classes = [...markup.matchAll(/class="([^"]*)"/g)].flatMap((m) => m[1].split(/\s+/))
+  const sizes = new Set()
+  const radii = new Set()
+  for (const raw of classes) {
+    const c = stripVariant(raw)
+    /* .micro is 12px — the same step as text-xs, not a new one */
+    const t = c.match(/^text-(xs|sm|base|lg|xl|2xl|3xl)$/)
+    if (t) sizes.add(t[1])
+    else if (c === 'micro') sizes.add('xs')
+    const d = c.match(/^(t-hero|t-page|t-h2|t-h3)$/)
+    if (d) sizes.add(d[1])
+    const r = c.match(/^rounded(-full|-sm|-md|-lg|-xl|-b[rl]-sm)?$/)
+    if (r) radii.add(r[1] ? RADIUS_STEP[r[1]] : 'base')
+  }
+  console.log(
+    `  ${path.padEnd(11)} ${String(sizes.size).padStart(2)} sizes   ${String(radii.size).padStart(2)} radii`,
+  )
+  if (sizes.size > BUDGET_SIZES) {
+    failures.push(`${path}: ${sizes.size} distinct font sizes (budget ${BUDGET_SIZES})`)
+  }
+  if (radii.size > BUDGET_RADII) {
+    failures.push(`${path}: ${radii.size} distinct radii (budget ${BUDGET_RADII})`)
+  }
+}
+
 const toolsMarkup = globalThis.__toolsHtml || ''
 const toolsInputs = (toolsMarkup.match(/<input\b/g) || []).length
 if (toolsInputs < 30) failures.push(`tools page renders only ${toolsInputs} inputs, expected 30+`)

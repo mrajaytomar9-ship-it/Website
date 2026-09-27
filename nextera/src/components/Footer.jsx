@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Identity */}
           <Reveal>
             <Logo />
-            <p className="mt-6 max-w-sm text-[14.5px] leading-[1.68] text-ash2 text-pretty">
+            <p className="mt-6 max-w-sm text-sm leading-[1.68] text-ash2 text-pretty">
               Website, WhatsApp enquiry path and Google Business Profile work for hotels and
               clinics in {CONTACT_DETAILS.city}. Scoped packages, tested enquiry paths, and an
               honest answer when something is not worth doing.
@@ -35,24 +35,24 @@ export default function Footer() {
                 href={whatsappLink(ENQUIRY_MESSAGES.general)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-fit items-center gap-2.5 text-[14.5px] text-ink transition-colors hover:text-ember-soft"
+                className="inline-flex w-fit items-center gap-2.5 text-sm text-ink transition-colors hover:text-ember-soft"
               >
                 <WhatsAppGlyph className="h-4 w-4 text-mint" />
                 WhatsApp us
               </a>
               <a
                 href={`tel:${CONTACT_DETAILS.phoneRaw.replace(/\s/g, '')}`}
-                className="text-[14.5px] text-ash transition-colors hover:text-ink"
+                className="text-sm text-ash transition-colors hover:text-ink"
               >
                 {CONTACT_DETAILS.phoneDisplay}
               </a>
               <a
                 href={`mailto:${CONTACT_DETAILS.email}`}
-                className="text-[14.5px] text-ash transition-colors hover:text-ink"
+                className="text-sm text-ash transition-colors hover:text-ink"
               >
                 {CONTACT_DETAILS.email}
               </a>
-              <span className="pt-1 text-[13.5px] text-ash3">
+              <span className="pt-1 text-sm text-ash3">
                 {CONTACT_DETAILS.city}, {CONTACT_DETAILS.region}
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function Footer() {
                     <li key={l.label}>
                       <Link
                         to={l.to}
-                        className="group inline-flex items-center gap-1.5 text-[14px] text-ash2 transition-colors hover:text-ink"
+                        className="group inline-flex items-center gap-1.5 text-sm text-ash2 transition-colors hover:text-ink"
                       >
                         <span className="h-px w-0 bg-ink transition-all duration-300 group-hover:w-3" />
                         {l.label}
@@ -88,7 +88,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-2.5">
             <span className="anim-pulse h-1.5 w-1.5 rounded-full bg-mint" />
-            <span className="text-[12.5px] text-ash3">
+            <span className="text-xs text-ash3">
               {CONTACT_DETAILS.responseNote}
             </span>
           </div>

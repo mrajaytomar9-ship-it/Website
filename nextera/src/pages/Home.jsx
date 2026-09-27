@@ -48,10 +48,8 @@ function Hero() {
           {/* Eyebrow */}
           <Reveal delay={60}>
             <div className="inline-flex items-center gap-2.5 rounded-full border border-rule bg-white/[0.025] px-4 py-2">
-              <Dot tone="mint" className="anim-pulse" />
-              <span className="micro text-ash2">
-                Agra · Hotels & Clinics
-              </span>
+              <ServiceIcon name="pin" className="h-3.5 w-3.5 shrink-0 text-ash2" />
+              <span className="micro text-ash2">Agra · Hotels & Clinics</span>
             </div>
           </Reveal>
 
@@ -65,7 +63,7 @@ function Hero() {
           </Reveal>
 
           <Reveal delay={260}>
-            <p className="mx-auto mt-8 max-w-2xl text-[16.5px] leading-[1.65] text-ash text-pretty md:text-[18px]">
+            <p className="mx-auto mt-8 max-w-2xl text-base leading-[1.65] text-ash text-pretty md:text-lg">
               {HERO.sub}
             </p>
           </Reveal>
@@ -84,16 +82,16 @@ function Hero() {
 
           {/* Stats */}
           <Reveal delay={470} className="mt-20 w-full">
-            <div className="mx-auto grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-3">
+            <div className="mx-auto grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-3">
               {HERO.stats.map((s) => (
                 <div key={s.label} className="bg-void px-6 py-7 text-center">
-                  <p className="font-display text-[30px] leading-none tracking-[-0.04em] text-ink">
+                  <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
                     {s.value}
-                    <span className="ml-1.5 text-[15px] tracking-normal text-ash3">
+                    <span className="ml-1.5 text-base tracking-normal text-ash3">
                       {s.unit}
                     </span>
                   </p>
-                  <p className="mx-auto mt-3 max-w-[190px] text-[12.5px] leading-[1.5] text-ash3">
+                  <p className="mx-auto mt-3 max-w-[190px] text-xs leading-[1.5] text-ash3">
                     {s.label}
                   </p>
                 </div>
@@ -108,7 +106,7 @@ function Hero() {
         <Marquee speed={44} className="py-6">
           {NICHES.map((n) => (
             <span key={n} className="flex items-center">
-              <span className="whitespace-nowrap px-7 text-[15px] tracking-[-0.01em] text-ash2 md:text-[16px]">
+              <span className="whitespace-nowrap px-7 text-base tracking-[-0.01em] text-ash2 md:text-base">
                 {n}
               </span>
               <span className="h-1 w-1 shrink-0 rounded-full bg-ash3/60" />
@@ -137,13 +135,13 @@ function Problems() {
             </SectionHead>
           </Reveal>
 
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-2">
+          <div className="grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2">
             {PROBLEMS.map((p, i) => (
               <Reveal key={p.n} delay={i * 80}>
                 <div className="group h-full bg-void p-7 transition-colors duration-500 hover:bg-coal">
                   <span className="micro text-ash3">{p.n}</span>
                   <h3 className="t-h3 mt-5 text-ink">{p.title}</h3>
-                  <p className="mt-3.5 text-[14.5px] leading-[1.62] text-ash2 text-pretty">
+                  <p className="mt-3.5 text-sm leading-[1.62] text-ash2 text-pretty">
                     {p.body}
                   </p>
                 </div>
@@ -172,23 +170,22 @@ function ServicesGrid() {
           </SectionHead>
         </Reveal>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-2">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2">
           {SERVICES.map((s, i) => (
             <Reveal key={s.id} delay={i * 90}>
               <article className="cq-wrap group relative flex h-full flex-col bg-void p-8 transition-colors duration-500 hover:bg-coal lg:p-10">
                 <div className="flex items-start justify-between gap-5">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
                     <ServiceIcon name={s.icon} className="h-[21px] w-[21px]" />
                   </span>
-                  <span className="micro mt-1 text-ash3">{s.code}</span>
                 </div>
 
                 <h3 className="t-h3 mt-7 text-ink">{s.title}</h3>
-                <p className="mt-3.5 max-w-md text-[15px] leading-[1.62] text-ash2 text-pretty">
+                <p className="mt-4 max-w-md text-base leading-[1.7] text-ash2 text-pretty">
                   {s.lede}
                 </p>
 
-                <ul className="mt-7 flex flex-1 flex-col gap-3">
+                <ul className="mt-8 flex flex-1 flex-col gap-4">
                   {s.points.map((p) => (
                     <li key={p.t} className="flex gap-3">
                       <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
@@ -200,16 +197,16 @@ function ServicesGrid() {
                           strokeLinejoin="round"
                         />
                       </svg>
-                      <span className="text-[14px] leading-[1.55] text-ash">
+                      <span className="text-sm leading-[1.6] text-ash">
                         <span className="text-ink">{p.t}.</span> {p.d}
                       </span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-7 border-t border-rule pt-5 lg:mt-9">
-                  <p className="micro mb-2.5 text-ash3">Not included</p>
-                  <p className="text-[12.5px] leading-[1.6] text-ash3">
+                <div className="mt-8 border-t border-rule pt-5 lg:mt-9">
+                  <p className="micro mb-3 text-ash2">Not included</p>
+                  <p className="text-sm leading-[1.65] text-ash2">
                     {s.notIncluded.join(' · ')}
                   </p>
                 </div>
@@ -218,7 +215,7 @@ function ServicesGrid() {
           ))}
         </div>
 
-        <Reveal delay={120} className="mt-10">
+        <Reveal delay={120} className="mt-12 flex justify-center lg:justify-end">
           <Button to="/services" variant="secondary" size="md">
             See the full service detail
           </Button>
@@ -256,13 +253,26 @@ function Showcase() {
               <span className="fade-line">the promise.</span>
             </SectionHead>
 
-            {/* Tab switcher */}
-            <div className="mt-10 flex flex-wrap gap-2">
+            {/* Tab switcher. A grid rather than flex-wrap so the five controls
+                sit on an even baseline (3 + 2 in a wrapped row read as a broken
+                layout), and the last one spans the gap on narrow screens.
+                Equal gap-x/gap-y stops the rows colliding. */}
+            <div
+              role="tablist"
+              aria-label="Interactive samples"
+              className="mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-5"
+            >
               {panels.map((p, i) => (
                 <button
                   key={p.key}
+                  role="tab"
+                  id={`sample-tab-${p.key}`}
+                  aria-selected={active === i}
+                  aria-controls="sample-panel"
                   onClick={() => setActive(i)}
-                  className={`rounded-full border px-4 py-2.5 text-[13px] transition-all duration-300 ${
+                  className={`inline-flex w-full items-center justify-center rounded-full border px-3 py-2.5 text-center text-sm transition-all duration-300 ${
+                    i === panels.length - 1 ? 'col-span-2 sm:col-span-1' : ''
+                  } ${
                     active === i
                       ? 'border-ink bg-ink text-void'
                       : 'border-rule text-ash hover:border-rule-strong hover:text-ink'
@@ -273,14 +283,20 @@ function Showcase() {
               ))}
             </div>
 
-            <p className="mt-7 max-w-sm text-[13.5px] leading-[1.6] text-ash3">
+            <p className="mt-7 max-w-sm text-sm leading-[1.6] text-ash3">
               Interactive samples. Figures shown are illustrative of the format, not a
               performance claim about any business.
             </p>
           </Reveal>
 
           <Reveal delay={140}>
-            <div key={panels[active].key} className="anim-rise">
+            <div
+              key={panels[active].key}
+              id="sample-panel"
+              role="tabpanel"
+              aria-labelledby={`sample-tab-${panels[active].key}`}
+              className="anim-rise"
+            >
               {panels[active].node}
             </div>
           </Reveal>
@@ -292,8 +308,6 @@ function Showcase() {
 
 /* ========================================================== NICHES ======== */
 function NicheSwitch() {
-  const [tab, setTab] = useState(0)
-
   return (
     <section className="band">
       <div className="shell">
@@ -308,26 +322,22 @@ function NicheSwitch() {
           </SectionHead>
         </Reveal>
 
-        <div className="mt-12 flex flex-wrap gap-2">
-          {[
-            { l: 'Hotels & Homestays', id: 'hotels' },
-            { l: 'Clinics & Practices', id: 'clinics' },
-          ].map((t, i) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(i)}
-              className={`rounded-full border px-5 py-2.5 text-[13.5px] transition-all duration-300 ${
-                tab === i
-                  ? 'border-ink bg-ink text-void'
-                  : 'border-rule text-ash hover:border-rule-strong hover:text-ink'
-              }`}
+        {/* Labels, not tabs: both cards below are always visible, so an
+            active/inactive pair here would promise a toggle that does not
+            exist. Static chips with identical treatment tell the truth. */}
+        <p className="mt-12 flex flex-wrap items-center gap-2.5">
+          <span className="mr-1 text-sm text-ash2">Both sectors, side by side:</span>
+          {['Hotels & Homestays', 'Clinics & Practices'].map((l) => (
+            <span
+              key={l}
+              className="rounded-full border border-rule bg-white/[0.02] px-4 py-2 text-sm text-ash"
             >
-              {t.l}
-            </button>
+              {l}
+            </span>
           ))}
-        </div>
+        </p>
 
-        <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule lg:grid-cols-2">
+        <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule lg:grid-cols-2">
           {[
             {
               head: 'Hotels & Homestays',
@@ -362,18 +372,15 @@ function NicheSwitch() {
                 'Treatment recommendations or outcome claims',
               ],
             },
-          ].map((n, i) => {
-            const isActive = tab === i
-            return (
-              <Reveal key={n.head} delay={i * 90}>
-                <div
-                  className={`h-full p-8 transition-colors duration-500 lg:p-10 ${
-                    isActive ? 'bg-coal' : 'bg-void'
-                  }`}
-                >
-                  <p className="micro text-ash3">{n.head}</p>
-                  <h3 className="t-h3 mt-5 text-ink">{n.line}</h3>
-                  <p className="mt-3.5 text-[14.5px] leading-[1.62] text-ash2 text-pretty">
+          ].map((n, i) => (
+            <Reveal key={n.head} delay={i * 90}>
+              <div className="flex h-full flex-col bg-void p-8 lg:p-10">
+                  <p className="micro text-ash2">{n.head}</p>
+                  {/* Reserved line counts (in em, so they scale with the fluid
+                      display size) keep both cards starting their sub-headings
+                      at the same height even when a heading wraps differently. */}
+                  <h3 className="t-h3 mt-5 min-h-[2.1em] text-ink">{n.line}</h3>
+                  <p className="mt-3.5 min-h-[4.9em] text-sm leading-[1.65] text-ash2 text-pretty">
                     {n.body}
                   </p>
 
@@ -382,7 +389,7 @@ function NicheSwitch() {
                       <p className="micro mb-3.5 text-mint">{n.ok}</p>
                       <ul className="flex flex-col gap-2.5">
                         {n.allow.map((a) => (
-                          <li key={a} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash">
+                          <li key={a} className="flex gap-2.5 text-sm leading-[1.5] text-ash">
                             <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                               <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
@@ -395,7 +402,7 @@ function NicheSwitch() {
                       <p className="micro mb-3.5 text-ember-soft">{n.no}</p>
                       <ul className="flex flex-col gap-2.5">
                         {n.deny.map((a) => (
-                          <li key={a} className="flex gap-2.5 text-[13px] leading-[1.5] text-ash3">
+                          <li key={a} className="flex gap-2.5 text-sm leading-[1.5] text-ash3">
                             <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                               <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
                             </svg>
@@ -405,10 +412,9 @@ function NicheSwitch() {
                       </ul>
                     </div>
                   </div>
-                </div>
-              </Reveal>
-            )
-          })}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -443,7 +449,7 @@ function WorkExamples() {
             return (
               <Reveal key={w.title} delay={i * 100}>
                 <article
-                  className="group relative h-full overflow-hidden rounded-2xl border bg-void p-7 transition-colors duration-500 hover:bg-coal"
+                  className="group relative h-full overflow-hidden rounded-lg border bg-void p-7 transition-colors duration-500 hover:bg-coal"
                   style={{ borderColor: t.border }}
                 >
                   <span
@@ -453,13 +459,13 @@ function WorkExamples() {
                     {w.tag}
                   </span>
 
-                  <h3 className="mt-5 font-display text-[22px] tracking-[-0.03em] text-ink">
+                  <h3 className="mt-5 font-display text-xl tracking-[-0.03em] text-ink">
                     {w.title}
                   </h3>
 
                   <ul className="mt-5 flex flex-col gap-2.5">
                     {w.what.map((x) => (
-                      <li key={x} className="flex gap-2.5 text-[13.5px] leading-[1.55] text-ash2">
+                      <li key={x} className="flex gap-2.5 text-sm leading-[1.55] text-ash2">
                         <span
                           className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
                           style={{ background: t.text }}
@@ -470,7 +476,7 @@ function WorkExamples() {
                   </ul>
 
                   <div className="mt-6 border-t border-rule pt-4">
-                    <p className="text-[12.5px] text-ash3">{w.outcome}</p>
+                    <p className="text-xs text-ash3">{w.outcome}</p>
                   </div>
                 </article>
               </Reveal>
@@ -479,7 +485,7 @@ function WorkExamples() {
         </div>
 
         <Reveal delay={140} className="mt-9">
-          <p className="text-[13px] text-ash3">
+          <p className="text-sm text-ash3">
             Illustrative examples of the shape of delivery. Names shown are representative; a
             named case study is published only with the client’s written permission.
           </p>
@@ -524,7 +530,7 @@ function ToolsTeaser() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className="text-[14px] leading-[1.55] text-ash">{b}</span>
+                  <span className="text-sm leading-[1.55] text-ash">{b}</span>
                 </li>
               ))}
             </ul>
@@ -538,33 +544,33 @@ function ToolsTeaser() {
               </Button>
             </div>
 
-            <p className="mt-6 flex items-center gap-2.5 text-[12.5px] text-ash3">
+            <p className="mt-6 flex items-center gap-2.5 text-xs text-ash3">
               <ServiceIcon name="calculator" className="h-4 w-4 shrink-0" />
               Free, no sign-up, and your numbers never leave your own device.
             </p>
           </Reveal>
 
           <Reveal delay={130}>
-            <div className="card-dark overflow-hidden rounded-[20px]">
+            <div className="card-dark overflow-hidden rounded-xl">
               <div className="flex items-center justify-between border-b border-rule px-5 py-3.5">
                 <span className="flex min-w-0 items-center gap-2.5">
                   <ServiceIcon name="calculator" className="h-3.5 w-3.5 shrink-0 text-ash2" />
-                  <span className="truncate text-[12px] text-ink">Profit & leak calculator</span>
+                  <span className="truncate text-xs text-ink">Profit & leak calculator</span>
                 </span>
                 <span className="micro shrink-0 text-ash3">Sample</span>
               </div>
 
               <div className="p-5">
                 <p className="micro text-ash3">Net profit this month</p>
-                <p className="mt-2 font-display text-[34px] leading-none tracking-[-0.045em] text-ink">
+                <p className="mt-2 font-display text-2xl leading-none tracking-[-0.045em] text-ink">
                   ₹1,00,303
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                  <span className="flex items-center gap-2 text-[12px] text-mint">
+                  <span className="flex items-center gap-2 text-xs text-mint">
                     <Dot tone="mint" />
                     Healthy · 19.7% margin
                   </span>
-                  <span className="text-[12px] text-ash3">Hotel · 14 rooms · 62% occupancy</span>
+                  <span className="text-xs text-ash3">Hotel · 14 rooms · 62% occupancy</span>
                 </div>
 
                 <div className="mt-5 flex flex-col">
@@ -573,9 +579,9 @@ function ToolsTeaser() {
                       key={r.l}
                       className="flex items-baseline justify-between gap-4 border-t border-rule-faint py-2.5"
                     >
-                      <span className="min-w-0 text-[12.5px] text-ash2">{r.l}</span>
+                      <span className="min-w-0 text-xs text-ash2">{r.l}</span>
                       <span
-                        className={`shrink-0 text-[12.5px] tabular-nums ${
+                        className={`shrink-0 text-xs tabular-nums ${
                           r.tone === 'ember'
                             ? 'text-ember-soft'
                             : r.tone === 'muted'
@@ -591,13 +597,13 @@ function ToolsTeaser() {
 
                 <div className="mt-4">
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-[12.5px] text-ash2">Revenue leaked before you see it</span>
-                    <span className="shrink-0 text-[12.5px] tabular-nums text-ember-soft">24.2%</span>
+                    <span className="text-xs text-ash2">Revenue leaked before you see it</span>
+                    <span className="shrink-0 text-xs tabular-nums text-ember-soft">24.2%</span>
                   </div>
                   <Meter value={78} tone="ember" className="mt-2.5" />
                 </div>
 
-                <p className="mt-5 border-t border-rule pt-4 text-[11.5px] leading-[1.6] text-ash3">
+                <p className="mt-5 border-t border-rule pt-4 text-xs leading-[1.6] text-ash3">
                   Illustrative figures for the shape of the output, not a claim about any business.
                   Your own numbers go in on the tools page.
                 </p>
@@ -616,8 +622,10 @@ function PricingPreview() {
     <section className="band">
       <div className="shell">
         <Reveal>
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="min-w-0 lg:max-w-2xl lg:flex-1">
+          {/* Same three columns as the grid below, so the button's right edge
+              is the third card's right edge rather than a free-floating one. */}
+          <div className="grid gap-8 lg:grid-cols-3 lg:items-end lg:gap-6">
+            <div className="min-w-0 lg:col-span-2">
               <SectionHead
                 eyebrow="Packages"
                 sub="One-time build, or an ongoing plan. No hidden tiers, no annual lock-in to get a better number."
@@ -628,8 +636,8 @@ function PricingPreview() {
               </SectionHead>
             </div>
 
-            <Reveal delay={100}>
-              <Button to="/pricing" variant="secondary" size="lg" className="shrink-0">
+            <Reveal delay={100} className="lg:justify-self-end">
+              <Button to="/pricing" variant="secondary" size="lg">
                 Compare all packages
               </Button>
             </Reveal>
@@ -640,7 +648,7 @@ function PricingPreview() {
           {PACKAGES.map((p, i) => (
             <Reveal key={p.id} delay={i * 100}>
               <article
-                className={`group relative flex h-full flex-col overflow-hidden rounded-[20px] border p-7 transition-all duration-500 lg:p-8 ${
+                className={`group relative flex h-full flex-col overflow-hidden rounded-xl border p-7 transition-all duration-500 lg:p-8 ${
                   p.highlight
                     ? 'border-ember/35 bg-coal glow-ember'
                     : 'border-rule bg-void hover:border-rule-strong'
@@ -652,30 +660,29 @@ function PricingPreview() {
                   </span>
                 )}
 
-                <p className="micro text-ash3">{p.code}</p>
-                <h3 className="mt-4 font-display text-[24px] tracking-[-0.03em] text-ink">
+                <h3 className="font-display text-xl tracking-[-0.03em] text-ink">
                   {p.name}
                 </h3>
 
                 <div className="mt-5 flex items-baseline gap-1.5">
-                  <span className="font-display text-[38px] leading-none tracking-[-0.045em] text-ink">
+                  <span className="font-display text-3xl leading-none tracking-[-0.045em] text-ink">
                     ₹{p.price.toLocaleString('en-IN')}
                   </span>
-                  <span className="text-[13.5px] text-ash3">/ {p.priceNote}</span>
+                  <span className="text-sm text-ash3">/ {p.priceNote}</span>
                 </div>
 
-                <p className="mt-5 text-[14px] leading-[1.6] text-ash2 text-pretty">{p.tagline}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-ash2 text-pretty">{p.tagline}</p>
 
-                <div className="mt-6 flex items-center gap-2.5 rounded-lg border border-rule-faint bg-white/[0.02] px-3.5 py-2.5">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-mint" />
-                  <span className="text-[12.5px] text-ash">
+                <div className="mt-6 flex items-center gap-2.5 rounded-md border border-rule-faint bg-white/[0.02] px-3.5 py-2.5">
+                  <ServiceIcon name="clock" className="h-3.5 w-3.5 shrink-0 text-ash2" />
+                  <span className="text-xs text-ash">
                     Planning range: <span className="text-ink">{p.turnaround}</span>
                   </span>
                 </div>
 
                 <ul className="mt-6 flex flex-1 flex-col gap-2.5">
                   {p.includes.slice(0, 5).map((x) => (
-                    <li key={x} className="flex gap-2.5 text-[13.5px] leading-[1.5] text-ash2">
+                    <li key={x} className="flex gap-2.5 text-sm leading-[1.5] text-ash2">
                       <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
                         <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -683,7 +690,7 @@ function PricingPreview() {
                     </li>
                   ))}
                   {p.includes.length > 5 && (
-                    <li className="pl-[22px] text-[13px] text-ash3">
+                    <li className="pl-[22px] text-sm font-medium text-ash2">
                       + {p.includes.length - 5} more in the package
                     </li>
                   )}
@@ -722,7 +729,7 @@ function Faq() {
                 <span className="fade-line">ask us first.</span>
               </SectionHead>
             </div>
-            <p className="mt-7 max-w-sm text-[14.5px] leading-[1.6] text-ash2">
+            <p className="mt-7 max-w-sm text-sm leading-[1.6] text-ash2">
               If something is missing, ask it on WhatsApp. A straight answer costs nothing.
             </p>
             <Button
@@ -748,7 +755,7 @@ function Faq() {
                       aria-expanded={isOpen}
                     >
                       <span
-                        className={`text-[16px] leading-[1.45] transition-colors duration-300 ${
+                        className={`text-base leading-[1.45] transition-colors duration-300 ${
                           isOpen ? 'text-ink' : 'text-ash hover:text-ink'
                         }`}
                       >
@@ -773,7 +780,7 @@ function Faq() {
                       }}
                     >
                       <div className="overflow-hidden">
-                        <p className="max-w-2xl pb-7 pr-10 text-[14.5px] leading-[1.68] text-ash2 text-pretty">
+                        <p className="max-w-2xl pb-7 pr-10 text-sm leading-[1.68] text-ash2 text-pretty">
                           {f.a}
                         </p>
                       </div>

@@ -22,7 +22,7 @@ export function Logo({ className = '', withWord = true }) {
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <Monogram className="h-[26px] w-[26px] text-ink" />
       {withWord && (
-        <span className="font-display text-[15.5px] font-semibold uppercase tracking-[0.15em] text-ink">
+        <span className="font-display text-base font-semibold uppercase tracking-[0.15em] text-ink">
           Nextera
         </span>
       )}
