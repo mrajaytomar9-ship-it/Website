@@ -96,6 +96,95 @@ check('no resource was fetched off-origin', (dom.window.performance?.getEntriesB
 const bar = [...container.querySelectorAll('div.fixed')].find((d) => d.className.includes('bottom-0'))
 check('phone summary bar renders the same profit', bar && bar.textContent.includes(formatINR(clinic.profit.netProfit)), bar ? bar.textContent.replace(/\s+/g, ' ').trim().slice(0, 60) : 'missing')
 
+/* ================================================ THE REPORT PAGE ======== */
+const { default: Report } = await import('../src/pages/Report')
+const { buildReport, defaultInput } = await import('../src/lib/report')
+
+dom.window.localStorage.removeItem('nextera.report.v1')
+act(() => { root.render(<StaticRouter location="/report"><Report /></StaticRouter>) })
+
+const ring = () => container.querySelector('svg[aria-label^="Presence score"]')
+const ringScore = () => {
+  const l = ring()?.getAttribute('aria-label') || ''
+  return (l.match(/score (\d+|-)/) || [])[1]
+}
+
+check('report page waits for a name and a link', text().includes('Give the business a name'), '')
+check('and refuses to score an empty form', ring() === null, '')
+
+typeInto(byLabel('Business name'), 'Guest House Taj View')
+typeInto(byLabel('Website'), 'tajviewagra.in')
+
+const expectedInput = {
+  ...defaultInput('hotel'),
+  name: 'Guest House Taj View',
+  links: { ...defaultInput('hotel').links, website: 'tajviewagra.in' },
+}
+const expected = buildReport(expectedInput)
+check('a name plus one link is enough to score', ring() !== null, ringScore())
+check(
+  'the score on screen is the score the engine returns',
+  ringScore() === String(Math.round(expected.score.overall)),
+  `${ringScore()} vs ${Math.round(expected.score.overall)}`,
+)
+check('the grade follows the score', text().includes(expected.score.grade.label), expected.score.grade.label)
+
+/* "Every check" also appears in the unlock prompt's copy, so look for the
+   section heading the unlocked breakdown actually renders. */
+const hasFullBreakdown = () =>
+  [...container.querySelectorAll('h3')].some((h) => h.textContent.trim() === 'Every check')
+check('the full breakdown is gated', hasFullBreakdown() === false, '')
+check('the unlock form is offered', text().includes('Unlock the full report'), '')
+
+const findUnlock = () =>
+  [...container.querySelectorAll('button')].find((b) => b.textContent.includes('Show me the full report'))
+click(findUnlock())
+check(
+  'unlocking without a number is refused',
+  text().includes('10-digit Indian mobile number') && hasFullBreakdown() === false,
+  '',
+)
+
+typeInto(byLabel('Your name'), 'Ravi Sharma')
+typeInto(byLabel('WhatsApp number'), '9876543210')
+click(findUnlock())
+check('a valid number unlocks the full report', hasFullBreakdown() === true, '')
+check(
+  'all three exports are offered',
+  text().includes('Print or save as PDF') &&
+    text().includes('Download the report') &&
+    text().includes('Send it to us on WhatsApp'),
+  '',
+)
+check(
+  'the money section is the calculator, not a second engine',
+  text().includes(formatINR(expected.money.metrics.profit.netProfit)),
+  formatINR(expected.money.metrics.profit.netProfit),
+)
+check(
+  'the pasted link is reported as recognised',
+  text().includes('Your own website') && text().includes('tajviewagra.in'),
+  '',
+)
+
+/* typing into the presence questions must move the score */
+const before = ringScore()
+typeInto(byLabel('Photos across your listings'), '60')
+typeInto(byLabel('Reviews you have'), '300')
+const richer = buildReport({
+  ...expectedInput,
+  presence: { ...expectedInput.presence, photos: '60', reviews: '300' },
+})
+check('answering more questions moves the score', ringScore() === String(Math.round(richer.score.overall)), `${before} -> ${ringScore()}`)
+check('and it went up', Number(ringScore()) > Number(before), `${before} -> ${ringScore()}`)
+
+const storedReport = JSON.parse(dom.window.localStorage.getItem('nextera.report.v1'))
+check(
+  'the report state is saved in the browser only',
+  storedReport?.input?.name === 'Guest House Taj View' && storedReport?.unlocked === true,
+  JSON.stringify(storedReport?.lead?.whatsapp),
+)
+
 console.log(failures.length ? `\nFAILURES: ${failures.join(' | ')}` : '\nAll interaction checks passed.')
 process.exit(failures.length ? 1 : 0)
 }

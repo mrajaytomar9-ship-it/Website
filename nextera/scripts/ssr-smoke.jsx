@@ -7,16 +7,19 @@ import Home from '../src/pages/Home'
 import Services from '../src/pages/Services'
 import Pricing from '../src/pages/Pricing'
 import Tools from '../src/pages/Tools'
+import Report from '../src/pages/Report'
 import Process from '../src/pages/Process'
 import About from '../src/pages/About'
 import Contact from '../src/pages/Contact'
 import NotFound from '../src/pages/NotFound'
+import { NAV } from '../src/lib/content'
 
 const routes = [
   ['/', Home],
   ['/services', Services],
   ['/pricing', Pricing],
   ['/tools', Tools],
+  ['/report', Report],
   ['/process', Process],
   ['/about', About],
   ['/contact', Contact],
@@ -48,6 +51,27 @@ for (const [path, Page] of routes) {
     globalThis.__toolsHtml = html
   }
 }
+
+/* ---- the report page: it must state its own limitations --------------- */
+const reportHtml = rendered.find(([path]) => path === '/report')?.[1] || ''
+const reportMust = [
+  'Your business,',
+  'Business name',
+  'Your links',
+  'Who you are up against',
+  'cannot read another site',
+  'accounting or tax advice',
+  'Findability 30',
+  'Google Maps',
+]
+for (const needle of reportMust) {
+  if (!reportHtml.includes(needle)) failures.push(`report page is missing: ${needle}`)
+}
+const reportInputs = (reportHtml.match(/<input\b/g) || []).length
+const reportLabels = (reportHtml.match(/<label\b/g) || []).length
+if (reportInputs < 12) failures.push(`report page renders only ${reportInputs} inputs, expected 12+`)
+if (reportLabels < 12) failures.push(`report page renders only ${reportLabels} labels, expected 12+`)
+console.log(`\nreport page: ${reportInputs} inputs, ${reportLabels} labels`)
 
 const html = globalThis.__toolsHtml || ''
 const must = [
@@ -171,20 +195,31 @@ if (toolsLabels < 30) failures.push(`tools page renders only ${toolsLabels} labe
 console.log(`\ntools page: ${toolsInputs} inputs, ${toolsLabels} labels`)
 
 /* the nav and footer must offer the new page everywhere */
-for (const needle of ['href="/tools"', '>Tools<']) {
+for (const needle of ['href="/tools"', '>Tools<', 'href="/report"', '>Report<']) {
   if (!html.includes(needle)) failures.push(`chrome is missing ${needle}`)
 }
 
-/* the home page must advertise the tools, and the nav must carry all 7 items */
+/* the home page must advertise the tools and the report, and the nav must
+   carry every destination except Home (Home is the logo) */
 const home = (rendered.find(([p]) => p === '/') || [])[1] || ''
 for (const needle of ['Open the calculator', 'Know your leak', 'Profit &amp; leak calculator']) {
   if (!home.includes(needle)) failures.push(`home page is missing: ${needle}`)
 }
 const navItems = [...home.matchAll(/<nav[^>]*aria-label="Primary"[\s\S]*?<\/nav>/g)]
+const expectedNav = NAV.filter((n) => n.to !== '/').length
 const navLinks = navItems.length ? (navItems[0][0].match(/<a /g) || []).length : 0
-if (navLinks !== 6) failures.push(`desktop nav has ${navLinks} links, expected 6 (Home is the logo)`)
-const footerTools = /Free tools[\s\S]{0,400}?Profit &amp; leak calculator/.test(home)
-if (!footerTools) failures.push('footer is missing the Free tools column')
+if (navLinks !== expectedNav) {
+  failures.push(`desktop nav has ${navLinks} links, expected ${expectedNav} (Home is the logo)`)
+}
+/* Search inside the <footer> element, not the whole page: "Free tools" is
+   also the eyebrow of the tools teaser section, so a page-wide match lands on
+   the wrong one. */
+const footerHtml = (home.match(/<footer[\s\S]*<\/footer>/) || [''])[0]
+if (!footerHtml) failures.push('home page renders no <footer>')
+const freeToolsCol = (footerHtml.match(/Free tools[\s\S]*/) || [''])[0]
+for (const needle of ['Business report generator', 'Profit &amp; leak calculator']) {
+  if (!freeToolsCol.includes(needle)) failures.push(`footer Free tools column is missing: ${needle}`)
+}
 
 if (failures.length) {
   console.error('\nFAIL')

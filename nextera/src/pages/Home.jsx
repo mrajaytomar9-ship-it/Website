@@ -9,6 +9,7 @@ import {
   WORK_EXAMPLES,
   CONTACT_DETAILS,
   TOOLS,
+  REPORT,
   whatsappLink,
   ENQUIRY_MESSAGES,
 } from '../lib/content'
@@ -616,6 +617,115 @@ function ToolsTeaser() {
   )
 }
 
+/* ======================================================= REPORT TEASER ==== */
+function ReportTeaser() {
+  /* Sample figures, labelled as such — the real ones come from the founder's
+     own answers on /report. */
+  const pillars = [
+    { l: 'Findability', v: 82 },
+    { l: 'Credibility', v: 46 },
+    { l: 'Convertibility', v: 35 },
+    { l: 'Money', v: 58 },
+  ]
+
+  return (
+    <section className="band border-t border-rule">
+      <div className="shell">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
+          <Reveal>
+            <SectionHead eyebrow={REPORT.teaser.eyebrow} sub={REPORT.teaser.sub}>
+              {REPORT.teaser.line1}
+              <br />
+              <span className="fade-line">{REPORT.teaser.line2}</span>
+            </SectionHead>
+
+            <ul className="mt-9 flex flex-col gap-3.5">
+              {REPORT.teaser.bullets.map((b) => (
+                <li key={b} className="flex gap-3">
+                  <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
+                    <path
+                      d="m3 8.4 3 3L13 4.6"
+                      stroke="#4fd1a5"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="text-sm leading-[1.6] text-ash">{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button to={REPORT.teaser.cta.to} variant="primary" size="lg">
+                {REPORT.teaser.cta.label}
+              </Button>
+              <Button to={REPORT.teaser.secondary.to} variant="secondary" size="lg">
+                {REPORT.teaser.secondary.label}
+              </Button>
+            </div>
+
+            <p className="mt-6 flex items-center gap-2.5 text-xs text-ash3">
+              <ServiceIcon name="lock" className="h-4 w-4 shrink-0" />
+              Runs in your browser. Nothing uploaded, nothing stored by us.
+            </p>
+          </Reveal>
+
+          <Reveal delay={130}>
+            <div className="card-dark overflow-hidden rounded-xl">
+              <div className="flex items-center justify-between border-b border-rule px-5 py-3.5">
+                <span className="flex min-w-0 items-center gap-2.5">
+                  <ServiceIcon name="doc" className="h-3.5 w-3.5 shrink-0 text-ash2" />
+                  <span className="truncate text-xs text-ink">Business report</span>
+                </span>
+                <span className="micro shrink-0 text-ash3">Sample</span>
+              </div>
+
+              <div className="p-5">
+                <div className="flex items-center gap-5">
+                  <span className="font-display text-3xl leading-none tracking-[-0.045em] text-ember-soft">
+                    54
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm text-ink">Leaky</p>
+                    <p className="mt-1.5 text-xs leading-[1.5] text-ash3">
+                      Visible, but most people who find you leave without contacting you.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-col gap-3.5">
+                  {pillars.map((x) => (
+                    <div key={x.l}>
+                      <div className="flex items-baseline justify-between gap-4">
+                        <span className="text-xs text-ash2">{x.l}</span>
+                        <span className="text-xs tabular-nums text-ash3">{x.v}/100</span>
+                      </div>
+                      <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/[0.07]">
+                        <div className="h-full rounded-full bg-ink" style={{ width: `${x.v}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="mt-6 border-t border-rule pt-4 text-xs leading-[1.6] text-ash2">
+                  <span className="text-ink">Costing the most:</span> no one-tap WhatsApp —
+                  reaching you means copying a number into a phone.
+                </p>
+
+                <p className="mt-4 border-t border-rule-faint pt-4 text-xs leading-[1.6] text-ash3">
+                  Illustrative figures for the shape of the output. Your score comes from your own
+                  answers on the report page.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ========================================================== PRICING ======= */
 function PricingPreview() {
   return (
@@ -812,6 +922,7 @@ export default function Home() {
       <NicheSwitch />
       <WorkExamples />
       <ToolsTeaser />
+      <ReportTeaser />
       <PricingPreview />
       <Faq />
       <CtaBand showHatch />

@@ -51,13 +51,16 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            {/* Eight destinations now, so the padding is tighter than it looks
+                like it needs to be: at exactly 1024px the row has very little
+                slack left before it would push the phone pill off-screen. */}
+            <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
               {NAV.filter((n) => n.to !== '/').map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-200 ${
+                    `relative rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                       isActive
                         ? 'bg-white/[0.08] text-ink'
                         : 'bg-transparent text-ash hover:bg-white/[0.04] hover:text-ink'
@@ -71,7 +74,7 @@ export default function Navbar() {
                           read as "you are here" on a dark canvas. */}
                       <span
                         aria-hidden="true"
-                        className={`absolute inset-x-3.5 -bottom-[3px] h-[2px] origin-left rounded-full bg-ink transition-transform duration-300 ${
+                        className={`absolute inset-x-3 -bottom-[3px] h-[2px] origin-left rounded-full bg-ink transition-transform duration-300 ${
                           isActive ? 'scale-x-100' : 'scale-x-0'
                         }`}
                       />

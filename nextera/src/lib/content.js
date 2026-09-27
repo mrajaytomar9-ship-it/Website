@@ -48,6 +48,8 @@ export const ENQUIRY_MESSAGES = {
     "Hi Nextera Solution, I have an existing website and I'm interested in Care & Presence (monthly maintenance).",
   tools:
     "Hi Nextera Solution — I ran my numbers through the free profit & leak calculator on your site. Could you sanity-check what it is telling me?",
+  report:
+    "Hi Nextera Solution — I generated the free business report on your site and I'd like to talk about what it found.",
 }
 
 /* -------------------------------------------------------------------------- */
@@ -58,6 +60,7 @@ export const NAV = [
   { label: 'Services', to: '/services' },
   { label: 'Pricing', to: '/pricing' },
   { label: 'Tools', to: '/tools' },
+  { label: 'Report', to: '/report' },
   { label: 'Process', to: '/process' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
@@ -616,6 +619,7 @@ export const FOOTER_LINKS = [
   {
     heading: 'Free tools',
     links: [
+      { label: 'Business report generator', to: '/report' },
       { label: 'Profit & leak calculator', to: '/tools#profit-engine' },
       { label: 'What-if scenarios', to: '/tools#scenarios' },
       { label: 'Quick calculations', to: '/tools#quick' },
@@ -632,6 +636,84 @@ export const FOOTER_LINKS = [
     ],
   },
 ]
+
+/* -------------------------------------------------------------------------- */
+/* FREE REPORT — /report                                                      */
+/* -------------------------------------------------------------------------- */
+export const REPORT = {
+  eyebrow: 'Free report',
+  line1: 'Your business,',
+  line2: 'on one honest page.',
+  sub: 'Answer a few questions, paste the links you already have — your website, your Google profile, a booking or directory listing — and this builds a scored report: where you are visible, where people lose confidence, what the month actually leaves you, and what to fix first.',
+  meta: [
+    { l: 'Checks', v: '21' },
+    { l: 'Time', v: 'About 4 minutes' },
+    { l: 'Cost', v: 'Free' },
+    { l: 'Uploads', v: 'None' },
+  ],
+
+  generateLabel: 'Jump to my report',
+  generatingNote: 'The report updates as you type. Nothing is submitted anywhere.',
+
+  freeTitle: 'Free, and it stays that way',
+  freePoints: [
+    'Your score and the three things costing you most, before you give us anything.',
+    'The full breakdown, the money and the competitor gap unlock with a name and a number.',
+    'Print it, download it as a single file, or send it to us on WhatsApp.',
+  ],
+
+  method: {
+    eyebrow: 'What this is',
+    title1: 'What it checks,',
+    title2: 'and what it cannot.',
+    lede: 'This page runs entirely in your browser. That is a real limitation, and it is better stated than hidden.',
+    does: [
+      'Scores 21 checks across four pillars: findability, credibility, convertibility and money.',
+      'Checks each link you paste — the domain, https, whether the address is actually yours, and which platform it belongs to.',
+      'Runs your numbers through the same profit, leak and break-even engine as the calculator.',
+      'Compares you against competitors you enter, and ranks where you lose.',
+    ],
+    doesNot: [
+      'It does not open your website or anybody else\u2019s. A page like this one cannot read another site\u2019s contents.',
+      'It does not fetch review counts, ratings or competitor prices — you read those off the public listing and type them in.',
+      'It does not rank you, predict enquiries, or promise any outcome. Nothing here is accounting or tax advice.',
+      'It does not store or transmit anything. Refresh the page and your answers are still here, in this browser only.',
+    ],
+  },
+
+  faqs: [
+    {
+      q: 'Is this the same as the audit you do by hand?',
+      a: 'No. The paid audit is a person opening your listings, your competitors\u2019 listings and your enquiry path, and writing down what is wrong. This is you answering structured questions and getting the arithmetic and the priorities for free. Many people run this first and then decide whether the hand audit is worth it.',
+    },
+    {
+      q: 'What do you do with my name and number?',
+      a: 'They unlock the rest of the report and let us reply. They are kept in this browser and are not uploaded. If you press the WhatsApp button, your own WhatsApp opens with the summary already written — that is the only moment anything leaves your device, and you can delete it before sending.',
+    },
+    {
+      q: 'How accurate is the score?',
+      a: 'It is exactly as accurate as your answers. The weights are ours and they are published here: findability 30, credibility 25, convertibility 25, money 20. A question you leave blank is excluded rather than marked down, so an honest half-report beats a guessed full one.',
+    },
+    {
+      q: 'Can you check a competitor for me?',
+      a: 'Not from this page — we do not scrape. Each competitor row gives you a Google Maps and a Google search link, so you can read the real numbers off in about a minute and put them in.',
+    },
+  ],
+
+  teaser: {
+    eyebrow: 'Free report',
+    line1: 'Four minutes,',
+    line2: 'one honest page.',
+    sub: 'Paste the links you already have and answer a few questions. You get a scored presence report, the leak in your numbers, and the three things worth fixing first.',
+    bullets: [
+      '21 checks across findability, credibility, convertibility and money',
+      'Recognises Google, MakeMyTrip, Booking, Practo, Justdial and twelve more',
+      'Print it, download it, or send it to us on WhatsApp',
+    ],
+    cta: { label: 'Generate my report', to: '/report' },
+    secondary: { label: 'Just the calculator', to: '/tools#profit-engine' },
+  },
+}
 
 /* -------------------------------------------------------------------------- */
 /* FREE TOOLS — /tools                                                        */

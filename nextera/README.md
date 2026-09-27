@@ -20,7 +20,7 @@ npm run preview  # serve the built bundle locally
 ```
 
 ```bash
-npm test         # 33 assertions over the calculator engine (node:test, no deps)
+npm test         # 62 assertions: 33 calculator engine + 29 report engine
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -260,6 +260,48 @@ picks the new field up automatically; per-type wording goes in that type's
 **Privacy:** inputs are stored in `localStorage` under `nextera.tools.v1` and
 nowhere else. The only thing that can leave the device is a WhatsApp message the
 founder deliberately sends, which contains the printed summary.
+
+## 5.1a The free business report (`/report`)
+
+A lead-generation tool: a founder answers a short questionnaire, pastes the
+links they already have, and gets a scored report.
+
+**Inputs** — business name, type and city; four link slots (website, Google
+profile, OTA/booking, directory); ten presence questions; the calculator's own
+number fields; up to three competitors.
+
+**Outputs** — a score out of 100 across four pillars (findability 30,
+credibility 25, convertibility 25, money 20), the three highest-impact weak
+points, the money breakdown, a competitor gap table, per-link findings, and a
+plan ordered cheapest-first. Three exports: print/save as PDF, a self-contained
+HTML download, and a pre-filled WhatsApp message.
+
+**The gate** — the score and the top three weak points are free. The full
+breakdown and the exports unlock on a name and a 10-digit Indian mobile number.
+Both are kept in `localStorage` under `nextera.report.v1` and never uploaded;
+the WhatsApp button is the only thing that sends data anywhere, and it is the
+visitor who presses send.
+
+**What it deliberately cannot do.** A static page cannot read another origin's
+HTML, so nothing here fetches a website, a review count or a competitor's
+prices. The link checks are checks on the *address* (scheme, domain, whether it
+is a borrowed host, which platform it belongs to). The page says this in its own
+"What it does not" panel — do not add copy that implies a scan happened.
+
+| File | Role |
+|---|---|
+| `src/lib/report.js` | The engine: link parsing, 21 checks, scoring, competitor gap, exports. Pure and browser-free. |
+| `src/lib/report.test.mjs` | 29 assertions over the engine |
+| `src/components/report/ReportForm.jsx` | The questionnaire, with live link feedback |
+| `src/components/report/ReportResult.jsx` | Score ring, gate, full breakdown, exports |
+| `src/pages/Report.jsx` | State, persistence, and the three export handlers |
+
+Scoring rule worth knowing: a question left blank returns `na` and is **excluded**
+from the score, not marked down. `calculator.js`'s `num()` coerces blanks to `0`,
+so `report.js` has its own `isAnswered()`/`asNum()` helpers — use those, not
+`num()`, or an unanswered question becomes a failed one.
+
+---
 
 ## 5.2 Responsive behaviour
 
