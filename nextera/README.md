@@ -290,7 +290,7 @@ is a borrowed host, which platform it belongs to). The page says this in its own
 
 | File | Role |
 |---|---|
-| `src/lib/report.js` | The engine: link parsing, 21 checks, scoring, competitor gap, exports. Pure and browser-free. |
+| `src/lib/report.js` | The engine: link parsing, up to 21 checks, scoring, competitor gap, exports. Pure and browser-free. |
 | `src/lib/report.test.mjs` | 29 assertions over the engine |
 | `src/components/report/ReportForm.jsx` | The questionnaire, with live link feedback |
 | `src/components/report/ReportResult.jsx` | Score ring, gate, full breakdown, exports |

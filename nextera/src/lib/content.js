@@ -646,7 +646,7 @@ export const REPORT = {
   line2: 'on one honest page.',
   sub: 'Answer a few questions, paste the links you already have — your website, your Google profile, a booking or directory listing — and this builds a scored report: where you are visible, where people lose confidence, what the month actually leaves you, and what to fix first.',
   meta: [
-    { l: 'Checks', v: '21' },
+    { l: 'Checks', v: 'Up to 21' },
     { l: 'Time', v: 'About 4 minutes' },
     { l: 'Cost', v: 'Free' },
     { l: 'Uploads', v: 'None' },
@@ -668,7 +668,7 @@ export const REPORT = {
     title2: 'and what it cannot.',
     lede: 'This page runs entirely in your browser. That is a real limitation, and it is better stated than hidden.',
     does: [
-      'Scores 21 checks across four pillars: findability, credibility, convertibility and money.',
+      'Scores up to 21 checks across four pillars: findability, credibility, convertibility and money. Two of them only apply once you have given the link they check.',
       'Checks each link you paste — the domain, https, whether the address is actually yours, and which platform it belongs to.',
       'Runs your numbers through the same profit, leak and break-even engine as the calculator.',
       'Compares you against competitors you enter, and ranks where you lose.',
@@ -706,7 +706,7 @@ export const REPORT = {
     line2: 'one honest page.',
     sub: 'Paste the links you already have and answer a few questions. You get a scored presence report, the leak in your numbers, and the three things worth fixing first.',
     bullets: [
-      '21 checks across findability, credibility, convertibility and money',
+      'Up to 21 checks across findability, credibility, convertibility and money',
       'Recognises Google, MakeMyTrip, Booking, Practo, Justdial and twelve more',
       'Print it, download it, or send it to us on WhatsApp',
     ],
