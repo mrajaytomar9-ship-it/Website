@@ -53,6 +53,8 @@ for (const [path, Page] of routes) {
 }
 
 /* ---- the report page: it must state its own limitations --------------- */
+import { PDF_CONTENT, PDF_ITEM_COUNT } from './pdf-content.mjs'
+
 const reportHtml = rendered.find(([path]) => path === '/report')?.[1] || ''
 const reportMust = [
   'Your business,',
@@ -220,6 +222,26 @@ const freeToolsCol = (footerHtml.match(/Free tools[\s\S]*/) || [''])[0]
 for (const needle of ['Business report generator', 'Profit &amp; leak calculator']) {
   if (!freeToolsCol.includes(needle)) failures.push(`footer Free tools column is missing: ${needle}`)
 }
+
+/* --------------------------------------------------------------------------
+   Every item published in "Services & Pricing" v1.1 must actually render.
+   Kept in scripts/pdf-content.mjs so the list stays reviewable on its own.
+   -------------------------------------------------------------------------- */
+const entityDecode = (h) =>
+  h.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"')
+const catalogueHtml = entityDecode(
+  [
+    (rendered.find(([x]) => x === '/services') || [])[1] || '',
+    (rendered.find(([x]) => x === '/pricing') || [])[1] || '',
+  ].join('\n'),
+)
+let pdfFound = 0
+for (const [section, needles] of Object.entries(PDF_CONTENT)) {
+  const missing = needles.filter((n) => !catalogueHtml.includes(n))
+  pdfFound += needles.length - missing.length
+  for (const m of missing) failures.push(`${section} content missing from the site: ${m}`)
+}
+console.log(`PDF catalogue items rendered: ${pdfFound}/${PDF_ITEM_COUNT}`)
 
 if (failures.length) {
   console.error('\nFAIL')

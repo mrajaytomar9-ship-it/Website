@@ -115,7 +115,8 @@ export default function Pricing() {
                     )}
                   </div>
 
-                  <p className="mt-6 text-sm leading-[1.6] text-ash text-pretty">{p.for}</p>
+                  <p className="mt-6 text-sm leading-[1.6] text-ash2 text-pretty">{p.tagline}</p>
+                  <p className="mt-3 text-sm leading-[1.6] text-ash text-pretty">{p.for}</p>
 
                   <div className="mt-6 flex-1">
                     <p className="micro mb-4 text-mint">What is included</p>

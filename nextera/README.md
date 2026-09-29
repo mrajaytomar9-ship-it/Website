@@ -80,9 +80,15 @@ They appear in four places, all driven from the same objects:
 - `/services` — one long-form section per service
 - the contact page bundle chips
 
-`content.test.mjs` asserts the titles, the three prices, both list-value/savings
-pairs, the section lengths, and that every service and bundle has a WhatsApp
-enquiry message — so a typo cannot quietly change a published price.
+Two layers stop this content from drifting:
+
+- `content.test.mjs` (data) — the four titles, the three prices, both
+  list-value/savings pairs, every section length, and that each service and
+  bundle has a WhatsApp enquiry message.
+- `scripts/pdf-content.mjs` + `npm run smoke` (rendered HTML) — **190 individual
+  items** from the document, checked against the actual `/services` and
+  `/pricing` markup. Drop one bullet from `content.js` and the build gate fails
+  naming it. Edit the PDF and the site together, or the gate will not pass.
 
 > **One discrepancy in the source document, left as written.** §3 gives Platinum a
 > list value of ₹1,11,500, but the seven component values in §4 sum to ₹1,31,500.
