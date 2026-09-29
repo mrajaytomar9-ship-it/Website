@@ -43,12 +43,30 @@ export function whatsappLink(message) {
 export const ENQUIRY_MESSAGES = {
   general:
     "Hi Nextera Solution, I found you online. I'm interested in improving my business's website and enquiry path. Could we talk?",
-  silver:
-    "Hi Nextera Solution, I'd like details about the Silver bundle (₹42,000 — website development).",
-  gold:
-    "Hi Nextera Solution, I'd like details about the Gold bundle (₹85,000 — website + customer experience + online presence).",
-  platinum:
-    "Hi Nextera Solution, I'd like details about the Platinum bundle (₹1,05,000 — the complete growth system).",
+  basic:
+    "Hi Nextera Solution, I'd like details about the Basic / Starter package (₹23,600 including GST).",
+  business:
+    "Hi Nextera Solution, I'd like details about the Business package (₹41,300 including GST).",
+  enterprise:
+    "Hi Nextera Solution, I'd like details about the Enterprise package (₹70,800 onwards including GST).",
+  aiLite:
+    "Hi Nextera Solution, I'd like details about AI Receptionist Lite (₹14,999 setup + ₹4,999/month).",
+  aiBusiness:
+    "Hi Nextera Solution, I'd like details about the AI Business Caller (₹29,999 setup + ₹9,999/month).",
+  aiEnterprise:
+    "Hi Nextera Solution, I'd like details about Enterprise AI Voice (₹69,999 setup + ₹19,999/month onwards).",
+  voice:
+    "Hi Nextera Solution, I'd like a quote for AI voice services.",
+  basicCare:
+    "Hi Nextera Solution, I'd like details about Basic Care maintenance (₹1,499/month).",
+  growthCare:
+    "Hi Nextera Solution, I'd like details about Growth Care maintenance (₹2,999/month).",
+  priorityCare:
+    "Hi Nextera Solution, I'd like details about Priority Care maintenance (₹5,999/month).",
+  marketing:
+    "Hi Nextera Solution, I'd like details about your monthly marketing services.",
+  addons:
+    "Hi Nextera Solution, I'd like a quote for one of your add-on services.",
   web:
     "Hi Nextera Solution, I'd like a quote for premium website development & database.",
   cx:
@@ -102,12 +120,12 @@ export const HERO = {
   line1: 'Your business is easy to find.',
   line2: 'Hard to contact.',
   sub: 'Nextera Solution builds the website, the automation and the online presence that turn a search into a real conversation — for ambitious businesses across India.',
-  primary: { label: 'See the bundles', to: '/pricing#silver' },
+  primary: { label: 'See the pricing', to: '/pricing#basic' },
   secondary: { label: 'Request a free audit', to: '/contact' },
   stats: [
-    { value: '₹42,000', unit: 'from', label: 'Silver bundle, one-time' },
+    { value: '₹23,600', unit: 'from', label: 'Basic website, including GST' },
     { value: '1–2', unit: 'weeks', label: 'Typical website delivery, by scope' },
-    { value: '6', unit: 'months', label: 'Free support included with Platinum' },
+    { value: '₹1,499', unit: 'per month', label: 'Website maintenance from' },
   ],
 }
 
@@ -190,12 +208,12 @@ export const SERVICES = [
     ],
     /* Priced separately — drawn from the document's Add-On Services list. */
     notIncluded: [
-      'Logo & brand identity design',
-      'Content writing & photography',
-      'Multi-language support',
-      'Video & 3D production',
+      'Logo and branding (₹6,999 onwards)',
+      'Website content writing (₹1,999/page)',
+      'Stock images, photography and video production',
+      'Additional language work',
     ],
-    startingPoint: 'Custom quote',
+    startingPoint: '₹23,600',
   },
   {
     id: 'cx',
@@ -239,8 +257,8 @@ export const SERVICES = [
         a: 'Instant. The moment an enquiry arrives, your automated reply is sent — usually within 5 seconds.',
       },
     ],
-    notIncluded: ['Advanced analytics dashboards', 'Training sessions for your team'],
-    startingPoint: 'Custom quote',
+    notIncluded: ['Team training (₹2,499/session)', 'Major integrations'],
+    startingPoint: '₹11,999 onwards',
   },
   {
     id: 'presence',
@@ -285,11 +303,11 @@ export const SERVICES = [
       },
     ],
     notIncluded: [
-      'Google Ads management (monthly)',
-      'Meta Ads management (monthly)',
-      'Monthly SEO packages (monthly)',
+      'Google Ads management (₹5,999/month)',
+      'Meta Ads management (₹5,999/month)',
+      'Google/Meta advertising budget',
     ],
-    startingPoint: 'Custom quote',
+    startingPoint: '₹7,999 onwards',
   },
   {
     id: 'whatsapp',
@@ -334,151 +352,398 @@ export const SERVICES = [
       },
     ],
     notIncluded: ['Official WhatsApp Business API (added when your volume grows)'],
-    startingPoint: 'Custom quote',
+    startingPoint: '₹19,999 onwards',
+  },
+  {
+    id: 'voice',
+    icon: 'chat',
+    title: 'AI Voice Services',
+    lede: 'Every call answered — in business hours or around the clock.',
+    body: 'A missed call is a lost customer. Our AI voice systems answer, qualify and route calls, collect lead details and book appointments, so nobody who phones you ever hears ringing.',
+    audience: [
+      'Clinics & Doctors',
+      'Hotels & Resorts',
+      'Real Estate',
+      'Service Businesses',
+      'Multi-branch businesses',
+    ],
+    includes: [
+      'Business-hours or 24/7 call answering',
+      'Basic and advanced FAQ handling',
+      'Lead name and phone collection',
+      'Call transfer to your team',
+      'Hindi and English support',
+      'Missed-call callback',
+      'Appointment requests and booking automation',
+      'Lead qualification and follow-up calls',
+      'CRM or Google Sheets integration',
+      'Monthly minute allowance and reporting',
+    ],
+    process: [
+      'We map your call flows and the questions callers actually ask',
+      'We configure the voice agent, languages and transfer rules',
+      'We connect it to your CRM or sheet and your phone number',
+      'We test every flow end-to-end before it goes live',
+      'We review call outcomes and refine monthly',
+    ],
+    faqs: [
+      {
+        q: 'Does AI voice guarantee more bookings?',
+        a: 'No. It guarantees the call is answered and the lead is captured. It cannot guarantee sales, bookings or conversions.',
+      },
+      {
+        q: 'What happens if callers talk for longer than the allowance?',
+        a: 'Each plan includes a monthly minute allowance — 200, 500 or 1,500 minutes. Extra usage is billed separately at the published per-minute rate, and limits keep your bill predictable.',
+      },
+    ],
+    notIncluded: [
+      'AI voice platform charges',
+      'Phone number rental and telephony charges',
+    ],
+    startingPoint: '₹14,999 setup + ₹4,999/month',
   },
 ]
 
 /* -------------------------------------------------------------------------- */
 /* BUNDLES — Services & Pricing v1.1, §3. All prices one-time, in INR.         */
 /* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* PRICING — "Nextera Solution — Complete Price Rate Card" v1.0                 */
+/* Target market: India Tier 2 and Tier 3. All customer prices include 18% GST. */
+/* Per §10 of the rate card, marketing material shows the final GST-inclusive   */
+/* amount and the taxable-value/GST breakup appears on the invoice.             */
+/* -------------------------------------------------------------------------- */
+export const GST_RATE = 0.18
+
+export const GST_POLICY =
+  'All displayed package prices include 18% GST where applicable. Final invoices will show the taxable value and GST breakup separately. If GST is not applicable to a particular transaction, the invoice will be adjusted accordingly.'
+
+export const THIRD_PARTY_NOTE =
+  'Third-party tools, usage charges and advertising budgets are not included unless specifically mentioned in the proposal. Applicable taxes will be shown transparently on the invoice.'
+
+/* §1 — Main packages ------------------------------------------------------- */
 export const PACKAGES = [
   {
-    id: 'silver',
-    name: 'Silver',
-    price: 42000,
-    priceNote: 'one-time',
-    bestFor: 'Website Development only',
-    tagline: 'Entry-level price. Custom-quoted for larger scopes.',
-    for: 'You need a credible, fast website that captures enquiries — nothing else yet.',
+    id: 'basic',
+    name: 'Basic / Starter',
+    price: 23600,
+    taxable: 20000,
+    gst: 3600,
+    priceNote: 'one-time, including GST',
+    tagline: 'A complete, credible website for a business that needs to be found and contacted.',
+    for: 'You need to look professional and be contactable — fast — on a sensible budget.',
     highlight: false,
-    cta: { label: 'Enquire about Silver', message: ENQUIRY_MESSAGES.silver },
-    turnaround: '1–2 weeks',
-    turnaroundNote: 'depending on scope; a custom timeline is shared before work starts',
-    support: '1-month free support',
+    cta: { label: 'Enquire about Basic', message: ENQUIRY_MESSAGES.basic },
+    support: '1 month free support',
+    revisions: '2 revision rounds',
     includes: [
-      'Custom website (up to 5 pages)',
-      'Basic SEO setup',
-      'Mobile-first design',
-      'Lead capture forms + WhatsApp button',
-      'Hosting & domain configuration',
-      '1-month free support',
+      'Up to 5 pages',
+      'Mobile-responsive design',
+      'Contact and enquiry forms',
+      'WhatsApp click-to-chat',
+      'Google Maps',
+      'Reviews and trust badges',
+      'SEO-ready structure',
+      'Basic speed optimization',
+      'Hosting/domain configuration',
+      'Deployment and testing',
+      '1 month free support',
+      '2 revision rounds',
     ],
+    extra: null,
   },
   {
-    id: 'gold',
-    name: 'Gold',
-    price: 85000,
-    priceNote: 'one-time',
-    bestFor: 'Website + Customer Experience + Online Presence',
-    tagline: 'List value ₹91,500 · you save ₹6,500.',
-    for: 'You want the website and the systems that answer and follow up on every enquiry.',
+    id: 'business',
+    name: 'Business',
+    price: 41300,
+    taxable: 35000,
+    gst: 6300,
+    priceNote: 'one-time, including GST',
+    tagline: 'Everything in Basic, plus the systems that answer, book and follow up.',
+    for: 'You want a website that works for you after the visitor lands, not just one that looks right.',
     highlight: true,
-    badge: 'Best value',
-    listValue: 91500,
-    save: 6500,
-    cta: { label: 'Enquire about Gold', message: ENQUIRY_MESSAGES.gold },
-    turnaround: 'Shared before work starts',
-    turnaroundNote: 'a custom timeline is agreed at the consultation',
-    support: '3-month free support',
+    badge: 'Most chosen',
+    cta: { label: 'Enquire about Business', message: ENQUIRY_MESSAGES.business },
+    support: '3 months free support',
+    revisions: '3 revision rounds',
     includes: [
-      'Everything in Silver',
-      'Automated enquiry response system',
-      'Local SEO optimization',
-      'Appointment booking automation',
-      'Analytics & tracking setup',
+      'Everything in Basic',
+      'Custom UI/design',
+      'CMS/database',
+      'Booking/enquiry system',
+      'Basic analytics',
       'Google Business Profile setup',
-      '3-month free support',
+      'Analytics and tracking setup',
+      'Local SEO setup',
+      'Automated enquiry response',
+      'Appointment booking',
+      '3 months free support',
+      '3 revision rounds',
     ],
+    extra: null,
   },
   {
-    id: 'platinum',
-    name: 'Platinum',
-    price: 105000,
-    priceNote: 'one-time',
-    bestFor: 'Everything — complete growth system',
-    tagline: 'List value ₹1,11,500 · you save ₹6,500.',
-    for: 'You want the whole system: website, automation, presence and WhatsApp sales.',
+    id: 'enterprise',
+    name: 'Enterprise',
+    price: 70800,
+    taxable: 60000,
+    gst: 10800,
+    priceNote: 'onwards, including GST',
+    tagline: 'The complete growth system — website, automation, CRM and ongoing strategy.',
+    for: 'You want one partner running the whole digital system across branches and channels.',
     highlight: false,
-    listValue: 111500,
-    save: 6500,
-    cta: { label: 'Enquire about Platinum', message: ENQUIRY_MESSAGES.platinum },
-    turnaround: 'Shared before work starts',
-    turnaroundNote: 'a custom timeline is agreed at the consultation',
-    support: '6-month free support',
+    cta: { label: 'Enquire about Enterprise', message: ENQUIRY_MESSAGES.enterprise },
+    support: '6 months free support',
+    revisions: 'Quoted with scope',
     includes: [
-      'Everything in Gold',
-      'WhatsApp automation & CRM setup',
-      'Priority support',
+      'Everything in Business',
+      'WhatsApp automation',
+      'CRM setup',
       'Review generation system',
-      'Monthly strategy review (6 months)',
       'Social media profile setup',
-      '6-month free support',
+      'Advanced reporting',
+      'Follow-up automation',
+      'Priority support',
+      'Monthly strategy review',
+      '6 months free support',
+    ],
+    extra:
+      'Enterprise pricing increases for multiple branches, complex CRM, custom applications and high-volume automation.',
+  },
+]
+
+/* §2 — AI voice services --------------------------------------------------- */
+export const AI_VOICE = [
+  {
+    id: 'ai-lite',
+    name: 'AI Receptionist Lite',
+    setup: 14999,
+    monthly: 4999,
+    setupNote: 'one-time setup, including GST',
+    monthlyNote: 'per month, including GST',
+    tagline: 'Answers your calls during business hours so no enquiry is missed.',
+    cta: { label: 'Enquire about AI Receptionist Lite', message: ENQUIRY_MESSAGES.aiLite },
+    includes: [
+      'Business-hours call answering',
+      'Basic FAQs',
+      'Lead name and phone collection',
+      'Call transfer',
+      'One phone number',
+      'One language',
+      'Up to 200 minutes/month',
+    ],
+    extraUsage: '₹8–₹10 per minute, GST included',
+  },
+  {
+    id: 'ai-business',
+    name: 'AI Business Caller',
+    setup: 29999,
+    monthly: 9999,
+    setupNote: 'one-time setup, including GST',
+    monthlyNote: 'per month, including GST',
+    tagline: 'A 24/7 receptionist in Hindi and English that qualifies leads and books appointments.',
+    highlight: true,
+    badge: 'Most chosen',
+    cta: { label: 'Enquire about AI Business Caller', message: ENQUIRY_MESSAGES.aiBusiness },
+    includes: [
+      '24/7 AI receptionist',
+      'Hindi and English',
+      'Missed-call callback',
+      'Appointment requests',
+      'Limited follow-up calls',
+      'Lead qualification',
+      'Basic CRM or Google Sheets integration',
+      'Up to 500 minutes/month',
+    ],
+    extraUsage: '₹7–₹8 per minute, GST included',
+  },
+  {
+    id: 'ai-enterprise',
+    name: 'Enterprise AI Voice',
+    setup: 69999,
+    monthly: 19999,
+    setupNote: 'one-time setup onwards, including GST',
+    monthlyNote: 'per month onwards, including GST',
+    tagline: 'Inbound and outbound calling across branches, languages and call flows.',
+    cta: { label: 'Enquire about Enterprise AI Voice', message: ENQUIRY_MESSAGES.aiEnterprise },
+    includes: [
+      'Inbound and outbound calling',
+      'Multiple call flows',
+      'CRM integration',
+      'Appointment automation',
+      'Multiple languages',
+      'Multiple numbers or branches',
+      'Up to 1,500 minutes/month',
+      'Monthly reports',
+      'Priority support',
+    ],
+    extraUsage: 'Quoted with scope',
+  },
+]
+
+export const AI_VOICE_LIMITS = [
+  'AI voice does not guarantee sales, bookings or conversions.',
+  'Telephony and platform usage must be controlled through monthly minute limits.',
+  'AI monthly fees are separate from website maintenance fees.',
+]
+
+/* §3 — Monthly website maintenance ----------------------------------------- */
+export const MAINTENANCE_PLANS = [
+  {
+    id: 'basic-care',
+    name: 'Basic Care',
+    price: 1499,
+    priceNote: 'per month, including GST',
+    best: 'A new website that needs to stay online and secure.',
+    cta: { label: 'Ask about Basic Care', message: ENQUIRY_MESSAGES.basicCare },
+    includes: ['Backup checks', 'Uptime monitoring', 'Security checks', 'Minor technical fixes'],
+  },
+  {
+    id: 'growth-care',
+    name: 'Growth Care',
+    price: 2999,
+    priceNote: 'per month, including GST',
+    best: 'A business actively publishing and optimizing.',
+    cta: { label: 'Ask about Growth Care', message: ENQUIRY_MESSAGES.growthCare },
+    includes: [
+      'Everything in Basic Care',
+      'Small content updates',
+      'Basic optimization',
+      'Minor layout changes',
+      'Monthly maintenance check',
+    ],
+  },
+  {
+    id: 'priority-care',
+    name: 'Priority Care',
+    price: 5999,
+    priceNote: 'per month, including GST',
+    best: 'A team that cannot afford downtime or slow fixes.',
+    cta: { label: 'Ask about Priority Care', message: ENQUIRY_MESSAGES.priorityCare },
+    includes: [
+      'Everything in Growth Care',
+      'Faster support',
+      'Monthly performance report',
+      'Priority bug fixing',
+      'Strategy review',
     ],
   },
 ]
 
-/* -------------------------------------------------------------------------- */
-/* ADD-ON SERVICES — §6. Enhance any bundle or category.                       */
-/* -------------------------------------------------------------------------- */
+/* §4 — Monthly marketing services ------------------------------------------ */
+export const MARKETING_SERVICES = [
+  { t: 'Google Business Profile management', price: 2999 },
+  { t: 'Local SEO Basic', price: 5999 },
+  { t: 'Local SEO Growth', price: 9999 },
+  { t: 'Social media management', price: 7999 },
+  { t: 'Google Ads management', price: 5999 },
+  { t: 'Meta Ads management', price: 5999 },
+  { t: 'SEO + Google Business Profile', price: 11999 },
+]
+
+export const MARKETING_NOTE =
+  'All monthly, including GST. Advertising budget is not included — for example, Google Ads management is ₹5,999/month and the Google advertising budget is paid separately by the client.'
+
+/* §5 — One-time add-on services -------------------------------------------- */
 export const ADD_ONS = [
-  { t: 'Logo & brand identity design', billing: 'One-time, custom quote' },
-  { t: 'Content writing & photography', billing: 'One-time, custom quote' },
-  { t: 'Google Ads management', billing: 'Monthly, custom quote' },
-  { t: 'Meta Ads management', billing: 'Monthly, custom quote' },
-  { t: 'Monthly SEO packages', billing: 'Monthly, custom quote' },
-  { t: 'Advanced analytics dashboards', billing: 'One-time, custom quote' },
-  { t: 'Multi-language support', billing: 'One-time, custom quote' },
-  { t: 'Video & 3D production', billing: 'One-time, custom quote' },
-  { t: 'Training sessions for your team', billing: 'One-time, custom quote' },
+  { t: 'Extra website page', price: 2499, unit: '' },
+  { t: 'Landing page', price: 3999, unit: '' },
+  { t: 'Logo and branding', price: 6999, unit: 'onwards' },
+  { t: 'Website content writing', price: 1999, unit: 'per page' },
+  { t: 'Google Business Profile setup', price: 4999, unit: '' },
+  { t: 'Local SEO initial setup', price: 7999, unit: '' },
+  { t: 'Booking system', price: 8999, unit: 'onwards' },
+  { t: 'Basic automation', price: 11999, unit: 'onwards' },
+  { t: 'WhatsApp automation', price: 19999, unit: 'onwards' },
+  { t: 'Review generation system', price: 6999, unit: '' },
+  { t: 'Social profile setup', price: 4999, unit: '' },
+  { t: 'Team training', price: 2499, unit: 'per session' },
+  { t: 'Ads account setup', price: 3999, unit: 'per platform' },
+]
+
+/* §6 — Standalone core services -------------------------------------------- */
+export const CORE_SERVICES = [
+  { t: 'Website development', price: '₹23,600' },
+  { t: 'Customer experience automation', price: '₹11,999 onwards' },
+  { t: 'Local SEO and online presence setup', price: '₹7,999 onwards' },
+  { t: 'WhatsApp automation and CRM', price: '₹19,999 onwards' },
+  { t: 'AI voice receptionist', price: '₹14,999 setup + ₹4,999/month' },
+  { t: 'AI business calling', price: '₹29,999 setup + ₹9,999/month' },
+]
+
+export const CORE_SERVICES_NOTE =
+  'These services can be sold separately or added to a package.'
+
+/* §7 — Package examples ---------------------------------------------------- */
+export const PACKAGE_EXAMPLES = [
+  {
+    id: 'ex-basic',
+    title: 'Basic website with AI receptionist',
+    lines: [
+      { k: 'Basic website', v: 23600 },
+      { k: 'AI receptionist setup', v: 14999 },
+    ],
+    initial: 38599,
+    monthly: { k: 'AI monthly service', v: 4999 },
+  },
+  {
+    id: 'ex-business',
+    title: 'Business website with AI caller',
+    lines: [
+      { k: 'Business website', v: 41300 },
+      { k: 'AI Business Caller setup', v: 29999 },
+    ],
+    initial: 71299,
+    monthly: { k: 'AI monthly service', v: 9999 },
+  },
+  {
+    id: 'ex-enterprise',
+    title: 'Enterprise system with AI voice',
+    lines: [
+      { k: 'Enterprise system', v: 70800 },
+      { k: 'Enterprise AI setup', v: 69999 },
+    ],
+    initial: 140799,
+    monthly: { k: 'AI monthly service', v: 19999, note: 'onwards' },
+  },
+]
+
+/* §8 — Third-party costs excluded ------------------------------------------ */
+export const THIRD_PARTY_EXCLUDED = [
+  'Domain registration and renewal',
+  'Hosting renewal',
+  'Premium plugins and software',
+  'WhatsApp API charges',
+  'AI voice platform charges',
+  'Phone number rental',
+  'Telephony charges',
+  'SMS charges',
+  'CRM subscriptions',
+  'Email marketing tools',
+  'Payment gateway charges',
+  'Google/Meta advertising budget',
+  'Stock images, photography and video production',
+  'Additional language work',
+  'Major integrations',
+]
+
+/* §9 — Payment terms ------------------------------------------------------- */
+export const PAYMENT_MILESTONES = [
+  { pct: '50%', when: 'advance to start the project' },
+  { pct: '30%', when: 'after design or system approval' },
+  { pct: '20%', when: 'before final launch' },
+]
+
+export const MONTHLY_TERMS = [
+  'Paid in advance every month',
+  'AI minutes do not carry forward',
+  'Extra usage billed separately',
+  'New features and major changes quoted separately',
+  'Monthly service can be cancelled with 15 days’ notice',
 ]
 
 /* -------------------------------------------------------------------------- */
-/* MONTHLY SUPPORT PLANS — §7. Every bundle includes a free support period;    */
-/* after that these keep systems updated, secure and performing.               */
-/* -------------------------------------------------------------------------- */
-export const SUPPORT_PLANS = [
-  {
-    id: 'starter',
-    name: 'Starter',
-    best: 'Best for a new website that needs to stay online and secure.',
-    includes: 'Updates, uptime monitoring, monthly report',
-    price: 'Custom quote',
-  },
-  {
-    id: 'growth',
-    name: 'Growth',
-    best: 'Best for businesses actively publishing and optimizing.',
-    includes: 'Starter + content updates, optimization, priority support',
-    price: 'Custom quote',
-  },
-  {
-    id: 'scale',
-    name: 'Scale',
-    best: 'Best for teams running continuous growth campaigns.',
-    includes: 'Growth + monthly strategy review, campaigns, everything',
-    price: 'Custom quote',
-  },
-]
-
-/* -------------------------------------------------------------------------- */
-/* HOW BUNDLE PRICING IS BUILT — §4. Indicative standalone values, used only   */
-/* to explain bundle savings. Final pricing depends on scope and timeline.     */
-/* -------------------------------------------------------------------------- */
-export const COMPONENT_VALUES = [
-  { t: 'Website Development (Silver scope)', value: 42000, silver: true, gold: true, platinum: true },
-  { t: 'Smart Customer Experience System', value: 28000, silver: false, gold: true, platinum: true },
-  { t: 'Online Presence & Local SEO', value: 21500, silver: false, gold: true, platinum: true },
-  { t: 'WhatsApp Automation & CRM', value: 25000, silver: false, gold: false, platinum: true },
-  { t: 'Review generation system', value: 6000, silver: false, gold: false, platinum: true },
-  { t: 'Social profile setup', value: 4000, silver: false, gold: false, platinum: true },
-  { t: 'Priority & strategy support', value: 5000, silver: false, gold: false, platinum: true },
-]
-
-export const COMPONENT_VALUES_NOTE =
-  'Component values are indicative and used only to explain bundle savings. Final project pricing always depends on scope, features and timeline.'
-
-/* -------------------------------------------------------------------------- */
-/* 5-STEP GROWTH FRAMEWORK — §8                                                */
+/* 5-STEP GROWTH FRAMEWORK — retained from Services & Pricing v1.1             */
 /* -------------------------------------------------------------------------- */
 export const GROWTH_FRAMEWORK = [
   { n: '01', t: 'Discover', d: 'We study your business, competitors and customers to find the real growth gaps.' },
@@ -489,40 +754,33 @@ export const GROWTH_FRAMEWORK = [
 ]
 
 /* -------------------------------------------------------------------------- */
-/* PRICING FAQ — §9                                                            */
+/* PRICING FAQ                                                                 */
 /* -------------------------------------------------------------------------- */
 export const PRICING_FAQS = [
   {
-    q: 'Why do you not show exact prices?',
-    a: 'Every business is different — scope, pages, features and timelines all vary. We share a clear, itemized quote after understanding your needs, so you pay only for what creates value.',
+    q: 'Do these prices include GST?',
+    a: 'Yes. Every price shown here is the final customer price including 18% GST where applicable. Your invoice shows the taxable value and the GST breakup separately.',
   },
   {
-    q: 'What determines the final pricing?',
-    a: 'The number of pages, features, integrations, design complexity, content needs and timeline. Your free consultation gives us everything needed for an accurate quote.',
+    q: 'What is not included in the price?',
+    a: 'Third-party costs — domain, hosting renewals, WhatsApp API, AI voice platform and telephony charges, SMS, CRM and email tool subscriptions, payment gateway fees, and Google or Meta advertising budgets. These are billed separately and listed in full on the pricing page.',
   },
   {
-    q: 'Do you offer payment plans?',
-    a: 'Yes. Most projects are split into an advance and milestone payments. Flexible options are discussed during the consultation.',
+    q: 'How does payment work?',
+    a: '50% advance to start, 30% after design or system approval, and 20% before final launch. Monthly services are paid in advance each month and can be cancelled with 15 days’ notice.',
   },
   {
-    q: 'Are there any hidden charges?',
-    a: 'No. Your quote includes everything listed. Hosting and domain costs are transparently itemized (and you own both).',
+    q: 'Can I buy one service on its own?',
+    a: 'Yes. Website development, customer experience automation, local SEO, WhatsApp automation and AI voice are all available separately, or you can add them to a package.',
   },
   {
-    q: 'What if I only need a website?',
-    a: 'That is exactly what the Silver bundle covers. You can always add systems and support later.',
+    q: 'Do AI voice minutes carry forward?',
+    a: 'No. Each plan includes a monthly minute allowance — 200, 500 or 1,500 depending on the plan — and unused minutes do not roll over. Extra usage is billed separately at the published per-minute rate.',
   },
-]
-
-/* -------------------------------------------------------------------------- */
-/* PAYMENT TERMS — §10                                                         */
-/* -------------------------------------------------------------------------- */
-export const PAYMENT_TERMS = [
-  'A booking advance confirms your project and reserves your delivery slot.',
-  'The balance is split into milestone payments released as each stage is approved.',
-  'All quotes are itemized; there are no hidden charges.',
-  'Hosting and domain costs are billed transparently and owned by you.',
-  'Refund policy: the advance is refundable if work has not started (within 7 days).',
+  {
+    q: 'Does AI voice guarantee more bookings?',
+    a: 'No. It guarantees that a call is answered and a lead is captured. It cannot guarantee sales, bookings or conversions, and we will not put that in writing to win the job.',
+  },
 ]
 
 export const WHAT_HAPPENS_NEXT = [
@@ -656,7 +914,7 @@ export const DIFFERENTIATORS = [
   },
   {
     title: 'Plain-language honesty',
-    body: 'No guaranteed rankings. No guaranteed leads. If a service is not ready to sell — official WhatsApp automation, voice agents — we say so rather than pretending.',
+    body: 'No guaranteed rankings. No guaranteed leads. AI voice answers calls and captures leads; it does not promise bookings, and we say so in writing rather than implying otherwise.',
   },
   {
     title: 'You own everything',
@@ -773,16 +1031,19 @@ export const FOOTER_LINKS = [
       { label: 'Customer experience system', to: '/services#cx' },
       { label: 'Online presence & SEO', to: '/services#presence' },
       { label: 'WhatsApp automation & CRM', to: '/services#whatsapp' },
+      { label: 'AI voice services', to: '/services#voice' },
     ],
   },
   {
     heading: 'Packages',
     links: [
-      { label: 'Silver · ₹42,000', to: '/pricing#silver' },
-      { label: 'Gold · ₹85,000', to: '/pricing#gold' },
-      { label: 'Platinum · ₹1,05,000', to: '/pricing#platinum' },
+      { label: 'Basic · ₹23,600', to: '/pricing#basic' },
+      { label: 'Business · ₹41,300', to: '/pricing#business' },
+      { label: 'Enterprise · ₹70,800', to: '/pricing#enterprise' },
+      { label: 'AI voice services', to: '/pricing#ai-voice' },
+      { label: 'Monthly maintenance', to: '/pricing#maintenance' },
+      { label: 'Marketing services', to: '/pricing#marketing' },
       { label: 'Add-on services', to: '/pricing#addons' },
-      { label: 'Monthly support plans', to: '/pricing#support' },
     ],
   },
   {
@@ -807,7 +1068,7 @@ export const FOOTER_LINKS = [
   {
     heading: 'Terms',
     links: [
-      { label: 'Pricing basis', to: '/pricing#terms' },
+      { label: 'Pricing basis', to: '/pricing#payment' },
       { label: 'What we never promise', to: '/about#integrity' },
       { label: 'Privacy approach', to: '/about#privacy' },
       { label: 'Request a callback', to: '/contact' },

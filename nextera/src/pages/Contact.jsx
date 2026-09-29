@@ -16,17 +16,18 @@ import useMeta from '../hooks/useMeta'
 const INTERESTS = [
   'A new website',
   'Fixing my current site',
-  'WhatsApp enquiry setup',
-  'Google Business Profile',
+  'WhatsApp automation & CRM',
+  'Google Business Profile & local SEO',
+  'AI voice receptionist',
   'Monthly care & updates',
   'Something else',
 ]
 
 const BUDGETS = [
-  'Under ₹6,000',
-  '₹6,000 – ₹15,000',
-  '₹15,000 – ₹30,000',
-  'Over ₹30,000',
+  'Under ₹25,000',
+  '₹25,000 – ₹45,000',
+  '₹45,000 – ₹75,000',
+  'Over ₹75,000',
   'Not sure yet',
 ]
 
@@ -52,7 +53,7 @@ function buildMessage({ name, business, interest, budget, timeline, note, packag
 export default function Contact() {
   useMeta(
     'Request a free audit',
-    'Request a free website and Google Business Profile audit for your business. No obligation, no cost — usually replied to within one working day.',
+    'Request a free website and Google Business Profile website and growth audit for your business. No obligation, no cost — usually replied to within one working day.',
   )
 
   const [form, setForm] = useState({

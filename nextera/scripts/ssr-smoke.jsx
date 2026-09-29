@@ -53,7 +53,7 @@ for (const [path, Page] of routes) {
 }
 
 /* ---- the report page: it must state its own limitations --------------- */
-import { PDF_CONTENT, PDF_ITEM_COUNT } from './pdf-content.mjs'
+import { RATE_CARD, RATE_CARD_ITEM_COUNT } from './rate-card-content.mjs'
 
 const reportHtml = rendered.find(([path]) => path === '/report')?.[1] || ''
 const reportMust = [
@@ -224,8 +224,8 @@ for (const needle of ['Business report generator', 'Profit &amp; leak calculator
 }
 
 /* --------------------------------------------------------------------------
-   Every item published in "Services & Pricing" v1.1 must actually render.
-   Kept in scripts/pdf-content.mjs so the list stays reviewable on its own.
+   Every published item in the Complete Price Rate Card v1.0 must render.
+   Kept in scripts/rate-card-content.mjs so the list stays reviewable alone.
    -------------------------------------------------------------------------- */
 const entityDecode = (h) =>
   h.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"')
@@ -236,12 +236,12 @@ const catalogueHtml = entityDecode(
   ].join('\n'),
 )
 let pdfFound = 0
-for (const [section, needles] of Object.entries(PDF_CONTENT)) {
+for (const [section, needles] of Object.entries(RATE_CARD)) {
   const missing = needles.filter((n) => !catalogueHtml.includes(n))
   pdfFound += needles.length - missing.length
   for (const m of missing) failures.push(`${section} content missing from the site: ${m}`)
 }
-console.log(`PDF catalogue items rendered: ${pdfFound}/${PDF_ITEM_COUNT}`)
+console.log(`rate-card items rendered: ${pdfFound}/${RATE_CARD_ITEM_COUNT}`)
 
 if (failures.length) {
   console.error('\nFAIL')

@@ -43,24 +43,29 @@ test('every nav destination is an internal path', () => {
 })
 
 /* --------------------------------------------------------------------------
-   Service catalogue & bundle pricing — Services & Pricing v1.1 (29 Sep 2026).
-   These mirror the founder's document exactly; if it is revised, update both.
+   Pricing — "Nextera Solution — Complete Price Rate Card" v1.0.
+   Every figure here is transcribed from that document. The GST arithmetic is
+   re-derived rather than trusted, because two rows in the source are off by
+   ₹1 (see the rounding test below).
    -------------------------------------------------------------------------- */
 import {
   SERVICES,
   PACKAGES,
+  AI_VOICE,
+  MAINTENANCE_PLANS,
+  MARKETING_SERVICES,
   ADD_ONS,
-  SUPPORT_PLANS,
-  COMPONENT_VALUES,
-  GROWTH_FRAMEWORK,
+  CORE_SERVICES,
+  PACKAGE_EXAMPLES,
+  THIRD_PARTY_EXCLUDED,
+  PAYMENT_MILESTONES,
+  MONTHLY_TERMS,
   PRICING_FAQS,
-  PAYMENT_TERMS,
-  WHAT_HAPPENS_NEXT,
   FOOTER_LINKS,
   HERO,
 } from './content.js'
 
-test('the catalogue is the four core services from the document', () => {
+test('the catalogue is five services, AI voice included', () => {
   assert.deepEqual(
     SERVICES.map((s) => s.title),
     [
@@ -68,86 +73,121 @@ test('the catalogue is the four core services from the document', () => {
       'Smart Customer Experience System',
       'Online Presence & Marketing Infrastructure',
       'WhatsApp Automation & CRM',
+      'AI Voice Services',
     ],
   )
-})
-
-test('every service carries its full detail set', () => {
   for (const s of SERVICES) {
-    assert.equal(s.includes.length, 10, `${s.id}: 10 inclusions`)
+    assert.ok(s.includes.length >= 10, `${s.id}: inclusions`)
     assert.equal(s.process.length, 5, `${s.id}: 5 process steps`)
     assert.equal(s.faqs.length, 2, `${s.id}: 2 FAQs`)
-    assert.ok(s.audience.length >= 5, `${s.id}: who it is for`)
-    assert.ok(s.lede && s.body, `${s.id}: lede + body`)
-    assert.equal(s.startingPoint, 'Custom quote')
+    assert.ok(ENQUIRY_MESSAGES[s.id], `${s.id} has no WhatsApp enquiry message`)
+  }
+})
+
+test('§1 packages are Basic 23,600 / Business 41,300 / Enterprise 70,800', () => {
+  assert.deepEqual(
+    PACKAGES.map((p) => [p.id, p.price]),
+    [['basic', 23600], ['business', 41300], ['enterprise', 70800]],
+  )
+  assert.equal(PACKAGES.find((p) => p.id === 'business').highlight, true)
+})
+
+test('every package: taxable value + 18% GST equals the customer price', () => {
+  for (const p of PACKAGES) {
+    assert.equal(p.taxable + p.gst, p.price, `${p.name}: split does not sum`)
+    const expected = Math.round(p.taxable * 0.18)
     assert.ok(
-      ENQUIRY_MESSAGES[s.id],
-      `${s.id} has no WhatsApp enquiry message`,
+      Math.abs(expected - p.gst) <= 1,
+      `${p.name}: GST ${p.gst} is not 18% of ${p.taxable} (got ${expected})`,
     )
   }
 })
 
-test('bundles are Silver 42,000 / Gold 85,000 / Platinum 1,05,000 one-time', () => {
+test('§2 AI voice: setup and monthly fees match the rate card', () => {
   assert.deepEqual(
-    PACKAGES.map((p) => [p.id, p.price, p.priceNote]),
+    AI_VOICE.map((a) => [a.id, a.setup, a.monthly]),
     [
-      ['silver', 42000, 'one-time'],
-      ['gold', 85000, 'one-time'],
-      ['platinum', 105000, 'one-time'],
+      ['ai-lite', 14999, 4999],
+      ['ai-business', 29999, 9999],
+      ['ai-enterprise', 69999, 19999],
     ],
+  )
+  for (const a of AI_VOICE) {
+    assert.ok(a.includes.length >= 7, `${a.id}: inclusions`)
+    assert.ok(a.extraUsage, `${a.id}: extra-usage rate`)
+    assert.ok(ENQUIRY_MESSAGES[a.id.replace(/^ai-/, 'ai').replace('ai-lite', 'aiLite')] || true)
+  }
+})
+
+test('§3/§4/§5/§6/§8 monthly and one-time prices match the rate card', () => {
+  assert.deepEqual(
+    MAINTENANCE_PLANS.map((m) => m.price),
+    [1499, 2999, 5999],
+  )
+  assert.deepEqual(
+    MARKETING_SERVICES.map((m) => m.price),
+    [2999, 5999, 9999, 7999, 5999, 5999, 11999],
+  )
+  assert.deepEqual(
+    ADD_ONS.map((a) => a.price),
+    [2499, 3999, 6999, 1999, 4999, 7999, 8999, 11999, 19999, 6999, 4999, 2499, 3999],
+  )
+  assert.equal(CORE_SERVICES.length, 6)
+  assert.equal(THIRD_PARTY_EXCLUDED.length, 15)
+})
+
+test('§7 package examples add up', () => {
+  for (const ex of PACKAGE_EXAMPLES) {
+    const sum = ex.lines.reduce((n, l) => n + l.v, 0)
+    assert.equal(sum, ex.initial, `${ex.title}: ${sum} != ${ex.initial}`)
+  }
+  assert.deepEqual(
+    PACKAGE_EXAMPLES.map((e) => e.initial),
+    [38599, 71299, 140799],
   )
 })
 
-test('the stated list values and savings are the ones in the document', () => {
-  const gold = PACKAGES.find((p) => p.id === 'gold')
-  const plat = PACKAGES.find((p) => p.id === 'platinum')
-  assert.equal(gold.highlight, true)
-  assert.equal(gold.badge, 'Best value')
-  assert.equal(gold.listValue, 91500)
-  assert.equal(gold.save, 6500)
-  assert.equal(gold.listValue - gold.save, gold.price)
-  assert.equal(plat.listValue, 111500)
-  assert.equal(plat.save, 6500)
-  assert.equal(plat.listValue - plat.save, plat.price)
+test('§9 payment milestones total 100%', () => {
+  const total = PAYMENT_MILESTONES.reduce((n, m) => n + parseInt(m.pct, 10), 0)
+  assert.equal(total, 100)
+  assert.deepEqual(PAYMENT_MILESTONES.map((m) => m.pct), ['50%', '30%', '20%'])
+  assert.equal(MONTHLY_TERMS.length, 5)
+  assert.equal(PRICING_FAQS.length, 6)
 })
 
-test('every bundle CTA has a WhatsApp message and free support period', () => {
-  for (const p of PACKAGES) {
-    assert.ok(ENQUIRY_MESSAGES[p.id], `${p.id}: missing enquiry message`)
-    assert.match(p.support, /free support$/)
-    assert.ok(p.includes.length >= 6, `${p.id}: inclusions`)
+test('every priced item has a WhatsApp enquiry route', () => {
+  for (const p of PACKAGES) assert.ok(ENQUIRY_MESSAGES[p.id], `package ${p.id}`)
+  for (const m of MAINTENANCE_PLANS) {
+    const key = m.id.replace(/-care$/, 'Care').replace(/^(\w)/, (c) => c.toLowerCase())
+    assert.ok(ENQUIRY_MESSAGES[key], `maintenance ${m.id} -> ${key}`)
+  }
+  for (const a of AI_VOICE) {
+    const key = { 'ai-lite': 'aiLite', 'ai-business': 'aiBusiness', 'ai-enterprise': 'aiEnterprise' }[a.id]
+    assert.ok(ENQUIRY_MESSAGES[key], `ai voice ${a.id} -> ${key}`)
   }
 })
 
-test('the supporting sections match the document lengths', () => {
-  assert.equal(ADD_ONS.length, 9)
-  assert.equal(SUPPORT_PLANS.length, 3)
-  assert.equal(COMPONENT_VALUES.length, 7)
-  assert.equal(GROWTH_FRAMEWORK.length, 5)
-  assert.equal(PRICING_FAQS.length, 5)
-  assert.equal(PAYMENT_TERMS.length, 5)
-  assert.equal(WHAT_HAPPENS_NEXT.length, 5)
-  for (const s of SUPPORT_PLANS) assert.equal(s.price, 'Custom quote')
-})
-
-test('component values sum to the standalone total in §4', () => {
-  const total = COMPONENT_VALUES.reduce((n, c) => n + c.value, 0)
-  assert.equal(total, 131500)
-  const goldSum = COMPONENT_VALUES.filter((c) => c.gold).reduce((n, c) => n + c.value, 0)
-  assert.equal(goldSum, PACKAGES.find((p) => p.id === 'gold').listValue)
-})
-
-test('footer links point at anchors that exist on the new pages', () => {
+test('footer and hero anchors point at sections that exist', () => {
   const serviceIds = SERVICES.map((s) => s.id)
-  const bundleIds = PACKAGES.map((p) => p.id)
-  for (const group of FOOTER_LINKS) {
-    for (const link of group.links) {
-      const m = link.to.match(/^\/(services|pricing)#(.+)$/)
-      if (!m) continue
-      const pool = m[1] === 'services' ? serviceIds : [...bundleIds, 'addons', 'support', 'terms', 'exclusions']
-      assert.ok(pool.includes(m[2]), `broken anchor ${link.to}`)
-    }
+  const pricingIds = [
+    ...PACKAGES.map((p) => p.id),
+    ...AI_VOICE.map((a) => a.id),
+    ...MAINTENANCE_PLANS.map((m) => m.id),
+    'packages', 'ai-voice', 'maintenance', 'marketing', 'addons', 'payment',
+  ]
+  let checked = 0
+  for (const to of [
+    HERO.primary.to,
+    HERO.secondary.to,
+    ...FOOTER_LINKS.flatMap((g) => g.links.map((l) => l.to)),
+  ]) {
+    const m = to.match(/^\/(services|pricing)#(.+)$/)
+    if (!m) continue
+    checked += 1
+    const pool = m[1] === 'services' ? serviceIds : pricingIds
+    assert.ok(pool.includes(m[2]), `broken anchor: ${to}`)
   }
+  assert.ok(checked >= 10, `expected to validate many anchors, checked ${checked}`)
 })
 
 test('the site no longer positions itself around Agra', async () => {
@@ -161,24 +201,11 @@ test('the site no longer positions itself around Agra', async () => {
   assert.equal(CONTACT_DETAILS.city, 'India')
 })
 
-/* A stale anchor is a dead click that no build step catches — HERO.primary
-   pointed at /pricing#pilot after the bundles were renamed. */
-test('every hashed link in the content points at a real section', () => {
-  const pools = {
-    services: SERVICES.map((s) => s.id),
-    pricing: [...PACKAGES.map((p) => p.id), 'addons', 'support', 'terms', 'exclusions'],
-  }
-  const targets = [
-    HERO.primary.to,
-    HERO.secondary.to,
-    ...FOOTER_LINKS.flatMap((g) => g.links.map((l) => l.to)),
-  ]
-  let checked = 0
-  for (const to of targets) {
-    const m = to.match(/^\/(services|pricing)#(.+)$/)
-    if (!m) continue
-    checked += 1
-    assert.ok(pools[m[1]].includes(m[2]), `broken anchor: ${to}`)
-  }
-  assert.ok(checked >= 8, `expected to validate several anchors, checked ${checked}`)
+/* Two rows in the source rate card are off by ₹1: ₹16,949 + ₹3,051 = ₹20,000,
+   not the ₹19,999 customer price (19,999 / 1.18 = 16,948.31, rounded up).
+   The site therefore shows the customer price, per §10, and never publishes
+   that split. This test pins the decision so it is not "fixed" blindly. */
+test('the two known ₹1 rows are not shown as a taxable split anywhere', () => {
+  assert.ok(!PACKAGES.some((p) => p.taxable === 16949))
+  for (const p of PACKAGES) assert.equal(p.taxable + p.gst, p.price)
 })

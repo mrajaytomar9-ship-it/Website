@@ -64,7 +64,7 @@ export function AuditMockup() {
           </p>
         </div>
         <div className="text-right">
-          <p className="micro mb-2.5 text-ash3">Fixed by Silver</p>
+          <p className="micro mb-2.5 text-ash3">Fixed by Basic</p>
           <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">4</p>
         </div>
       </div>
@@ -258,7 +258,7 @@ const STAGES = [
 
 export function DeliveryMockup() {
   return (
-    <MockFrame label="Delivery board" meta="Gold bundle">
+    <MockFrame label="Delivery board" meta="Business package">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
         {STAGES.map((s, i) => (
           <div key={s.k} className="relative">

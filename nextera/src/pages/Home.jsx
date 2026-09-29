@@ -779,20 +779,16 @@ function PricingPreview() {
                   <span className="text-sm text-ash3">{p.priceNote}</span>
                 </div>
 
-                <p className="mt-5 text-sm leading-[1.6] text-ash2 text-pretty">
-                  {p.bestFor}
+                <p className="mt-5 text-sm leading-[1.6] text-ash2 text-pretty">{p.tagline}</p>
+                <p className="mt-2 text-xs text-ash3">
+                  Taxable value ₹{p.taxable.toLocaleString('en-IN')} + GST{' '}
+                  ₹{p.gst.toLocaleString('en-IN')}
                 </p>
-                {p.listValue ? (
-                  <p className="mt-2 text-xs text-ash3">
-                    List value ₹{p.listValue.toLocaleString('en-IN')} ·{' '}
-                    <span className="text-mint">you save ₹{p.save.toLocaleString('en-IN')}</span>
-                  </p>
-                ) : null}
 
                 <div className="mt-6 flex items-center gap-2.5 rounded-md border border-rule-faint bg-white/[0.02] px-3.5 py-2.5">
                   <ServiceIcon name="clock" className="h-3.5 w-3.5 shrink-0 text-ash2" />
                   <span className="text-xs text-ash">
-                    Planning range: <span className="text-ink">{p.turnaround}</span>
+                    Includes <span className="text-ink">{p.support}</span> · {p.revisions}
                   </span>
                 </div>
 

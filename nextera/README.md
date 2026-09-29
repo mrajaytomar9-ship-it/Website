@@ -20,7 +20,7 @@ npm run preview  # serve the built bundle locally
 ```
 
 ```bash
-npm test         # 78 assertions: 33 calculator + 29 report + 9 contact + 7 catalogue
+npm test         # 80 assertions: 33 calculator + 29 report + 18 contact & rate card
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -58,46 +58,49 @@ Both values are currently **placeholders**. Your business requirements (BR-013,
 and `SALES-002` in the Sales SOP) explicitly forbid publishing invented contact
 details, so these must be real before the site goes live.
 
-### 2.2 Services, bundles and prices
+### 2.2 Services, packages and prices
 
-The whole catalogue now comes from one document: **"Nextera Solution — Services &
-Pricing" v1.1, 29 September 2026**. Every field in `SERVICES`, `PACKAGES`,
-`ADD_ONS`, `SUPPORT_PLANS`, `COMPONENT_VALUES`, `GROWTH_FRAMEWORK`,
-`PRICING_FAQS`, `PAYMENT_TERMS` and `WHAT_HAPPENS_NEXT` is transcribed from it.
-Nothing on those pages is invented.
+The whole catalogue comes from **"Nextera Solution — Complete Price Rate Card"
+v1.0**. Every figure in `PACKAGES`, `AI_VOICE`, `MAINTENANCE_PLANS`,
+`MARKETING_SERVICES`, `ADD_ONS`, `CORE_SERVICES`, `PACKAGE_EXAMPLES`,
+`THIRD_PARTY_EXCLUDED`, `PAYMENT_MILESTONES` and `MONTHLY_TERMS` is transcribed
+from it. Target market is India Tier 2 and Tier 3; all customer prices include
+18% GST.
 
-| Bundle | Price | List value | You save |
-|---|---|---|---|
-| Silver | ₹42,000 one-time | — | — |
-| Gold (best value) | ₹85,000 one-time | ₹91,500 | ₹6,500 |
-| Platinum | ₹1,05,000 one-time | ₹1,11,500 | ₹6,500 |
+| Package | Taxable | GST | Customer price |
+|---|---:|---:|---:|
+| Basic / Starter | ₹20,000 | ₹3,600 | **₹23,600** |
+| Business | ₹35,000 | ₹6,300 | **₹41,300** |
+| Enterprise | ₹60,000 | ₹10,800 | **₹70,800 onwards** |
 
-They appear in four places, all driven from the same objects:
+AI voice is a setup fee plus a monthly fee: Lite ₹14,999 + ₹4,999/mo, Business
+Caller ₹29,999 + ₹9,999/mo, Enterprise ₹69,999 + ₹19,999/mo onwards. Maintenance
+runs ₹1,499 / ₹2,999 / ₹5,999 per month.
 
-- home page service + bundle previews
-- `/pricing` bundle cards, the §4 component-value table, category starting points,
-  add-ons, support plans, pricing FAQ and payment terms
-- `/services` — one long-form section per service
-- the contact page bundle chips
+Per §10 of the rate card, the site shows the **final GST-inclusive customer
+price**; the taxable-value and GST breakup appears on the invoice (an example
+breakup is rendered on `/pricing`).
 
-Two layers stop this content from drifting:
+> **Two rows in the source rate card are off by ₹1.** Enterprise AI Voice monthly
+> and WhatsApp automation are both quoted as ₹16,949 + ₹3,051 = **₹20,000**, but
+> the customer price is stated as **₹19,999** (19,999 ÷ 1.18 = 16,948.31, rounded
+> up to 16,949). The site shows the ₹19,999 customer price and never publishes
+> that split, so the discrepancy is not visible to customers — but it will show
+> on an invoice if you itemize those two lines. Worth correcting at source.
 
-- `content.test.mjs` (data) — the four titles, the three prices, both
-  list-value/savings pairs, every section length, and that each service and
-  bundle has a WhatsApp enquiry message.
-- `scripts/pdf-content.mjs` + `npm run smoke` (rendered HTML) — **190 individual
-  items** from the document, checked against the actual `/services` and
-  `/pricing` markup. Drop one bullet from `content.js` and the build gate fails
-  naming it. Edit the PDF and the site together, or the gate will not pass.
+Two layers keep this content honest, and they catch different mistakes:
 
-> **One discrepancy in the source document, left as written.** §3 gives Platinum a
-> list value of ₹1,11,500, but the seven component values in §4 sum to ₹1,31,500.
-> Both agree on what you pay (₹1,05,000, save ₹6,500). The site reproduces §3's
-> figures on the bundle card and shows the §4 components in the transparency
-> table. If the intent was ₹1,31,500, change `listValue` on Platinum.
+- `content.test.mjs` (data) — the five service titles, all three package prices,
+  the taxable + GST = total identity for each package, every AI voice setup and
+  monthly fee, and the exact price arrays for maintenance, marketing and all 13
+  add-ons. Change one number and it fails showing both values.
+- `scripts/rate-card-content.mjs` + `npm run smoke` (rendered HTML) — **179
+  items** from the rate card checked against the real `/services` and `/pricing`
+  markup, so something that stops *rendering* is caught even if the data is fine.
 
-Individual service categories are all **"Custom quote"** — the document
-deliberately does not publish per-category prices.
+They are not redundant. Changing Local SEO Growth from ₹9,999 to ₹9,998 is
+invisible to the render check (₹9,999 still appears on the AI voice card) but
+the data test fails immediately. Deleting a bullet entirely is the reverse.
 
 ### 2.3 Work examples
 
@@ -436,7 +439,8 @@ Every claim on the site traces to your business documents:
 | Site content | Source document |
 |---|---|
 | Positioning, hotel/clinic niches | `05_BRD.md` §1, §5 · `03_DECISION_REGISTER.md` §6.1 |
-| Services, bundles, add-ons, support plans, pricing FAQ | `Services & Pricing` v1.1 (29 Sep 2026) §2–§10 |
+| Packages, AI voice, maintenance, marketing, add-ons, payment terms | `Complete Price Rate Card` v1.0 §1–§10 |
+| Service descriptions (who it is for, inclusions, process, FAQs) | `Services & Pricing` v1.1 (29 Sep 2026) §2 |
 | Hotel / clinic sector boundaries | `07_SERVICE_CATALOGUE_AND_PRICING.md` §8 |
 | Revision + payment terms | `07_SERVICE_CATALOGUE_AND_PRICING.md` §9, §10, §12 |
 | Sales process steps | `13_SALES_SOP.md` §5–14 |

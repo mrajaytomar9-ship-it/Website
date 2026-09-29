@@ -35,6 +35,16 @@ const MOCKS = [
   />,
   <ProfileMockup key="m2" />,
   <CareMockup key="m3" />,
+  <PhoneMockup
+    key="m4"
+    title="A call answered at 11:40 PM"
+    accent="ember"
+    lines={[
+      'Incoming call · answered in 2 rings',
+      'Caller: name and number captured',
+      'Appointment requested · forwarded to CRM',
+    ]}
+  />,
 ]
 
 export default function Services() {
@@ -51,9 +61,9 @@ export default function Services() {
         line2="One growth system."
         sub="Each service can be bought on its own, or combined into a bundle for a lower total price. Every engagement starts with understanding your business — not with a template."
         meta={[
-          { l: 'Core services', v: '4' },
-          { l: 'Bundles from', v: '₹42,000' },
-          { l: 'Coverage', v: 'India' },
+          { l: 'Core services', v: '5' },
+          { l: 'Websites from', v: '₹23,600' },
+          { l: 'AI voice from', v: '₹14,999' },
           { l: 'Free first step', v: '30-min consultation' },
         ]}
       >
@@ -288,7 +298,8 @@ function ServiceSection({ service, index, mock, flip = false }) {
                     {service.startingPoint}
                   </p>
                   <p className="mt-2 text-xs leading-[1.6] text-ash3">
-                    Bundled pricing starts at ₹42,000 — see the bundles for a lower combined price.
+                    Including 18% GST where applicable. Also available inside a package — see the
+                    pricing page for the full rate card.
                   </p>
                 </div>
 
