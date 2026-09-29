@@ -344,6 +344,18 @@ transforms, and canvas. Those live in `ui/Cinema.jsx`, built on
 | `ScrollParallax` | Scroll-linked translate, proportional to the section's own travel. |
 | `useScrollSkew` | Leans the marquee by scroll **velocity** (the delta between events, not the absolute position). |
 
+**The artefact mockups run themselves.** Feedback was that the mockups should read
+"like a running video", not a poster. `useDemoLoop(beats)` in `ui/Cinema.jsx`
+drives a single looping timeline per mockup: the audit reveals its rows one at a
+time while the counters climb, the enquiry chat types a message out and waits on
+the typing dots before replying, the delivery board plays its task chips left to
+right with the active stage pulsing, the listing resolves row by row, and the
+care report fills its allowance ticks. Elements are **always rendered** — only
+their opacity/translate animate — so the finished picture is what a crawler, a
+printout or a reduced-motion visitor gets; the loop is purely for people
+watching with motion on. `motion-test` asserts exactly that (SSR audit shows
+`6`, never `0`; the reduced-motion delivery board is the finished board).
+
 **Opacity was the real bug behind "the site looks the same."** Every ambient
 effect in layers 1–4 peaked between alpha `0.022` and `0.16` — below the
 threshold at which a slow animation on a near-black background registers at all.

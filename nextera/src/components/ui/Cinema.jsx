@@ -415,4 +415,34 @@ export function useScrollSkew(max = 5) {
   return !mounted || reduced ? undefined : { skewX }
 }
 
+/* ------------------------------------------------------------- demo loop
+   The mockups are meant to read like a screen recording: statuses advance,
+   chips pop in, messages type out — then it resets and plays again. This hook
+   drives that single timeline. `beats` is the number of steps; the loop holds
+   one tick at the finished state before rewinding.
+
+   Server render and reduced motion both return the finished state, so the full
+   picture is what a crawler, a printout or a reduced-motion visitor sees — the
+   loop is purely for people watching with motion on. */
+export function useDemoLoop(beats, stepMs = 850) {
+  const { mounted, reduced } = useReducedMotion()
+  const [step, setStep] = useState(0)
+
+  useEffect(() => {
+    if (!mounted) return undefined
+    if (reduced) {
+      setStep(beats)
+      return undefined
+    }
+    let s = 0
+    const id = setInterval(() => {
+      s = (s + 1) % (beats + 2)
+      setStep(Math.min(s, beats))
+    }, stepMs)
+    return () => clearInterval(id)
+  }, [mounted, reduced, beats, stepMs])
+
+  return !mounted || reduced ? beats : Math.min(step, beats)
+}
+
 export { m }

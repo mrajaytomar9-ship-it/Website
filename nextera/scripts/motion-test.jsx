@@ -310,6 +310,29 @@ async function main() {
   await mount(React.createElement(EmberField))
   check('EmberField keeps its canvas under reduced motion', html().includes('<canvas'), html().slice(0, 160))
 
+  /* ------------------------------------------- 5. the looping demo mockups
+     Each mockup plays a self-running timeline. The guarantee that matters for
+     crawlers and reduced motion is that the finished state is what is rendered
+     when nothing is playing. */
+  const { AuditMockup, DeliveryMockup } = await import('../src/components/Mockups.jsx')
+
+  const ssrAudit = renderToStaticMarkup(React.createElement(AuditMockup))
+  check('SSR audit shows the full issue count, never zero', ssrAudit.includes('>6<'), ssrAudit.slice(0, 160))
+
+  const ssrDel = renderToStaticMarkup(React.createElement(DeliveryMockup))
+  check(
+    'SSR delivery board renders every chip',
+    ['Accepted 14 Sep', 'QA + final approval'].every((t) => ssrDel.includes(t)),
+    ssrDel.slice(0, 160),
+  )
+
+  setReducedMotion(true)
+  await mount(React.createElement(DeliveryMockup))
+  check(
+    'reduced-motion delivery board is the finished board',
+    html().includes('Accepted 14 Sep') && html().includes('QA + final approval'),
+    html().slice(0, 160),
+  )
   setReducedMotion(false)
 
   await act(async () => root.unmount())

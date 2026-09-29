@@ -1,6 +1,16 @@
 import { Dot } from './ui/Primitives'
-import { CountUp } from './ui/Motion'
 import { WhatsAppGlyph } from './Navbar'
+import { useDemoLoop } from './ui/Cinema'
+
+/* Each mockup runs its own looping timeline so it reads like a screen recording.
+   `vis` turns a boolean into the opacity/translate of one beat. Elements are
+   always rendered (so the text stays in the DOM for crawlers and tests) and only
+   their visibility is animated; under reduced motion every beat is on. */
+const vis = (on) => ({
+  opacity: on ? 1 : 0,
+  transform: on ? 'translateY(0) scale(1)' : 'translateY(6px) scale(0.98)',
+  transition: 'opacity 0.55s var(--ease-out-expo), transform 0.55s var(--ease-out-expo)',
+})
 
 /* =============================================================================
    MOCKUPS
@@ -55,9 +65,11 @@ const SEV = {
 }
 
 export function AuditMockup() {
+  const step = useDemoLoop(AUDIT_ROWS.length + 2, 700)
+  const issues = Math.min(step, AUDIT_ROWS.length)
+  const fixed = Math.min(4, Math.max(0, step - 2))
   return (
     <MockFrame label="Website & listing audit" meta="Sample">
-      {/* a radar sweep reading the page */}
       <span aria-hidden="true" className="scan-y">
         <i />
       </span>
@@ -68,21 +80,21 @@ export function AuditMockup() {
             <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-mint text-mint" />
             Issues found · live scan
           </p>
-          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-ink">
-            <CountUp value={6} />
+          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-ink tabular-nums">
+            {issues}
           </p>
         </div>
         <div className="text-right">
           <p className="micro mb-2.5 text-ash3">Fixed by Basic</p>
-          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">
-            <CountUp value={4} />
+          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint tabular-nums">
+            {fixed}
           </p>
         </div>
       </div>
 
       <div className="mt-6 flex flex-col gap-3.5">
         {AUDIT_ROWS.map((r, i) => (
-          <div key={r.label} className="group">
+          <div key={r.label} className="group" style={vis(step > i)}>
             <div className="flex items-center justify-between gap-3">
               <div className="flex min-w-0 items-center gap-2.5">
                 <Dot tone="ink" className="shrink-0" />
@@ -115,10 +127,10 @@ export function AuditMockup() {
 
 /* ------------------------------------------------- 2. ENQUIRY / PHONE PATH */
 export function EnquiryMockup() {
+  const step = useDemoLoop(5, 950)
   return (
     <MockFrame label="Enquiry path — tested" meta="Mobile" padded={false}>
       <div className="grid grid-cols-1 gap-0 sm:grid-cols-[minmax(0,1fr)_232px]">
-        {/* left: the site strip */}
         <div className="border-b border-rule p-5 sm:border-b-0 sm:border-r">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-mint anim-pulse" />
@@ -127,38 +139,32 @@ export function EnquiryMockup() {
 
           <div className="mt-4 space-y-2.5">
             {[
-              { t: 'What is this place?', done: true },
-              { t: 'What does a stay cost?', done: true },
-              { t: 'Where exactly is it?', done: true },
-            ].map((s) => (
+              { t: 'What is this place?', b: 1 },
+              { t: 'What does a stay cost?', b: 2 },
+              { t: 'Where exactly is it?', b: 3 },
+            ].map((q) => (
               <div
-                key={s.t}
+                key={q.t}
                 className="flex items-center gap-2.5 rounded-md border border-rule-faint bg-white/[0.02] px-3 py-2.5"
+                style={vis(step >= q.b)}
               >
                 <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-mint/15">
                   <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
-                    <path
-                      d="m2.5 6.2 2.2 2.2L9.5 3.6"
-                      stroke="#4fd1a5"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="m2.5 6.2 2.2 2.2L9.5 3.6" stroke="#4fd1a5" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
-                <span className="text-xs text-ash">{s.t}</span>
+                <span className="text-xs text-ash">{q.t}</span>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 flex items-center gap-2.5 rounded-md border border-rule bg-white/[0.03] px-3 py-3">
+          <div className="mt-4 flex items-center gap-2.5 rounded-md border border-rule bg-white/[0.03] px-3 py-3" style={vis(step >= 4)}>
             <WhatsAppGlyph className="h-4 w-4 shrink-0 text-mint" />
             <span className="text-xs text-ink">Message on WhatsApp</span>
             <span className="ml-auto micro text-ash3">1 tap</span>
           </div>
         </div>
 
-        {/* right: the resulting chat */}
         <div className="flex flex-col bg-black/35 p-4">
           <div className="flex items-center gap-2.5 border-b border-rule-faint pb-3">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-mint/15">
@@ -174,26 +180,28 @@ export function EnquiryMockup() {
           </div>
 
           <div className="mt-3.5 flex flex-1 flex-col gap-2.5">
-            <div
-              className="ml-auto max-w-[88%] rounded-md rounded-br-sm px-3 py-2 text-xs leading-[1.5] text-black"
-              style={{ background: 'linear-gradient(135deg,#5fe0b0,#3fc794)' }}
-            >
+            <div className="ml-auto max-w-[88%] rounded-md rounded-br-sm px-3 py-2 text-xs leading-[1.5] text-black" style={{ ...vis(step >= 1), background: 'linear-gradient(135deg,#5fe0b0,#3fc794)' }}>
               Hi — I saw your Stay Options page. Is a room available this weekend for 2 guests?
             </div>
-            <div className="max-w-[86%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-xs leading-[1.5] text-ash">
+            <div className="max-w-[86%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-xs leading-[1.5] text-ash" style={vis(step >= 2)}>
               Namaste! Let me check with the front desk and confirm.
             </div>
-            {/* the owner is always mid-reply */}
-            <div className="max-w-[46%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-mint">
-              <span className="typing" aria-label="typing">
-                <i />
-                <i />
-                <i />
-              </span>
-            </div>
+            {step >= 3 && step < 4 ? (
+              <div className="max-w-[46%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-mint">
+                <span className="typing" aria-label="typing">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </div>
+            ) : (
+              <div className="max-w-[86%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-xs leading-[1.5] text-ash" style={vis(step >= 4)}>
+                Yes — the deluxe room is free both nights. Shall I hold it for you?
+              </div>
+            )}
           </div>
 
-          <div className="mt-3.5 flex items-center gap-1.5 border-t border-rule-faint pt-3 text-xs text-ash3">
+          <div className="mt-3.5 flex items-center gap-1.5 border-t border-rule-faint pt-3 text-xs text-ash3" style={vis(step >= 5)}>
             <span className="h-1 w-1 rounded-full bg-mint" />
             Delivered · 4:41 PM
           </div>
@@ -213,6 +221,7 @@ export function ProfileMockup() {
     { k: 'Category', v: 'Unchanged', good: null },
     { k: 'Reviews', v: '11 awaiting reply', good: false },
   ]
+  const step = useDemoLoop(rows.length + 1, 620)
 
   return (
     <MockFrame label="Google Business Profile" meta="Authorised changes">
@@ -244,8 +253,8 @@ export function ProfileMockup() {
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5 border-t border-rule pt-4">
-        {rows.map((r) => (
-          <div key={r.k} className="flex items-center justify-between gap-2">
+        {rows.map((r, i) => (
+          <div key={r.k} className="flex items-center justify-between gap-2" style={vis(step >= i + 1)}>
             <span className="text-xs text-ash3">{r.k}</span>
             <span
               className={`flex items-center gap-1.5 text-xs ${
@@ -279,56 +288,73 @@ const STAGES = [
 ]
 
 export function DeliveryMockup() {
+  // Flatten every task chip into a single timeline so the board plays left to
+  // right like a recording, holds on a finished board, then rewinds.
+  let acc = 0
+  const beats = STAGES.map((st) => {
+    const start = acc
+    acc += st.items.length
+    return { start, end: acc }
+  })
+  const total = acc + 1
+  const step = useDemoLoop(total, 800)
+
   return (
     <MockFrame label="Delivery board" meta="Business package">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-        {STAGES.map((s, i) => (
-          <div key={s.k} className="relative">
-            <div className="mb-2.5 flex items-center gap-1.5">
-              {s.active ? (
-                <span className="live-dot inline-block h-2 w-2 rounded-full bg-ember text-ember" />
-              ) : (
-                <Dot tone={s.done ? 'mint' : 'ink'} />
-              )}
-              <span
-                className={`text-xs font-medium tracking-[0.02em] ${
-                  s.done || s.active ? 'text-ink' : 'text-ash3'
-                }`}
-              >
-                {s.k}
-              </span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              {s.items.map((it) => (
-                <div
-                  key={it}
-                  className={`rounded-sm border px-2 py-1.5 text-xs leading-[1.35] ${
-                    s.done
-                      ? 'border-mint/20 bg-mint/[0.06] text-mint'
-                      : s.active
-                        ? 'border-ember/25 bg-ember/[0.07] text-ember-soft'
-                        : 'border-rule-faint bg-white/[0.015] text-ash3'
+        {STAGES.map((st, i) => {
+          const { start, end } = beats[i]
+          const done = step >= end + 1
+          const active = !done && step > start
+          return (
+            <div key={st.k} className="relative">
+              <div className="mb-2.5 flex items-center gap-1.5">
+                {active ? (
+                  <span className="live-dot inline-block h-2 w-2 rounded-full bg-ember text-ember" />
+                ) : (
+                  <Dot tone={done ? 'mint' : 'ink'} />
+                )}
+                <span
+                  className={`text-xs font-medium tracking-[0.02em] ${
+                    done || active ? 'text-ink' : 'text-ash3'
                   }`}
                 >
-                  {it}
-                </div>
-              ))}
+                  {st.k}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                {st.items.map((it, j) => (
+                  <div
+                    key={it}
+                    style={vis(step >= start + j + 1)}
+                    className={`rounded-sm border px-2 py-1.5 text-xs leading-[1.35] ${
+                      done
+                        ? 'border-mint/20 bg-mint/[0.06] text-mint'
+                        : active
+                          ? 'border-ember/25 bg-ember/[0.07] text-ember-soft'
+                          : 'border-rule-faint bg-white/[0.015] text-ash3'
+                    }`}
+                  >
+                    {it}
+                  </div>
+                ))}
+              </div>
+              {i < STAGES.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className={`absolute -right-1 top-[7px] hidden h-px w-2 sm:block ${
+                    active ? 'flow-dash w-3' : ''
+                  }`}
+                  style={
+                    active
+                      ? undefined
+                      : { background: done ? 'rgba(79,209,165,0.45)' : 'rgba(255,255,255,0.1)' }
+                  }
+                />
+              )}
             </div>
-            {i < STAGES.length - 1 && (
-              <span
-                aria-hidden="true"
-                className={`absolute -right-1 top-[7px] hidden h-px w-2 sm:block ${
-                  s.active ? 'flow-dash w-3' : ''
-                }`}
-                style={
-                  s.active
-                    ? undefined
-                    : { background: s.done ? 'rgba(79,209,165,0.45)' : 'rgba(255,255,255,0.1)' }
-                }
-              />
-            )}
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       <div className="flow-dash mt-5 h-px w-full" aria-hidden="true" />
@@ -338,10 +364,10 @@ export function DeliveryMockup() {
           { l: 'Revision rounds', v: '2 included' },
           { l: 'Enquiry paths tested', v: '4 of 4' },
           { l: 'Open blockers', v: 'None' },
-        ].map((s) => (
-          <div key={s.l}>
-            <p className="micro mb-1.5 text-ash3">{s.l}</p>
-            <p className="font-display text-base tracking-[-0.02em] text-ink">{s.v}</p>
+        ].map((x) => (
+          <div key={x.l}>
+            <p className="micro mb-1.5 text-ash3">{x.l}</p>
+            <p className="font-display text-base tracking-[-0.02em] text-ink">{x.v}</p>
           </div>
         ))}
       </div>
@@ -358,13 +384,15 @@ const CARE_ROWS = [
 ]
 
 export function CareMockup() {
+  const step = useDemoLoop(9, 700)
+  const used = Math.min(step, 7)
   return (
     <MockFrame label="Monthly care report" meta="Cycle 04">
       <div className="flex items-center justify-between">
         <div>
           <p className="micro mb-2 text-ash3">Allowance used</p>
-          <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
-            <CountUp value={7} />
+          <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink tabular-nums">
+            {used}
             <span className="text-ash3">/12</span>
           </p>
         </div>
@@ -372,10 +400,10 @@ export function CareMockup() {
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
             <span
               key={i}
-              className={i < 7 ? 'tick-live h-6 w-[3px] rounded-full' : 'h-6 w-[3px] rounded-full'}
+              className="h-6 w-[3px] rounded-full"
               style={{
-                background: i < 7 ? '#4fd1a5' : 'rgba(255,255,255,0.1)',
-                '--d': `${i * 0.18}s`,
+                background: i < used ? '#4fd1a5' : 'rgba(255,255,255,0.1)',
+                transition: 'background 0.4s ease',
               }}
             />
           ))}
