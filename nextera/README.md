@@ -31,22 +31,28 @@ npm run check    # everything above + production build + CSS class coverage
 
 ## 2. Before you publish — required changes
 
-### 2.1 Contact details  ⚠️ REQUIRED
+### 2.1 Contact details
 
-Open `src/lib/content.js` and edit `CONTACT_DETAILS`:
+The phone number is **live** (`+91 92343 77413`) and `content.test.mjs` fails the
+build if `phoneRaw` stops being a valid Indian mobile or stops matching
+`phoneDisplay`, because every WhatsApp button on the site is built from it.
+
+The **email is still a placeholder** — replace it in `src/lib/content.js`:
 
 ```js
 export const CONTACT_DETAILS = {
-  phoneDisplay: '+91 98765 43210',   // ← replace
-  phoneRaw:     '+919876543210',     // ← replace (no spaces, country code first)
-  email:        'hello@nexterasolution.in', // ← replace
+  phoneDisplay: '+91 92343 77413',   // live
+  phoneRaw:     '+919234377413',     // live — digits only, country code first
+  email:        'hello@nexterasolution.in', // ← still a placeholder
   // …
 }
 ```
 
-`phoneRaw` is what every WhatsApp deep link uses, so it must be digits only with
-the country code and no `+`, spaces or dashes. Getting this wrong silently breaks
-every WhatsApp button on the site.
+`phoneRaw` carries the country code with a leading `+` and no spaces: the `tel:`
+links use it as-is (and `tel:+91…` is the correct international form), while
+`whatsappLink()` strips every non-digit before building `wa.me/…`. One value
+serves both. `content.test.mjs` asserts the digits, the display string and both
+link forms, because a typo here silently breaks every contact button at once.
 
 Both values are currently **placeholders**. Your business requirements (BR-013,
 and `SALES-002` in the Sales SOP) explicitly forbid publishing invented contact

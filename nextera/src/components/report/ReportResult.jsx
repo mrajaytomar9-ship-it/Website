@@ -264,7 +264,7 @@ export default function ReportResult({
                   autoComplete="tel"
                   value={lead.whatsapp}
                   onChange={(e) => setLead({ ...lead, whatsapp: e.target.value })}
-                  placeholder="98765 43210"
+                  placeholder="e.g. 98123 45678"
                   className="field"
                 />
               </FieldShell>

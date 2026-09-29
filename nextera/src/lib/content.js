@@ -17,9 +17,9 @@
    ============================================================================= */
 
 export const CONTACT_DETAILS = {
-  /* TODO(founder): replace with the real Nextera Solution business number. */
-  phoneDisplay: '+91 98765 43210',
-  phoneRaw: '+919876543210',
+  /* Live business number, supplied by the founder on 2026-09-29. */
+  phoneDisplay: '+91 92343 77413',
+  phoneRaw: '+919234377413',
   /* TODO(founder): replace with the real monitored business email. */
   email: 'hello@nexterasolution.in',
   city: 'Agra',
