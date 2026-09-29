@@ -24,7 +24,7 @@ import Button from '../components/ui/Button'
 import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
 import { SectionHead } from '../components/ui/Primitives'
-import { Cascade, Spotlight } from '../components/ui/Motion'
+import { Cascade, DriftLight, Shine, Spotlight } from '../components/ui/Motion'
 import useMeta from '../hooks/useMeta'
 
 const Tick = ({ tone = '#4fd1a5' }) => (
@@ -107,12 +107,14 @@ export default function Pricing() {
                   id={p.id}
                   ember={p.highlight}
                   tilt={3}
-                  className={`lit lit-hover edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                  className={`lit lit-hover shine edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
                     p.highlight
-                      ? 'ring-pulse border-ember/35 bg-ember/[0.04]'
+                      ? 'breathe border-ember/35 bg-ember/[0.04]'
                       : 'border-rule bg-void'
                   }`}
                 >
+                  <Shine index={i} />
+                  <DriftLight />
                   {p.badge && (
                     <span className="micro absolute right-7 top-7 rounded-full border border-ember/35 bg-ember/[0.1] px-3 py-1 text-ember-soft">
                       {p.badge}
@@ -210,12 +212,13 @@ export default function Pricing() {
                   id={a.id}
                   ember={a.highlight}
                   tilt={3}
-                  className={`lit lit-hover edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                  className={`lit lit-hover shine edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
                     a.highlight
-                      ? 'ring-pulse border-ember/35 bg-ember/[0.04]'
+                      ? 'breathe border-ember/35 bg-ember/[0.04]'
                       : 'border-rule bg-void'
                   }`}
                 >
+                  <Shine index={i + 2} tempo={11} />
                   {a.badge && (
                     <span className="micro absolute right-7 top-7 rounded-full border border-ember/35 bg-ember/[0.1] px-3 py-1 text-ember-soft">
                       {a.badge}
@@ -307,8 +310,9 @@ export default function Pricing() {
                 <Spotlight
                   as="div"
                   id={p.id}
-                  className="lit lit-hover flex h-full scroll-mt-28 flex-col rounded-xl border border-rule bg-void p-7"
+                  className="lit lit-hover shine relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border border-rule bg-void p-7"
                 >
+                  <Shine index={i + 3} tempo={12} />
                   <h3 className="font-display text-xl tracking-[-0.03em] text-ink">{p.name}</h3>
                   <p className="mt-3 text-sm leading-[1.6] text-ash2 text-pretty">{p.best}</p>
 

@@ -60,6 +60,8 @@ async function main() {
     Magnetic,
     Parallax,
     CursorGlow,
+    Shine,
+    DriftLight,
   } = await import('../src/components/ui/Motion.jsx')
 
   const host = dom.window.document.getElementById('root')
@@ -154,9 +156,30 @@ async function main() {
   await mount(React.createElement(CursorGlow))
   check('CursorGlow mounts a light layer', html().includes('fixed'), html().slice(0, 160))
 
+  /* --------------------------------------------- 2c. the living-light layer */
+  setReducedMotion(false)
+  await act(async () => {})
+
+  await mount(React.createElement(Shine, { index: 2 }))
+  check('Shine renders a moving light layer', html().includes('shine-layer'), html())
+  check(
+    'Shine staggers by index so a grid does not flash in unison',
+    html().includes('animationDelay') || html().includes('animation-delay'),
+    html(),
+  )
+
+  await mount(React.createElement(DriftLight))
+  check('DriftLight renders a drifting glow layer', html().includes('drift-light-layer'), html())
+
   setReducedMotion(true)
   await act(async () => {})
   check('CursorGlow unmounts when the preference changes to reduced', html().trim() === '', html())
+
+  await mount(React.createElement(Shine, { index: 1 }))
+  check('Shine renders nothing when motion is reduced', html().trim() === '', html())
+
+  await mount(React.createElement(DriftLight))
+  check('DriftLight renders nothing when motion is reduced', html().trim() === '', html())
 
   await mount(
     React.createElement(SplitLines, { lines: ['Calm headline'], className: 't-page' }),

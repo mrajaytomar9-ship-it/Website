@@ -32,6 +32,7 @@ import {
   CountUp,
   Magnetic,
   Parallax,
+  Shine,
   SplitLines,
 } from '../components/ui/Motion'
 import { Meter } from '../components/tools/fields'
@@ -60,7 +61,9 @@ function Hero() {
           <Reveal delay={60}>
             <div className="inline-flex items-center gap-2.5 rounded-full border border-rule bg-white/[0.025] px-4 py-2">
               <ServiceIcon name="pin" className="h-3.5 w-3.5 shrink-0 text-ash2" />
-              <span className="micro text-ash2">India · Hotels · Clinics · Restaurants · Institutes</span>
+              <span className="micro text-shimmer">
+                India · Hotels · Clinics · Restaurants · Institutes
+              </span>
             </div>
           </Reveal>
 
@@ -195,9 +198,10 @@ function ServicesGrid() {
         <div className="mt-16 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2">
           {SERVICES.map((s, i) => (
             <Reveal key={s.id} delay={i * 90}>
-              <article className="cq-wrap group relative flex h-full flex-col bg-void p-8 transition-colors duration-500 hover:bg-coal lg:p-10">
+              <article className="shine cq-wrap group relative flex h-full flex-col overflow-hidden bg-void p-8 transition-colors duration-500 hover:bg-coal lg:p-10">
+                <Shine index={i} tempo={10} />
                 <div className="flex items-start justify-between gap-5">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
+                  <span className="icon-pulse flex h-12 w-12 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink transition-colors duration-500 group-hover:border-ember/30 group-hover:text-ember-soft">
                     <ServiceIcon name={s.icon} className="h-[21px] w-[21px]" />
                   </span>
                 </div>

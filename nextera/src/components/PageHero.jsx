@@ -25,7 +25,7 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
             <Reveal delay={50}>
               <div className="mb-7 flex items-center gap-3">
                 <span className="h-px w-7 bg-rule-strong" />
-                <span className="micro text-ash2">{eyebrow}</span>
+                <span className="micro text-shimmer">{eyebrow}</span>
               </div>
             </Reveal>
           )}

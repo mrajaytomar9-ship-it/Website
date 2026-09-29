@@ -16,6 +16,10 @@ export default function CtaBand({
 }) {
   return (
     <section className="relative">
+      {/* A hairline with light travelling along it, marking the last panel on
+          the page. Two streaks, offset, so it never reads as a metronome. */}
+      <div aria-hidden="true" className="streak h-px w-full bg-rule" />
+
       {showHatch && (
         <div className="shell">
           <Rule hatch />

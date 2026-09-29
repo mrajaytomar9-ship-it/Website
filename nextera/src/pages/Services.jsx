@@ -204,7 +204,7 @@ function ServiceSection({ service, index, mock, flip = false }) {
             {/* copy */}
             <Reveal className={`cq-wrap ${flip ? 'lg:order-2' : ''}`}>
               <div className="flex items-center gap-3.5">
-                <span className="flex h-11 w-11 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink">
+                <span className="icon-pulse flex h-11 w-11 items-center justify-center rounded-md border border-rule bg-white/[0.03] text-ink">
                   <ServiceIcon name={service.icon} className="h-5 w-5" />
                 </span>
                 <span className="micro text-ash3">Service 2.{index + 1}</span>

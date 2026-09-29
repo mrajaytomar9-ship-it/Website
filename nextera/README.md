@@ -21,7 +21,7 @@ npm run preview  # serve the built bundle locally
 
 ```bash
 npm test         # 80 assertions: 33 calculator + 29 report + 18 contact & rate card
-npm run test:motion   # 24 checks: motion mounts, reduced-motion collapses, SSR is honest
+npm run test:motion   # 29 checks: motion mounts, reduced-motion collapses, SSR is honest
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -235,7 +235,39 @@ used by `.glow-ember`). Each is layered — two tight shadows plus a wide soft o
 | `.cascade` | children arriving one after another |
 | `.ring-pulse` | breathing ember ring on the recommended card |
 | `.edge-light` | a highlight running along a surface's top edge on hover |
+| `.shine` + `.shine-layer` | a light band crossing a surface on a long loop |
+| `.breathe` | a shadow that slowly deepens and releases |
+| `.drift-light` + `.drift-light-layer` | a glow behind a panel that wanders |
+| `.icon-pulse` | a slow glow pulse on small iconography |
+| `.text-shimmer` | a light band passing through display text |
+| `.streak` | light travelling along a hairline rule |
+| `.aurora` | a slow morphing background field |
 | `.num-tab` | tabular figures, so animating numbers do not jitter |
+
+**Living light** is the layer that keeps moving without being asked. Two cost
+rules govern it, because continuous animation is where a site starts to
+fan-spin: transform and opacity are composited and free; `box-shadow` and
+`background-position` repaint, so `.breathe` and `.text-shimmer` are reserved
+for one or two featured elements and never used across a grid of cards.
+`Shine`'s `index` staggers neighbours by ~1.45s so a row of cards reads as light
+moving through a room rather than a strobe.
+
+**Why the light layers are elements, not pseudo-elements.** A surface has
+exactly one `::before` and one `::after`, and `.spotlight`, `.sheen` and
+`.edge-light` already claim them. A second rule for the same pseudo-element does
+not merge — it overwrites the first one's `background` outright, so the cursor
+light would silently vanish from any card that also got a sweep. `Shine` and
+`DriftLight` render real elements instead. `npm run check` runs
+`scripts/pseudo-check.mjs`, which collects every class that styles a
+pseudo-element and fails if any element in `src/` carries two of them on the
+same one.
+
+**Gradient-clipped text needs an escape hatch.** `.fade-line` and
+`.text-shimmer` both paint text with a clipped background and set the colour to
+`transparent`. Printers skip backgrounds by default and forced-colors mode drops
+background images, so without an explicit reset the second line of every
+headline came off the page invisible. Both now fall back to solid text in
+`@media print` and `@media (forced-colors: active)`.
 
 The React side lives in `src/components/ui/Motion.jsx`: `Spotlight`, `CountUp`,
 `ScrollProgress`, `Ambient`, `SplitLines`, `Cascade`, `Magnetic`, `Parallax`,
@@ -269,7 +301,7 @@ mismatch for reduced-motion users, whose client tree omits it. `CountUp`
 likewise starts at its final value, so the server, the printed page and a
 no-JS reader all see the real price rather than a zero.
 
-`npm run test:motion` (24 checks, part of `npm run check`) verifies all of it:
+`npm run test:motion` (29 checks, part of `npm run check`) verifies all of it:
 that the effects mount and carry their classes, that reduced motion collapses
 every one of them, and that SSR prints the true figure, the true headline and no
 scroll bar. It caught both SSR bugs above on its first run, and later caught

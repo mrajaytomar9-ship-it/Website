@@ -263,6 +263,19 @@ export function Ambient({ className = '' }) {
         className="orb orb-cool anim-orb"
         style={{ width: 460, height: 460, top: '22%', right: '-6%', animationDelay: '-6s' }}
       />
+      {/* A third, slower field so the background never settles into a loop the
+          eye can predict. */}
+      <div
+        className="orb orb-ember aurora"
+        style={{
+          width: 620,
+          height: 620,
+          top: '38%',
+          left: '34%',
+          opacity: 0.45,
+          animationDelay: '-9s',
+        }}
+      />
     </div>
   )
 }
@@ -518,4 +531,40 @@ export function Parallax({ children, speed = 0.12, className = '' }) {
       {children}
     </div>
   )
+}
+
+/* ==========================================================================
+   Living light — layers that keep moving on their own.
+
+   These are real elements rather than CSS pseudo-elements on purpose. A
+   surface has exactly one ::before and one ::after, and .spotlight, .sheen and
+   .edge-light already claim them. A second rule for the same pseudo-element
+   does not merge — it silently overwrites the first one's background, so the
+   cursor light would vanish from any card that also got a sweep.
+   ========================================================================== */
+
+/**
+ * Shine — a light band crossing a surface on a long loop. `index` staggers
+ * neighbours so a grid of cards does not flash in unison, which is what makes
+ * a row of them read as a room with light moving through it rather than a
+ * strobe.
+ */
+export function Shine({ index = 0, tempo = 9 }) {
+  const { mounted, reduced } = useReducedMotion()
+  if (!mounted || reduced) return null
+  return (
+    <span
+      aria-hidden="true"
+      className="shine-layer"
+      style={{ animationDelay: `${-(index * 1.45).toFixed(2)}s`, animationDuration: `${tempo}s` }}
+    />
+  )
+}
+
+/** DriftLight — a soft glow behind a panel that wanders, so the shadow it
+ *  casts looks like it comes from a source that is slowly moving. */
+export function DriftLight({ className = '' }) {
+  const { mounted, reduced } = useReducedMotion()
+  if (!mounted || reduced) return null
+  return <span aria-hidden="true" className={`drift-light-layer ${className}`} />
 }

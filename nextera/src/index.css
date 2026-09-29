@@ -454,6 +454,133 @@
     transform: scaleX(1);
   }
 
+  /* ========================================================================
+     LIVING LIGHT — effects that keep moving without being asked.
+
+     Two cost rules, because continuous animation is where a site starts to
+     fan-spin:
+
+     - Transform and opacity are free. A pseudo-element that slides is
+       composited on the GPU and never touches layout.
+     - box-shadow and background-position are NOT. They repaint. Where an
+       effect genuinely needs them (.breathe, .text-shimmer) it is used on a
+       small number of elements at a slow tempo, never on a grid of cards.
+
+     Every rule in this block is switched off wholesale under
+     prefers-reduced-motion, at the bottom of the file.
+     ======================================================================== */
+
+  /* A light band crossing a surface on a long loop — like light moving
+     through a room. Pure transform, so it is the cheapest thing here. */
+  /* .shine clips; the moving light is a real child element (.shine-layer),
+     not a pseudo-element. Pseudo-elements are a scarce resource — .spotlight
+     already owns ::after on a card, and two rules for the same ::after
+     silently overwrite each other's background. */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine-layer {
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: 38%;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.05),
+      transparent
+    );
+    transform: translateX(-160%) skewX(-12deg);
+    animation: shineCross 9s var(--ease-out-expo) infinite;
+    z-index: 2;
+  }
+
+  /* A shadow that breathes: the surface reads as hovering at slightly
+     different heights over time. box-shadow repaints, so this belongs on one
+     or two featured cards, not on every card in a grid. */
+  .breathe {
+    animation: breatheShadow 7s ease-in-out infinite;
+  }
+
+  /* A soft light behind a panel that slowly drifts, so the shadow it casts
+     seems to come from a source that is moving. Transform only. */
+  .drift-light {
+    position: relative;
+  }
+  /* Real element again, for the same reason: .sheen and .edge-light both
+     already claim ::before on the surfaces this would sit on. */
+  .drift-light-layer {
+    position: absolute;
+    inset: -14% -6%;
+    pointer-events: none;
+    background: radial-gradient(
+      58% 58% at 50% 46%,
+      rgba(232, 146, 47, 0.13),
+      transparent 72%
+    );
+    filter: blur(34px);
+    z-index: 0;
+    animation: driftLight 13s ease-in-out infinite;
+  }
+
+  /* A slow glow pulse on small iconography. */
+  .icon-pulse {
+    animation: iconGlow 5.4s ease-in-out infinite;
+  }
+
+  /* A light band passing through display text. background-position repaints,
+     so this is reserved for one or two lines, not body copy. */
+  .text-shimmer {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-ash2) 0%,
+      var(--color-ash2) 38%,
+      var(--color-ink) 48%,
+      var(--color-ash2) 58%,
+      var(--color-ash2) 100%
+    );
+    background-size: 260% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmerText 8.5s ease-in-out infinite;
+  }
+
+  /* Thin light streaks crossing a band, for section separators. */
+  .streak {
+    position: relative;
+    overflow: hidden;
+  }
+  .streak::before,
+  .streak::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 34%;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(232, 146, 47, 0.75),
+      transparent
+    );
+    animation: streakRun 11s linear infinite;
+  }
+  .streak::after {
+    animation-delay: -5.5s;
+    opacity: 0.55;
+  }
+
+  /* A second, slower aurora layer for hero backgrounds. */
+  .aurora {
+    animation: auroraShift 24s ease-in-out infinite;
+  }
+
   /* Figures that change should not jitter horizontally. */
   .num-tab {
     font-variant-numeric: tabular-nums;
@@ -658,6 +785,29 @@
   main a {
     text-decoration: underline;
   }
+
+  /* Both of these paint text with a clipped background and set the colour to
+     transparent. Printers skip backgrounds by default, so without this reset
+     the second line of every headline — and every shimmering eyebrow — comes
+     off the page invisible. */
+  .fade-line,
+  .text-shimmer {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: #000;
+  }
+}
+
+/* Forced-colors (Windows high contrast) replaces colours with system ones and
+   drops background images, which would make the same clipped-text effects
+   render as blank space. */
+@media (forced-colors: active) {
+  .fade-line,
+  .text-shimmer {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
 }
 
 /* ---------- Animations ---------- */
@@ -758,6 +908,90 @@
     transform: translate3d(0, -26px, 0) scale(1.06);
   }
 }
+@keyframes shineCross {
+  0% {
+    transform: translateX(-160%) skewX(-12deg);
+  }
+  55%,
+  100% {
+    transform: translateX(360%) skewX(-12deg);
+  }
+}
+@keyframes breatheShadow {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-soft),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-lift),
+      0 0 44px -18px rgba(232, 146, 47, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+@keyframes driftLight {
+  0%,
+  100% {
+    transform: translate3d(-4%, 0, 0) scale(1);
+    opacity: 0.75;
+  }
+  33% {
+    transform: translate3d(5%, -4%, 0) scale(1.08);
+    opacity: 1;
+  }
+  66% {
+    transform: translate3d(-2%, 5%, 0) scale(0.96);
+    opacity: 0.6;
+  }
+}
+@keyframes iconGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 146, 47, 0);
+    border-color: var(--color-rule);
+  }
+  50% {
+    box-shadow: 0 0 22px -6px rgba(232, 146, 47, 0.5);
+    border-color: rgba(232, 146, 47, 0.34);
+  }
+}
+@keyframes shimmerText {
+  0% {
+    background-position: 180% 0;
+  }
+  100% {
+    background-position: -80% 0;
+  }
+}
+@keyframes streakRun {
+  0% {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(320%);
+    opacity: 0;
+  }
+}
+@keyframes auroraShift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.12) rotate(6deg);
+    opacity: 1;
+  }
+}
 @keyframes ringPulse {
   0%,
   100% {
@@ -833,5 +1067,28 @@
   .ring-pulse {
     animation: none;
     box-shadow: var(--shadow-ember);
+  }
+  /* The whole living-light block: nothing here carries information, so it all
+     stops. .text-shimmer has to fall back to a solid colour rather than a
+     transparent one, or reduced-motion readers would get invisible text. */
+  .shine-layer,
+  .drift-light-layer,
+  .streak::before,
+  .streak::after {
+    display: none;
+  }
+  .breathe,
+  .icon-pulse,
+  .aurora {
+    animation: none;
+  }
+  .breathe {
+    box-shadow: var(--shadow-soft);
+  }
+  .text-shimmer {
+    animation: none;
+    background-image: none;
+    color: var(--color-ash2);
+    -webkit-text-fill-color: currentColor;
   }
 }
