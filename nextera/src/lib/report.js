@@ -290,7 +290,7 @@ export function buildChecks(input) {
     status: parsed.maps.ok ? 'ok' : 'missing',
     weight: 5,
     effort: 'low',
-    finding: parsed.maps.ok ? 'You have a Google profile link.' : 'No Google profile link — for most Agra businesses this is the single biggest source of enquiries.',
+    finding: parsed.maps.ok ? 'You have a Google profile link.' : 'No Google profile link — for most local businesses this is the single biggest source of enquiries.',
     fix: 'Claim or create the profile on Google, verify it, and fill every field including timings and categories.',
   })
 
@@ -471,7 +471,7 @@ export function buildChecks(input) {
     weight: 1,
     effort: 'high',
     finding: isAnswered(p.languages) ? `Handled in ${formatNumber(Math.round(asNum(p.languages)))} language(s).` : 'Not given.',
-    fix: 'Hindi alongside English is usually enough in Agra; say on the page that you reply in both.',
+    fix: 'Hindi alongside English is usually enough in India; say on the page that you reply in both.',
   })
 
   /* --- money ----------------------------------------------------------- */
@@ -737,7 +737,7 @@ export function defaultInput(typeId = 'hotel') {
   return {
     name: '',
     typeId,
-    city: 'Agra',
+    city: '',
     links: { website: '', maps: '', ota: '', listing: '' },
     presence: {
       photos: '',

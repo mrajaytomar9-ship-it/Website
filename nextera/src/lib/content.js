@@ -22,8 +22,11 @@ export const CONTACT_DETAILS = {
   phoneRaw: '+919234377413',
   /* TODO(founder): replace with the real monitored business email. */
   email: 'hello@nexterasolution.in',
-  city: 'Agra',
-  region: 'Uttar Pradesh',
+  /* Location changed from "Agra" to a national footprint on the founder's
+     instruction, 2026-09-29. The Services & Pricing v1.1 document lists
+     "Jaipur, Rajasthan, India" — confirm which to use. */
+  city: 'India',
+  region: '',
   country: 'India',
   /* Response-time expectation. Support hours are still UNDECIDED per DEC-047,
      so this is deliberately soft rather than a contractual promise. */
@@ -40,12 +43,22 @@ export function whatsappLink(message) {
 export const ENQUIRY_MESSAGES = {
   general:
     "Hi Nextera Solution, I found you online. I'm interested in improving my business's website and enquiry path. Could we talk?",
-  pilot:
-    "Hi Nextera Solution, I'd like details about the Presence Pilot package (one-page website + WhatsApp enquiry).",
-  foundation:
-    "Hi Nextera Solution, I'd like details about the Presence Foundation package (multi-page website + Google Business Profile).",
-  care:
-    "Hi Nextera Solution, I have an existing website and I'm interested in Care & Presence (monthly maintenance).",
+  silver:
+    "Hi Nextera Solution, I'd like details about the Silver bundle (₹42,000 — website development).",
+  gold:
+    "Hi Nextera Solution, I'd like details about the Gold bundle (₹85,000 — website + customer experience + online presence).",
+  platinum:
+    "Hi Nextera Solution, I'd like details about the Platinum bundle (₹1,05,000 — the complete growth system).",
+  web:
+    "Hi Nextera Solution, I'd like a quote for premium website development & database.",
+  cx:
+    "Hi Nextera Solution, I'd like a quote for the smart customer experience system (enquiry automation & follow-ups).",
+  presence:
+    "Hi Nextera Solution, I'd like a quote for online presence & marketing infrastructure (local SEO, Google Business Profile, reviews).",
+  whatsapp:
+    "Hi Nextera Solution, I'd like a quote for WhatsApp automation & CRM.",
+  support:
+    "Hi Nextera Solution, I'd like details about your monthly support plans (Starter / Growth / Scale).",
   tools:
     "Hi Nextera Solution — I ran my numbers through the free profit & leak calculator on your site. Could you sanity-check what it is telling me?",
   report:
@@ -88,13 +101,13 @@ export const NICHES = [
 export const HERO = {
   line1: 'Your business is easy to find.',
   line2: 'Hard to contact.',
-  sub: 'Nextera Solution builds the website, the WhatsApp enquiry path and the Google Business Profile that turn a search into a real conversation — for hotels and clinics across Agra.',
-  primary: { label: 'Start with the Pilot', to: '/pricing#pilot' },
+  sub: 'Nextera Solution builds the website, the automation and the online presence that turn a search into a real conversation — for ambitious businesses across India.',
+  primary: { label: 'See the bundles', to: '/pricing#silver' },
   secondary: { label: 'Request a free audit', to: '/contact' },
   stats: [
-    { value: '3–5', unit: 'days', label: 'Pilot delivery, after inputs are in' },
-    { value: '50%', unit: 'advance', label: 'Balance due before public launch' },
-    { value: '2', unit: 'rounds', label: 'Consolidated revision rounds included' },
+    { value: '₹42,000', unit: 'from', label: 'Silver bundle, one-time' },
+    { value: '1–2', unit: 'weeks', label: 'Typical website delivery, by scope' },
+    { value: '6', unit: 'months', label: 'Free support included with Platinum' },
   ],
 }
 
@@ -127,233 +140,397 @@ export const PROBLEMS = [
 /* -------------------------------------------------------------------------- */
 /* SERVICES — from 07_SERVICE_CATALOGUE_AND_PRICING.md §4                     */
 /* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/* SERVICE CATALOGUE — Nextera Solution "Services & Pricing" v1.1, §2          */
+/* Four core categories. Every field below is transcribed from that document;   */
+/* nothing is invented. Each can be bought alone or combined into a bundle.    */
+/* -------------------------------------------------------------------------- */
 export const SERVICES = [
   {
     id: 'web',
     icon: 'window',
-    title: 'Websites',
-    lede: 'One-page presence or a proper small multi-page site, built mobile-first around a single goal: a clear, low-friction enquiry path.',
-    points: [
+    title: 'Premium Website Development & Database',
+    lede: 'Premium digital storefronts built to convert visitors into customers.',
+    body: 'Your website is your 24/7 salesperson. We build fast, secure, premium websites engineered to build trust and turn visitors into paying customers — not just pretty pages that sit there.',
+    audience: [
+      'Hotels & Resorts',
+      'Clinics & Healthcare',
+      'Restaurants',
+      'Service Businesses',
+      'Educational Institutes',
+    ],
+    includes: [
+      'Custom website design (no templates)',
+      'Online booking / enquiry system',
+      'Fast loading — under 2.5 seconds',
+      'Database & content management (CMS)',
+      'Mobile-first responsive design',
+      'Google Maps, reviews & trust badges',
+      'SEO-ready structure from day one',
+      'Speed optimization & performance tuning',
+      'Lead capture forms & WhatsApp integration',
+      'Basic analytics & conversion tracking',
+    ],
+    process: [
+      'We study your business, competitors and customers',
+      'We design a custom wireframe and visual concept for your approval',
+      'We build, test and optimize your website',
+      'We deploy and connect analytics',
+      'We support, update and optimize as you grow',
+    ],
+    faqs: [
       {
-        t: 'One responsive page',
-        d: 'Up to six standard content sections, one primary language, your logo, colours and approved content.',
+        q: 'How long does website development take?',
+        a: 'Most websites are delivered in 1–2 weeks depending on scope. A custom timeline is shared before work starts.',
       },
       {
-        t: 'Small multi-page site',
-        d: 'Up to five standard pages on a shared design system — Home, Stay/Room Options, Property, Location, Contact.',
+        q: 'Will my website work on mobile?',
+        a: 'Yes. Every website is mobile-first and tested on real devices. Most of your customers will visit from a phone.',
+      },
+    ],
+    /* Priced separately — drawn from the document's Add-On Services list. */
+    notIncluded: [
+      'Logo & brand identity design',
+      'Content writing & photography',
+      'Multi-language support',
+      'Video & 3D production',
+    ],
+    startingPoint: 'Custom quote',
+  },
+  {
+    id: 'cx',
+    icon: 'chat',
+    title: 'Smart Customer Experience System',
+    lede: 'Automated systems that answer, follow up and convert — even at 2 AM.',
+    body: 'Most businesses lose customers because they respond too late. Our smart systems capture enquiries instantly, follow up automatically and nurture leads until they are ready to buy.',
+    audience: [
+      'Clinics & Doctors',
+      'Hotels',
+      'Real Estate',
+      'Consultants',
+      'Coaches & Trainers',
+    ],
+    includes: [
+      'Instant enquiry response automation',
+      'Repeated-customer loyalty automation',
+      'Automated follow-up sequences',
+      'Patient / client follow-up system',
+      'Appointment booking automation',
+      'Lead scoring & prioritization',
+      'Smart reminders (SMS / WhatsApp)',
+      'Detailed reports on response times',
+      'Customer feedback & review generation',
+      'Multi-channel inbox (all in one place)',
+    ],
+    process: [
+      'We map your customer journey and find the gaps',
+      'We design an automated system for each stage',
+      'We set up and connect all tools',
+      'We test every flow end-to-end',
+      'We monitor results and refine monthly',
+    ],
+    faqs: [
+      {
+        q: 'Do I need to change my current tools?',
+        a: 'Not necessarily. We build around what you already use and add what is missing.',
       },
       {
-        t: 'Enquiry paths that work',
-        d: 'Click-to-WhatsApp, an enquiry form, and up to two agreed entry points using one defined routing method.',
+        q: 'How fast can responses be automated?',
+        a: 'Instant. The moment an enquiry arrives, your automated reply is sent — usually within 5 seconds.',
+      },
+    ],
+    notIncluded: ['Advanced analytics dashboards', 'Training sessions for your team'],
+    startingPoint: 'Custom quote',
+  },
+  {
+    id: 'presence',
+    icon: 'pin',
+    title: 'Online Presence & Marketing Infrastructure',
+    lede: 'Get found, get trusted and get chosen — across Google and social.',
+    body: 'Having a website is not enough if customers cannot find you. We build your complete digital presence infrastructure: search visibility, reviews, local listings and marketing foundations.',
+    audience: [
+      'Local Businesses',
+      'Retail',
+      'Restaurants',
+      'Service Providers',
+      'Franchises',
+    ],
+    includes: [
+      'Local SEO (Google Maps ranking)',
+      'Google Ads / Meta Ads setup',
+      'Google Business Profile optimization',
+      'Meta Pixel & GA4 analytics setup',
+      'On-page SEO for all pages',
+      'Review management & generation',
+      'Content strategy basics',
+      'Reputation monitoring',
+      'Social media page setup & optimization',
+      'Monthly performance reporting',
+    ],
+    process: [
+      'We audit your current online presence',
+      'We fix the foundations (listings, speed, content)',
+      'We optimize your pages and profiles',
+      'We launch campaigns and tracking',
+      'We report results and scale what works',
+    ],
+    faqs: [
+      {
+        q: 'How long until I see SEO results?',
+        a: 'Local SEO typically shows improvement in 4–8 weeks. Rankings build gradually with consistent optimization.',
       },
       {
-        t: 'Technical groundwork',
-        d: 'Page titles, descriptions, logical structure, fast loads, and a staging preview you review before anything goes live.',
+        q: 'Do you run Google Ads?',
+        a: 'Yes. We set up and manage Google and Meta ad campaigns with clear budgets and reporting.',
       },
     ],
     notIncluded: [
-      'Booking engines and payment gateways',
-      'Patient portals or record systems',
-      'Official WhatsApp API or chatbot integrations',
-      'Multi-location architecture and CMS migration',
+      'Google Ads management (monthly)',
+      'Meta Ads management (monthly)',
+      'Monthly SEO packages (monthly)',
     ],
+    startingPoint: 'Custom quote',
   },
   {
     id: 'whatsapp',
-    icon: 'chat',
-    title: 'WhatsApp enquiry setup',
-    lede: 'The shortest path between a customer who has decided to enquire and a human who can answer — tested end to end before launch.',
-    points: [
+    icon: 'whatsapp',
+    title: 'WhatsApp Automation & CRM',
+    lede: 'Your most-used app, turned into your most powerful sales channel.',
+    body: 'Indian customers love WhatsApp. We turn it into a complete business tool — automated replies, catalogs, broadcasts, order updates and a simple CRM — so no customer is ever missed.',
+    audience: [
+      'Retail & E-commerce',
+      'Clinics',
+      'Hotels',
+      'Coaching Institutes',
+      'Wholesale & Distribution',
+    ],
+    includes: [
+      'WhatsApp Business setup & optimization',
+      'Order / booking updates automation',
+      'Automated greetings & away messages',
+      'Simple CRM to track every conversation',
+      'Product / service catalog setup',
+      'Team inbox for multiple staff',
+      'Broadcast campaigns (with compliance)',
+      'Automated replies & quick replies',
+      'Click-to-WhatsApp on website & ads',
+      'Analytics on response and conversion',
+    ],
+    process: [
+      'We audit how you currently use WhatsApp',
+      'We set up and optimize your business profile',
+      'We build automation flows for your use case',
+      'We train your team on the system',
+      'We review performance and improve monthly',
+    ],
+    faqs: [
       {
-        t: 'Click-to-chat on every page',
-        d: 'A pre-filled WhatsApp action that opens the right conversation with the right context, so you are not starting from zero.',
+        q: 'Is this the official WhatsApp Business API?',
+        a: 'We start with the free WhatsApp Business app, which works for most businesses. The official API can be added when your volume grows.',
       },
       {
-        t: 'One routing method, clearly defined',
-        d: 'We agree where enquiries land, who watches it, and what happens if someone is unavailable — and it is written down.',
-      },
-      {
-        t: 'Lightweight enquiry form',
-        d: 'Only the fields the enquiry actually needs, reaching a destination you control. No unnecessary personal data collected.',
-      },
-      {
-        t: 'Tested before launch',
-        d: 'Every contact link and form is submitted and verified end to end. A screenshot is not proof that a submission arrived.',
+        q: 'Can I use WhatsApp for bulk marketing?',
+        a: 'Yes, with proper consent and compliance. We follow WhatsApp policies to keep your number safe.',
       },
     ],
-    notIncluded: [
-      'Automated marketing blasts via WhatsApp Business API',
-      '24/7 unattended response',
-      'Official API messaging — not yet offered',
+    notIncluded: ['Official WhatsApp Business API (added when your volume grows)'],
+    startingPoint: 'Custom quote',
+  },
+]
+
+/* -------------------------------------------------------------------------- */
+/* BUNDLES — Services & Pricing v1.1, §3. All prices one-time, in INR.         */
+/* -------------------------------------------------------------------------- */
+export const PACKAGES = [
+  {
+    id: 'silver',
+    name: 'Silver',
+    price: 42000,
+    priceNote: 'one-time',
+    bestFor: 'Website Development only',
+    tagline: 'Entry-level price. Custom-quoted for larger scopes.',
+    for: 'You need a credible, fast website that captures enquiries — nothing else yet.',
+    highlight: false,
+    cta: { label: 'Enquire about Silver', message: ENQUIRY_MESSAGES.silver },
+    turnaround: '1–2 weeks',
+    turnaroundNote: 'depending on scope; a custom timeline is shared before work starts',
+    support: '1-month free support',
+    includes: [
+      'Custom website (up to 5 pages)',
+      'Basic SEO setup',
+      'Mobile-first design',
+      'Lead capture forms + WhatsApp button',
+      'Hosting & domain configuration',
+      '1-month free support',
     ],
   },
   {
-    id: 'gbp',
-    icon: 'pin',
-    title: 'Google Business Profile',
-    lede: 'The listing most local customers actually see. We make it accurate, complete and consistent with your website.',
-    points: [
-      {
-        t: 'Profile audit first',
-        d: 'A prioritised list of what is wrong, what is missing, and what we can and cannot fix — before any work is quoted.',
-      },
-      {
-        t: 'Authorized corrections',
-        d: 'Contact details, hours, website URL, description and business information, using access you authorise and platform rules.',
-      },
-      {
-        t: 'Ongoing upkeep',
-        d: 'Up to four posts or updates per month under Care & Presence, where appropriate and authorized.',
-      },
-      {
-        t: 'Review response drafts',
-        d: 'Up to 20 drafted replies per month, in your voice. We respond to genuine reviews; we never write fake ones.',
-      },
-    ],
-    notIncluded: [
-      'Guaranteed verification or ranking',
-      'Suspension recovery and ownership disputes',
-      'Duplicate-profile resolution',
-      'Keyword-stuffed business names or false categories',
+    id: 'gold',
+    name: 'Gold',
+    price: 85000,
+    priceNote: 'one-time',
+    bestFor: 'Website + Customer Experience + Online Presence',
+    tagline: 'List value ₹91,500 · you save ₹6,500.',
+    for: 'You want the website and the systems that answer and follow up on every enquiry.',
+    highlight: true,
+    badge: 'Best value',
+    listValue: 91500,
+    save: 6500,
+    cta: { label: 'Enquire about Gold', message: ENQUIRY_MESSAGES.gold },
+    turnaround: 'Shared before work starts',
+    turnaroundNote: 'a custom timeline is agreed at the consultation',
+    support: '3-month free support',
+    includes: [
+      'Everything in Silver',
+      'Automated enquiry response system',
+      'Local SEO optimization',
+      'Appointment booking automation',
+      'Analytics & tracking setup',
+      'Google Business Profile setup',
+      '3-month free support',
     ],
   },
   {
-    id: 'care',
-    icon: 'shield',
-    title: 'Care & Presence',
-    lede: 'Monthly upkeep for a site we built, or a site you already have. Real recurring work, not a relabelled one-off project.',
-    points: [
-      {
-        t: 'Two small updates a month',
-        d: 'One existing page, up to three existing text or image blocks, per request. Anything bigger becomes a change request.',
-      },
-      {
-        t: 'Enquiry-flow check',
-        d: 'One scheduled cycle per month verifying that your contact paths still work end to end.',
-      },
-      {
-        t: 'Monthly report',
-        d: 'Work completed, issues found, available performance data with its source and limits, and one prioritised recommendation.',
-      },
-      {
-        t: 'Honest allowances',
-        d: 'Unused allowances do not roll over, and we do not publish filler content to justify a quota.',
-      },
-    ],
-    notIncluded: [
-      '24/7 support or unlimited requests',
-      'Paid advertising or full SEO campaigns',
-      'Emergency rebuilds of a pre-existing broken site',
-      'Major redesigns',
+    id: 'platinum',
+    name: 'Platinum',
+    price: 105000,
+    priceNote: 'one-time',
+    bestFor: 'Everything — complete growth system',
+    tagline: 'List value ₹1,11,500 · you save ₹6,500.',
+    for: 'You want the whole system: website, automation, presence and WhatsApp sales.',
+    highlight: false,
+    listValue: 111500,
+    save: 6500,
+    cta: { label: 'Enquire about Platinum', message: ENQUIRY_MESSAGES.platinum },
+    turnaround: 'Shared before work starts',
+    turnaroundNote: 'a custom timeline is agreed at the consultation',
+    support: '6-month free support',
+    includes: [
+      'Everything in Gold',
+      'WhatsApp automation & CRM setup',
+      'Priority support',
+      'Review generation system',
+      'Monthly strategy review (6 months)',
+      'Social media profile setup',
+      '6-month free support',
     ],
   },
 ]
 
 /* -------------------------------------------------------------------------- */
-/* PACKAGES — 07_SERVICE_CATALOGUE_AND_PRICING.md §5, §6, §7                  */
-/* NOTE: prices are PROPOSED, not approved (DEC-035). Edit in one place here. */
+/* ADD-ON SERVICES — §6. Enhance any bundle or category.                       */
 /* -------------------------------------------------------------------------- */
-export const PACKAGES = [
+export const ADD_ONS = [
+  { t: 'Logo & brand identity design', billing: 'One-time, custom quote' },
+  { t: 'Content writing & photography', billing: 'One-time, custom quote' },
+  { t: 'Google Ads management', billing: 'Monthly, custom quote' },
+  { t: 'Meta Ads management', billing: 'Monthly, custom quote' },
+  { t: 'Monthly SEO packages', billing: 'Monthly, custom quote' },
+  { t: 'Advanced analytics dashboards', billing: 'One-time, custom quote' },
+  { t: 'Multi-language support', billing: 'One-time, custom quote' },
+  { t: 'Video & 3D production', billing: 'One-time, custom quote' },
+  { t: 'Training sessions for your team', billing: 'One-time, custom quote' },
+]
+
+/* -------------------------------------------------------------------------- */
+/* MONTHLY SUPPORT PLANS — §7. Every bundle includes a free support period;    */
+/* after that these keep systems updated, secure and performing.               */
+/* -------------------------------------------------------------------------- */
+export const SUPPORT_PLANS = [
   {
-    id: 'pilot',
-    name: 'Presence Pilot',
-    price: 6000,
-    priceNote: 'one-time',
-    tagline: 'For a qualified business needing a clear first improvement without a full project.',
-    for: 'You need to look credible and be contactable — fast — on a sensible budget.',
-    cta: { label: 'Start with the Pilot', message: ENQUIRY_MESSAGES.pilot },
-    turnaround: '3–5 working days',
-    turnaroundNote: 'after scope acceptance, advance verification, inputs received and capacity confirmed',
-    includes: [
-      'One responsive page, up to six content sections',
-      'One primary language',
-      'Click-to-WhatsApp enquiry action',
-      'One minimal enquiry form (where handling is available)',
-      'Contact and location information',
-      'Basic page title and description',
-      'Google Business Profile audit with prioritised findings',
-      'Staging preview, defined QA and handover',
-    ],
-    excludes: [
-      'GBP correction execution',
-      'Booking engine, patient portal, payment gateway',
-      'Official WhatsApp API, chatbot or voice agent',
-      'Ongoing SEO, ongoing maintenance, extra languages',
-      'Photography, logo redesign, complex site migration',
-    ],
-    copyNote:
-      'We turn your supplied, approved facts into concise website copy. That does not include extensive interviews, independent verification of every claim, or unlimited rewriting.',
-    highlight: false,
+    id: 'starter',
+    name: 'Starter',
+    best: 'Best for a new website that needs to stay online and secure.',
+    includes: 'Updates, uptime monitoring, monthly report',
+    price: 'Custom quote',
   },
   {
-    id: 'foundation',
-    name: 'Presence Foundation',
-    price: 15000,
-    priceNote: 'one-time',
-    tagline: 'For a business that needs a more complete website and coordinated public information.',
-    for: 'You are ready for several real pages, one clean enquiry route, and a Google listing that matches the website.',
-    cta: { label: 'Enquire about Foundation', message: ENQUIRY_MESSAGES.foundation },
-    turnaround: '7–10 working days',
-    turnaroundNote: 'after required inputs and capacity confirmation',
-    includes: [
-      'Up to five standard pages on a shared design system',
-      'Your logo, colours and approved content',
-      'Mobile-responsive implementation',
-      'Up to two agreed enquiry entry points, one routing method',
-      'Click-to-WhatsApp enquiry setup',
-      'Page titles, descriptions and logical structure',
-      'Google Business Profile audit',
-      'One approved batch of routine GBP corrections',
-      'Basic measurement setup where appropriate',
-      'Staging, QA, launch and handover',
-    ],
-    excludes: [
-      'Unlimited pages, complex CMS migration',
-      'Multi-location architecture, custom integrations',
-      'Backlink campaigns or full search strategy',
-      'Everything excluded from the Pilot, unless explicitly added',
-    ],
-    copyNote:
-      'Example structure for a hotel: Home · Stay Options · Property & Amenities · Location · Contact. For a clinic: Home · About · Services · Clinic Information · Contact. These are starting points, not fixed layouts.',
-    highlight: true,
+    id: 'growth',
+    name: 'Growth',
+    best: 'Best for businesses actively publishing and optimizing.',
+    includes: 'Starter + content updates, optimization, priority support',
+    price: 'Custom quote',
   },
   {
-    id: 'care',
-    name: 'Care & Presence',
-    price: 4000,
-    priceNote: 'per month',
-    recurring: true,
-    tagline: 'For ongoing upkeep of a site we built, or one you already have.',
-    for: 'Your site is maintainable and you want it looked after without thinking about it every month.',
-    cta: { label: 'Discuss monthly care', message: ENQUIRY_MESSAGES.care },
-    turnaround: 'Monthly cycle',
-    turnaroundNote: 'billed in advance under the recurring agreement',
-    includes: [
-      'Up to 2 small website updates',
-      'Up to 4 GBP posts or updates, where appropriate and authorized',
-      'Up to 20 review-response drafts',
-      '1 enquiry-flow check cycle',
-      '1 monthly report',
-      '1 prioritised improvement recommendation',
-    ],
-    allowanceTable: [
-      { k: 'Small website update', v: 'Covers one existing page, up to three existing text/image blocks' },
-      { k: 'GBP post or update', v: 'Up to four per month, where appropriate and authorized' },
-      { k: 'Review-response draft', v: 'Up to twenty per month' },
-      { k: 'Enquiry-flow check', v: 'One scheduled cycle per month' },
-      { k: 'Monthly report', v: 'One, with sources and limitations stated' },
-    ],
-    excludes: [
-      'Daily monitoring or 24/7 support',
-      'Unlimited requests or continuous lead generation',
-      'Full SEO campaigns, paid ads, messaging usage',
-      'Major malware recovery or full redesign',
-      'Content needing specialist professional review',
-    ],
-    copyNote:
-      'Before a retainer starts we check the stack, access, existing defects and backup feasibility. A pre-existing broken website is not automatically repaired under the monthly fee — that is assessed and scoped separately.',
-    highlight: false,
+    id: 'scale',
+    name: 'Scale',
+    best: 'Best for teams running continuous growth campaigns.',
+    includes: 'Growth + monthly strategy review, campaigns, everything',
+    price: 'Custom quote',
   },
+]
+
+/* -------------------------------------------------------------------------- */
+/* HOW BUNDLE PRICING IS BUILT — §4. Indicative standalone values, used only   */
+/* to explain bundle savings. Final pricing depends on scope and timeline.     */
+/* -------------------------------------------------------------------------- */
+export const COMPONENT_VALUES = [
+  { t: 'Website Development (Silver scope)', value: 42000, silver: true, gold: true, platinum: true },
+  { t: 'Smart Customer Experience System', value: 28000, silver: false, gold: true, platinum: true },
+  { t: 'Online Presence & Local SEO', value: 21500, silver: false, gold: true, platinum: true },
+  { t: 'WhatsApp Automation & CRM', value: 25000, silver: false, gold: false, platinum: true },
+  { t: 'Review generation system', value: 6000, silver: false, gold: false, platinum: true },
+  { t: 'Social profile setup', value: 4000, silver: false, gold: false, platinum: true },
+  { t: 'Priority & strategy support', value: 5000, silver: false, gold: false, platinum: true },
+]
+
+export const COMPONENT_VALUES_NOTE =
+  'Component values are indicative and used only to explain bundle savings. Final project pricing always depends on scope, features and timeline.'
+
+/* -------------------------------------------------------------------------- */
+/* 5-STEP GROWTH FRAMEWORK — §8                                                */
+/* -------------------------------------------------------------------------- */
+export const GROWTH_FRAMEWORK = [
+  { n: '01', t: 'Discover', d: 'We study your business, competitors and customers to find the real growth gaps.' },
+  { n: '02', t: 'Design', d: 'We design a custom concept and system blueprint for your approval.' },
+  { n: '03', t: 'Deploy', d: 'We build, test and launch your website, automation and tracking.' },
+  { n: '04', t: 'Optimize', d: 'We measure performance, test what works and refine continuously.' },
+  { n: '05', t: 'Scale', d: 'We compound results with campaigns, content and monthly strategy.' },
+]
+
+/* -------------------------------------------------------------------------- */
+/* PRICING FAQ — §9                                                            */
+/* -------------------------------------------------------------------------- */
+export const PRICING_FAQS = [
+  {
+    q: 'Why do you not show exact prices?',
+    a: 'Every business is different — scope, pages, features and timelines all vary. We share a clear, itemized quote after understanding your needs, so you pay only for what creates value.',
+  },
+  {
+    q: 'What determines the final pricing?',
+    a: 'The number of pages, features, integrations, design complexity, content needs and timeline. Your free consultation gives us everything needed for an accurate quote.',
+  },
+  {
+    q: 'Do you offer payment plans?',
+    a: 'Yes. Most projects are split into an advance and milestone payments. Flexible options are discussed during the consultation.',
+  },
+  {
+    q: 'Are there any hidden charges?',
+    a: 'No. Your quote includes everything listed. Hosting and domain costs are transparently itemized (and you own both).',
+  },
+  {
+    q: 'What if I only need a website?',
+    a: 'That is exactly what the Silver bundle covers. You can always add systems and support later.',
+  },
+]
+
+/* -------------------------------------------------------------------------- */
+/* PAYMENT TERMS — §10                                                         */
+/* -------------------------------------------------------------------------- */
+export const PAYMENT_TERMS = [
+  'A booking advance confirms your project and reserves your delivery slot.',
+  'The balance is split into milestone payments released as each stage is approved.',
+  'All quotes are itemized; there are no hidden charges.',
+  'Hosting and domain costs are billed transparently and owned by you.',
+  'Refund policy: the advance is refundable if work has not started (within 7 days).',
+]
+
+export const WHAT_HAPPENS_NEXT = [
+  { n: 'Step 1', d: 'Book a free 30-minute consultation.' },
+  { n: 'Step 2', d: 'We understand your business, goals and current gaps.' },
+  { n: 'Step 3', d: 'You receive a clear, itemized proposal and timeline.' },
+  { n: 'Step 4', d: 'Approve the scope and pay the booking advance.' },
+  { n: 'Step 5', d: 'We build, launch and optimize — with support built in.' },
 ]
 
 export const COMMERCIAL_TERMS = {
@@ -434,7 +611,7 @@ export const NICHES_DETAIL = [
     id: 'hotels',
     label: 'Hotels & Homestays',
     headline: 'A stay page that sells the room before they call.',
-    body: 'For properties in Agra, the website usually has one job: convince someone that this specific place is worth the enquiry. That means the rooms, the amenities, the location and the route from the station — stated plainly, with photos that are yours, and a way to ask a question in one tap.',
+    body: 'For a property like yours, the website usually has one job: convince someone that this specific place is worth the enquiry. That means the rooms, the amenities, the location and the route from the station — stated plainly, with photos that are yours, and a way to ask a question in one tap.',
     allowed: [
       'Property information and approved room descriptions',
       'Amenities, location and directions',
@@ -494,7 +671,7 @@ export const DIFFERENTIATORS = [
    Replace with real, permission-approved project records before publishing. */
 export const WORK_EXAMPLES = [
   {
-    tag: 'Hotel · Agra',
+    tag: 'Hotel',
     title: 'Guest House Taj View',
     what: [
       'One-page presence built around rooms, amenities and location',
@@ -505,7 +682,7 @@ export const WORK_EXAMPLES = [
     tone: 'ember',
   },
   {
-    tag: 'Clinic · Agra',
+    tag: 'Clinic',
     title: 'Brightline Dental Care',
     what: [
       'Four-page site with an approved-information-only content model',
@@ -534,7 +711,7 @@ export const WORK_EXAMPLES = [
 export const FAQS = [
   {
     q: 'How fast can you go live?',
-    a: 'The Presence Pilot is planned at 3–5 working days and Presence Foundation at 7–10 working days — but only after scope acceptance, advance verification, all required inputs and a capacity check. That is a planning range, not an automatic deadline. Missing content or slow feedback moves the date, and we tell you rather than quietly absorbing it.',
+    a: 'Most websites are delivered in 1–2 weeks depending on scope, and larger bundles take longer because more systems are involved. A custom timeline is shared before work starts — after scope acceptance, advance verification, all required inputs and a capacity check. That is a planning range, not an automatic deadline. Missing content or slow feedback moves the date, and we tell you rather than quietly absorbing it.',
   },
   {
     q: 'Do you guarantee more calls or bookings?',
@@ -542,7 +719,7 @@ export const FAQS = [
   },
   {
     q: 'What does the payment look like?',
-    a: 'The default structure is 50% advance to begin, and 50% due before the site goes public under agreed terms. Monthly Care & Presence is billed in advance. Every price is confirmed in a written scope before any invoice is raised.',
+    a: 'A booking advance confirms your project and reserves your delivery slot; the balance is split into milestone payments released as each stage is approved. Monthly support plans are billed in advance. Every price is confirmed in a written scope before any invoice is raised, and the advance is refundable if work has not started within 7 days.',
   },
   {
     q: 'Can I pay in instalments or get a discount?',
@@ -592,19 +769,20 @@ export const FOOTER_LINKS = [
   {
     heading: 'Services',
     links: [
-      { label: 'Websites', to: '/services#websites' },
-      { label: 'WhatsApp enquiry setup', to: '/services#whatsapp' },
-      { label: 'Google Business Profile', to: '/services#gbp' },
-      { label: 'Care & Presence', to: '/services#care' },
+      { label: 'Website development', to: '/services#web' },
+      { label: 'Customer experience system', to: '/services#cx' },
+      { label: 'Online presence & SEO', to: '/services#presence' },
+      { label: 'WhatsApp automation & CRM', to: '/services#whatsapp' },
     ],
   },
   {
     heading: 'Packages',
     links: [
-      { label: 'Presence Pilot', to: '/pricing#pilot' },
-      { label: 'Presence Foundation', to: '/pricing#foundation' },
-      { label: 'Care & Presence', to: '/pricing#care' },
-      { label: 'What is excluded', to: '/pricing#exclusions' },
+      { label: 'Silver · ₹42,000', to: '/pricing#silver' },
+      { label: 'Gold · ₹85,000', to: '/pricing#gold' },
+      { label: 'Platinum · ₹1,05,000', to: '/pricing#platinum' },
+      { label: 'Add-on services', to: '/pricing#addons' },
+      { label: 'Monthly support plans', to: '/pricing#support' },
     ],
   },
   {
@@ -754,7 +932,7 @@ export const TOOLS = {
   /* Presets are starting points, and the page says so — this is the honesty
      line that keeps a founder from mistaking our numbers for theirs. */
   presetNote:
-    'The starting numbers are realistic for a business of this shape in Agra. They are not your numbers — change every field that you know better.',
+    'The starting numbers are realistic for a business of this shape in India. They are not your numbers — change every field that you know better.',
 
   assumptions: [
     {

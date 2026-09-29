@@ -241,7 +241,7 @@ export default function ReportForm({ input, setInput, errors }) {
             label="City"
             value={input.city}
             onChange={(v) => setField('city', v)}
-            placeholder="Agra"
+            placeholder="Your city"
           />
         </div>
 

@@ -1,39 +1,44 @@
-import { useState } from 'react'
 import {
   PACKAGES,
+  ADD_ONS,
+  SUPPORT_PLANS,
+  COMPONENT_VALUES,
+  COMPONENT_VALUES_NOTE,
+  SERVICES,
+  PRICING_FAQS,
+  PAYMENT_TERMS,
+  WHAT_HAPPENS_NEXT,
   COMMERCIAL_TERMS,
   CONTACT_DETAILS,
   whatsappLink,
   ENQUIRY_MESSAGES,
 } from '../lib/content'
+import { formatINR } from '../lib/calculator'
 import PageHero from '../components/PageHero'
 import Button from '../components/ui/Button'
 import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
-import { SectionHead, Rule, Dot } from '../components/ui/Primitives'
-import { WhatsAppGlyph } from '../components/Navbar'
+import { SectionHead } from '../components/ui/Primitives'
 import useMeta from '../hooks/useMeta'
 
 export default function Pricing() {
   useMeta(
     'Pricing',
-    'Presence Pilot ₹6,000, Presence Foundation ₹15,000, Care & Presence ₹4,000 per month. Payment terms, two revision rounds, and everything explicitly excluded from each package.',
+    'Silver ₹42,000, Gold ₹85,000 and Platinum ₹1,05,000 — one-time bundle pricing. Add-on services, monthly support plans and payment terms, all itemized.'
   )
-
-  const [openPkg, setOpenPkg] = useState('foundation')
 
   return (
     <>
       <PageHero
-        eyebrow="Pricing"
-        line1="Priced in rupees."
-        line2="Scoped in writing."
-        sub="Three packages. No hidden tiers, no setup fee, no annual lock-in to unlock a better number. Every quote references a published package, or a written custom scope you have approved."
+        eyebrow="Bundle pricing"
+        line1="Three bundles."
+        line2="No hidden tiers."
+        sub="Bundles are the most practical way to get a complete growth system. Each one combines several service categories at a lower total price than buying them separately. All prices are one-time and in Indian Rupees."
         meta={[
-          { l: 'From', v: '₹6,000' },
-          { l: 'Payment', v: '50% advance' },
-          { l: 'Revisions', v: '2 rounds' },
-          { l: 'Contract', v: 'Per project' },
+          { l: 'From', v: '₹42,000' },
+          { l: 'Payment', v: 'Advance + milestones' },
+          { l: 'Free support', v: 'Up to 6 months' },
+          { l: 'Hidden charges', v: 'None' },
         ]}
       >
         <div className="flex flex-wrap gap-2">
@@ -47,193 +52,350 @@ export default function Pricing() {
                   : 'border-rule text-ash hover:border-rule-strong hover:text-ink'
               }`}
             >
-              {p.name}
+              {p.name} · {formatINR(p.price)}
             </a>
           ))}
-          <a
-            href="#terms"
-            className="rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
-          >
-            Terms
-          </a>
+          {['addons', 'support', 'terms'].map((id) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className="rounded-full border border-rule px-4 py-2.5 text-sm text-ash transition-colors hover:border-rule-strong hover:text-ink"
+            >
+              {id === 'addons' ? 'Add-ons' : id === 'support' ? 'Support plans' : 'Terms'}
+            </a>
+          ))}
         </div>
       </PageHero>
 
-      {/* --------------------------------------------------- PACKAGE CARDS */}
+      {/* ------------------------------------------------------ BUNDLE CARDS */}
       <section className="band border-t border-rule">
         <div className="shell">
-          <div className="grid gap-6 lg:grid-cols-3">
+          <Reveal>
+            <SectionHead
+              eyebrow="Service bundle pricing"
+              sub="Buy one category on its own, or combine them into a bundle for a lower total price."
+            >
+              Pick the bundle that
+              <br />
+              <span className="fade-line">matches where you are.</span>
+            </SectionHead>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {PACKAGES.map((p, i) => (
-              <Reveal key={p.id} delay={i * 100}>
+              <Reveal key={p.id} delay={i * 110}>
                 <article
                   id={p.id}
-                  className={`flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border ${
-                    p.highlight ? 'border-ember/35 bg-coal' : 'border-rule bg-void'
+                  className={`relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                    p.highlight ? 'border-ember/35 bg-ember/[0.04]' : 'border-rule bg-void'
                   }`}
                 >
-                  {p.highlight && (
-                    <div className="hatch h-[3px] w-full" style={{ opacity: 0.5 }} />
+                  {p.badge && (
+                    <span className="micro absolute right-7 top-7 rounded-full border border-ember/35 bg-ember/[0.1] px-3 py-1 text-ember-soft">
+                      {p.badge}
+                    </span>
                   )}
 
-                  <div className="flex flex-1 flex-col p-7 lg:p-8">
-                    <div className="flex items-center justify-end">
-                      {p.highlight && (
-                        <span className="rounded-full border border-ember/35 bg-ember/10 px-2.5 py-1 micro text-ember-soft">
-                          Most chosen
-                        </span>
-                      )}
-                    </div>
+                  <p className="micro text-ash3">Bundle</p>
+                  <h3 className="mt-3 font-display text-xl tracking-[-0.03em] text-ink">
+                    {p.name}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.55] text-ash2">{p.bestFor}</p>
 
-                    <h2 className="mt-4 font-display text-xl tracking-[-0.03em] text-ink">
-                      {p.name}
-                    </h2>
-
-                    <div className="mt-6 flex items-baseline gap-1.5">
-                      <span className="font-display text-3xl leading-none tracking-[-0.045em] text-ink">
-                        ₹{p.price.toLocaleString('en-IN')}
-                      </span>
-                      <span className="text-sm text-ash3">/ {p.priceNote}</span>
-                    </div>
-
-                    <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
-                      {p.tagline}
+                  <div className="mt-7 border-y border-rule py-6">
+                    <p className="font-display text-3xl tracking-[-0.04em] text-ink">
+                      {formatINR(p.price)}
                     </p>
-
-                    <div className="mt-6 rounded-md border border-rule-faint bg-white/[0.02] px-4 py-3">
-                      <p className="micro mb-1.5 text-ash3">Planning range</p>
-                      <p className="text-sm text-ink">{p.turnaround}</p>
-                      <p className="mt-1.5 text-xs leading-[1.5] text-ash3">
-                        {p.turnaroundNote}
+                    <p className="micro mt-2 text-ash3">{p.priceNote}</p>
+                    {p.listValue && (
+                      <p className="mt-3 text-xs leading-[1.6] text-ash2">
+                        List value {formatINR(p.listValue)} ·{' '}
+                        <span className="text-mint">you save {formatINR(p.save)}</span>
                       </p>
-                    </div>
-
-                    <p className="mt-6 text-sm leading-[1.6] text-ash text-pretty">
-                      <span className="text-ink">Best for: </span>
-                      {p.for}
-                    </p>
-
-                    <Button
-                      href={whatsappLink(p.cta.message)}
-                      variant={p.highlight ? 'accent' : 'secondary'}
-                      size="md"
-                      className="mt-7 w-full"
-                    >
-                      {p.cta.label}
-                    </Button>
-
-                    <button
-                      onClick={() => setOpenPkg(openPkg === p.id ? null : p.id)}
-                      className="mt-3 flex items-center justify-center gap-2 py-2.5 text-xs text-ash3 transition-colors hover:text-ink"
-                    >
-                      {openPkg === p.id ? 'Hide' : 'Show'} full scope
-                      <span
-                        className={`relative block h-2.5 w-2.5 transition-transform duration-400 ${
-                          openPkg === p.id ? 'rotate-45' : ''
-                        }`}
-                      >
-                        <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current" />
-                        <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-current" />
-                      </span>
-                    </button>
+                    )}
                   </div>
 
-                  {/* expandable full scope */}
-                  <div
-                    className="grid border-t border-rule transition-all duration-500"
-                    style={{
-                      gridTemplateRows: openPkg === p.id ? '1fr' : '0fr',
-                      transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)',
-                    }}
+                  <p className="mt-6 text-sm leading-[1.6] text-ash text-pretty">{p.for}</p>
+
+                  <div className="mt-6 flex-1">
+                    <p className="micro mb-4 text-mint">What is included</p>
+                    <ul className="flex flex-col gap-2.5">
+                      {p.includes.map((x) => (
+                        <li key={x} className="flex gap-2.5 text-sm leading-[1.5] text-ash2">
+                          <svg
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            className="mt-[4px] h-3 w-3 shrink-0"
+                          >
+                            <path
+                              d="m3 8.4 3 3L13 4.6"
+                              stroke="#4fd1a5"
+                              strokeWidth="1.7"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          {x}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <dl className="mt-7 flex flex-col gap-2 border-t border-rule pt-6 text-sm">
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-ash3">Delivery</dt>
+                      <dd className="text-right text-ash2">{p.turnaround}</dd>
+                    </div>
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-ash3">Free support</dt>
+                      <dd className="text-right text-ash2">{p.support}</dd>
+                    </div>
+                  </dl>
+
+                  <Button
+                    href={whatsappLink(p.cta.message)}
+                    variant={p.highlight ? 'primary' : 'secondary'}
+                    size="md"
+                    arrow
+                    className="mt-7 w-full"
                   >
-                    <div className="overflow-hidden">
-                      <div className="flex flex-col gap-6 p-7 lg:p-8">
-                        <List
-                          title="What is included"
-                          tone="mint"
-                          items={p.includes}
-                        />
-
-                        {p.allowanceTable && (
-                          <div>
-                            <p className="micro mb-3 text-mint">Monthly allowance</p>
-                            <div className="flex flex-col">
-                              {p.allowanceTable.map((a) => (
-                                <div
-                                  key={a.k}
-                                  className="flex flex-col gap-1 border-b border-rule-faint py-3 last:border-b-0"
-                                >
-                                  <span className="text-sm text-ink">{a.k}</span>
-                                  <span className="text-xs leading-[1.5] text-ash3">
-                                    {a.v}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        <List title="What is excluded" tone="red" items={p.excludes} />
-
-                        {p.copyNote && (
-                          <p className="rounded-md border border-rule-faint bg-white/[0.02] p-4 text-xs leading-[1.62] text-ash3">
-                            {p.copyNote}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    {p.cta.label}
+                  </Button>
                 </article>
               </Reveal>
             ))}
           </div>
 
-          {/* add-ons */}
-          <Reveal delay={140} className="mt-6">
-            <div className="rounded-xl border border-rule bg-coal p-7 lg:p-9">
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)]">
-                <div>
-                  <p className="micro mb-4 text-ash3">Add-ons & custom work</p>
-                  <h2 className="t-h3 text-ink">
-                    Need something
-                    <br />
-                    <span className="fade-line">outside these three?</span>
-                  </h2>
-                  <p className="mt-5 text-sm leading-[1.62] text-ash2 text-pretty">
-                    That is a normal conversation, not a problem. We scope it, you decide, and it
-                    is quoted separately — never quietly folded into a package it does not fit.
-                  </p>
-                </div>
-
-                <div className="grid gap-px overflow-hidden rounded-md border border-rule bg-rule sm:grid-cols-2">
-                  {[
-                    'Additional standard page',
-                    'Additional language',
-                    'Extra approved content',
-                    'Additional revision round',
-                    'Existing-site remediation',
-                    'Specialised integration',
-                  ].map((x) => (
-                    <div key={x} className="flex items-center gap-2.5 bg-void px-5 py-4">
-                      <Dot tone="ember" />
-                      <span className="text-sm text-ash">{x}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <Reveal delay={140} className="mt-8">
+            <p className="text-xs leading-[1.6] text-ash3">
+              All final pricing is confirmed in a written proposal. This page is a service and
+              pricing guide, not a binding contract. Prices in Indian Rupees (INR).
+            </p>
           </Reveal>
         </div>
       </section>
 
-      {/* --------------------------------------------------- COMPARISON TABLE */}
-      <Comparison />
+      {/* -------------------------------------------- HOW PRICING IS BUILT */}
+      <section className="band relative border-y border-rule bg-black/35">
+        <div className="shell">
+          <Reveal>
+            <SectionHead
+              eyebrow="How bundle pricing is built"
+              sub="To keep pricing transparent, here is the indicative value of each component. Bundles discount the combined value — you pay less than buying each service separately."
+            >
+              What each part
+              <br />
+              <span className="fade-line">is worth on its own.</span>
+            </SectionHead>
+          </Reveal>
 
-      {/* --------------------------------------------------- TERMS */}
+          <Reveal delay={120} className="mt-14">
+            <div className="overflow-x-auto rounded-xl border border-rule bg-void">
+              <table className="w-full min-w-[620px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-rule">
+                    <th className="micro px-6 py-4 font-medium text-ash3">Component</th>
+                    <th className="micro px-6 py-4 text-right font-medium text-ash3">
+                      Standalone value
+                    </th>
+                    {PACKAGES.map((p) => (
+                      <th
+                        key={p.id}
+                        className="micro px-6 py-4 text-right font-medium text-ash3"
+                      >
+                        {p.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPONENT_VALUES.map((c) => (
+                    <tr key={c.t} className="border-b border-rule">
+                      <td className="px-6 py-4 text-sm text-ash">{c.t}</td>
+                      <td className="px-6 py-4 text-right text-sm text-ash2">
+                        {formatINR(c.value)}
+                      </td>
+                      {PACKAGES.map((p) => {
+                        const key = p.id
+                        const on = c[key]
+                        return (
+                          <td
+                            key={key}
+                            className={`px-6 py-4 text-right text-sm ${
+                              on ? 'text-mint' : 'text-ash3'
+                            }`}
+                          >
+                            {on ? formatINR(c.value) : '—'}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  ))}
+                  <tr className="border-b border-rule">
+                    <td className="px-6 py-4 text-sm text-ink">Bundle total</td>
+                    <td className="px-6 py-4 text-right text-sm text-ash2">
+                      {formatINR(COMPONENT_VALUES.reduce((n, c) => n + c.value, 0))}
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm text-ash2">
+                      {formatINR(PACKAGES.find((p) => p.id === 'silver').price)}
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm text-ash2">
+                      {formatINR(PACKAGES.find((p) => p.id === 'gold').price)}
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm text-ash2">
+                      {formatINR(PACKAGES.find((p) => p.id === 'platinum').price)}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-rule bg-white/[0.02]">
+                    <td className="px-6 py-4 text-sm text-ink">You pay</td>
+                    <td className="px-6 py-4 text-right text-sm text-ash3">—</td>
+                    {PACKAGES.map((p) => (
+                      <td key={p.id} className="px-6 py-4 text-right text-sm text-ink">
+                        {formatINR(p.price)}
+                        {p.save ? (
+                          <span className="ml-2 text-xs text-mint">save {formatINR(p.save)}</span>
+                        ) : null}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-5 text-xs leading-[1.6] text-ash3">{COMPONENT_VALUES_NOTE}</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ------------------------------------------- CATEGORY STARTING POINTS */}
+      <section className="band">
+        <div className="shell">
+          <Reveal>
+            <SectionHead
+              eyebrow="Category starting points"
+              sub="Buying a single category? These are the entry points. Final quotes are tailored to your business."
+            >
+              Buying just
+              <br />
+              <span className="fade-line">one service?</span>
+            </SectionHead>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.id} delay={i * 90}>
+                <div className="h-full rounded-xl border border-rule bg-void p-7">
+                  <h3 className="font-display text-xl tracking-[-0.03em] text-ink">
+                    {s.title.split(' & ')[0]}
+                  </h3>
+                  <p className="mt-3 text-sm leading-[1.6] text-ash2 text-pretty">{s.lede}</p>
+                  <p className="mt-4 text-xs leading-[1.6] text-ash3">
+                    Recommended for {s.audience.slice(0, 3).join(', ')}.
+                  </p>
+                  <div className="mt-6 flex items-end justify-between gap-4 border-t border-rule pt-5">
+                    <span className="micro text-ash3">Starting point</span>
+                    <span className="text-base text-ink">{s.startingPoint}</span>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------- ADD-ONS */}
+      <section id="addons" className="band scroll-mt-24 border-t border-rule">
+        <div className="shell">
+          <Reveal>
+            <SectionHead
+              eyebrow="Add-on services"
+              sub="Enhance any bundle or category with these optional services."
+            >
+              Extras, priced
+              <br />
+              <span className="fade-line">separately and openly.</span>
+            </SectionHead>
+          </Reveal>
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-3">
+            {ADD_ONS.map((a, i) => (
+              <Reveal key={a.t} delay={i * 60}>
+                <div className="flex h-full flex-col justify-between gap-4 bg-void p-6">
+                  <p className="text-sm leading-[1.5] text-ash">{a.t}</p>
+                  <p className="micro text-ash3">{a.billing}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------- SUPPORT PLANS */}
+      <section id="support" className="band scroll-mt-24 border-t border-rule">
+        <div className="shell">
+          <Reveal>
+            <SectionHead
+              eyebrow="Monthly support plans"
+              sub="Every bundle includes a free support period. After that, monthly plans keep your systems updated, secure and performing."
+            >
+              After the free
+              <br />
+              <span className="fade-line">period ends.</span>
+            </SectionHead>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {SUPPORT_PLANS.map((p, i) => (
+              <Reveal key={p.id} delay={i * 100}>
+                <div className="flex h-full flex-col rounded-xl border border-rule bg-void p-7">
+                  <h3 className="font-display text-xl tracking-[-0.03em] text-ink">{p.name}</h3>
+                  <p className="mt-3 text-sm leading-[1.6] text-ash2 text-pretty">{p.best}</p>
+                  <p className="mt-5 flex-1 text-sm leading-[1.6] text-ash3">{p.includes}</p>
+                  <div className="mt-6 border-t border-rule pt-5">
+                    <p className="text-base text-ink">{p.price}</p>
+                    <a
+                      href={whatsappLink(ENQUIRY_MESSAGES.support)}
+                      className="mt-2 inline-block text-sm text-ember-soft transition-colors hover:text-ink"
+                    >
+                      Ask about {p.name} →
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --------------------------------------------------- PRICING FAQ */}
+      <section className="band border-t border-rule">
+        <div className="shell">
+          <Reveal>
+            <SectionHead eyebrow="Pricing FAQ" sub="The questions that come up before anyone commits.">
+              Straight answers
+              <br />
+              <span className="fade-line">about money.</span>
+            </SectionHead>
+          </Reveal>
+
+          <div className="mt-14 grid gap-x-14 gap-y-8 lg:grid-cols-2">
+            {PRICING_FAQS.map((f, i) => (
+              <Reveal key={f.q} delay={i * 70}>
+                <div className="border-t border-rule pt-6">
+                  <h3 className="text-base text-ink">{f.q}</h3>
+                  <p className="mt-3 text-sm leading-[1.65] text-ash2 text-pretty">{f.a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------- TERMS & PAYMENT */}
       <section id="terms" className="band scroll-mt-24 border-t border-rule">
         <div className="shell">
           <Reveal>
             <SectionHead
-              eyebrow="The small print, made large"
+              eyebrow="Payment terms and what happens next"
               sub="These are the terms that decide whether a project goes smoothly. Better to read them here than to discover them halfway through."
             >
               The conditions
@@ -242,7 +404,45 @@ export default function Pricing() {
             </SectionHead>
           </Reveal>
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2">
+          <div className="mt-14 grid gap-10 lg:grid-cols-2">
+            <Reveal>
+              <div className="rounded-xl border border-rule bg-void p-8">
+                <p className="micro mb-5 text-ash3">Payment terms</p>
+                <ul className="flex flex-col gap-3.5">
+                  {PAYMENT_TERMS.map((x) => (
+                    <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
+                      <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
+                        <path
+                          d="m3 8.4 3 3L13 4.6"
+                          stroke="#4fd1a5"
+                          strokeWidth="1.7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+
+            <Reveal delay={110}>
+              <div className="rounded-xl border border-rule bg-void p-8">
+                <p className="micro mb-5 text-ash3">What happens after you contact us</p>
+                <ol className="flex flex-col">
+                  {WHAT_HAPPENS_NEXT.map((s) => (
+                    <li key={s.n} className="flex gap-4 border-t border-rule py-4 last:border-b">
+                      <span className="micro shrink-0 pt-0.5 text-ember">{s.n}</span>
+                      <span className="text-sm leading-[1.6] text-ash2">{s.d}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule md:grid-cols-2">
             {[
               { k: 'Payment', items: COMMERCIAL_TERMS.payment, tone: 'mint' },
               { k: 'Revisions', items: COMMERCIAL_TERMS.revisions, tone: 'sky' },
@@ -253,23 +453,31 @@ export default function Pricing() {
                 <div className="h-full bg-void p-8">
                   <p className="micro mb-5 text-ash3">{g.k}</p>
                   <ul className="flex flex-col gap-3.5">
-                    {g.items.map((x) => {
-                      const red = g.tone === 'red'
-                      return (
-                        <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
-                          {red ? (
-                            <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
-                              <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
-                            </svg>
-                          ) : (
-                            <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
-                              <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                          {x}
-                        </li>
-                      )
-                    })}
+                    {g.items.map((x) => (
+                      <li key={x} className="flex gap-3 text-sm leading-[1.6] text-ash2">
+                        {g.tone === 'red' ? (
+                          <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
+                            <path
+                              d="M4 4l8 8M12 4l-8 8"
+                              stroke="#f0705a"
+                              strokeWidth="1.6"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        ) : (
+                          <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
+                            <path
+                              d="m3 8.4 3 3L13 4.6"
+                              stroke="#4fd1a5"
+                              strokeWidth="1.7"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        )}
+                        {x}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </Reveal>
@@ -294,7 +502,12 @@ export default function Pricing() {
                 ].map((x) => (
                   <div key={x} className="flex items-center gap-3">
                     <svg viewBox="0 0 16 16" fill="none" className="h-3 w-3 shrink-0">
-                      <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
+                      <path
+                        d="M4 4l8 8M12 4l-8 8"
+                        stroke="#f0705a"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                      />
                     </svg>
                     <span className="text-sm text-ash2">{x}</span>
                   </div>
@@ -306,152 +519,11 @@ export default function Pricing() {
       </section>
 
       <CtaBand
-        line1="Want a number"
-        line2="for your business?"
-        sub="Send us your business name and what you are losing today. You will get a written scope and a fixed quote — usually the same day."
-        primary={{ label: 'Request a quote', to: '/contact' }}
+        line1="Let's build your growth system."
+        line2="Book a free consultation."
+        sub={`We will review your business, show you exactly what we would build, and give you a transparent, itemized quote — no pressure, no obligation. Call ${CONTACT_DETAILS.phoneDisplay} or message us on WhatsApp.`}
         showHatch
       />
     </>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-function List({ title, tone, items }) {
-  const red = tone === 'red'
-  return (
-    <div>
-      <p className={`micro mb-3.5 ${red ? 'text-ember-soft' : 'text-mint'}`}>{title}</p>
-      <ul className="flex flex-col gap-2.5">
-        {items.map((x) => (
-          <li key={x} className="flex gap-2.5 text-sm leading-[1.55] text-ash2">
-            {red ? (
-              <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
-                <path d="M4 4l8 8M12 4l-8 8" stroke="#f0705a" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 16 16" fill="none" className="mt-[4px] h-3 w-3 shrink-0">
-                <path d="m3 8.4 3 3L13 4.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-            {x}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-const COMPARE_ROWS = [
-  { k: 'One-time price', v: ['₹6,000', '₹15,000', '₹4,000 / month'] },
-  { k: 'Standard pages', v: ['1 page', 'Up to 5', '—'] },
-  { k: 'Content sections', v: ['Up to 6', 'Per page', '—'] },
-  { k: 'Primary language', v: ['1', '1', '1'] },
-  { k: 'Click-to-WhatsApp', v: [true, true, true] },
-  { k: 'Enquiry form', v: ['1 minimal', 'Up to 2 entry points', 'Flow check'] },
-  { k: 'GBP audit', v: [true, true, false] },
-  { k: 'GBP corrections executed', v: [false, '1 approved batch', 'Up to 4 posts / updates'] },
-  { k: 'Review-response drafts', v: [false, false, 'Up to 20 / month'] },
-  { k: 'Monthly report', v: [false, false, true] },
-  { k: 'Revision rounds', v: ['2', '2', 'Within allowance'] },
-  { k: 'Planning range', v: ['3–5 days', '7–10 days', 'Monthly cycle'] },
-  { k: 'Booking engine / payments', v: [false, false, false] },
-  { k: 'Official WhatsApp API', v: [false, false, false] },
-  { k: 'AI voice agent', v: [false, false, false] },
-]
-
-function Comparison() {
-  return (
-    <section className="band relative border-y border-rule bg-black/35">
-      <div className="shell">
-        <Reveal>
-          <SectionHead eyebrow="Side by side">
-            Every difference,
-            <br />
-            <span className="fade-line">in one table.</span>
-          </SectionHead>
-        </Reveal>
-
-        <Reveal delay={120} className="mt-12">
-          <p className="mb-3 flex items-center gap-2 text-xs text-ash3 md:hidden">
-            <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
-              <path d="M2.5 8h11M10 4.5 13.5 8 10 11.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Swipe sideways to compare all three
-          </p>
-          <div className="overflow-x-auto rounded-lg border border-rule">
-            <table className="w-full min-w-[720px] border-collapse text-left">
-              <thead>
-                <tr className="border-b border-rule bg-white/[0.015]">
-                  <th className="w-[32%] px-5 py-5 text-left text-sm font-normal text-ash3">
-                    Feature
-                  </th>
-                  {PACKAGES.map((p) => (
-                    <th
-                      key={p.id}
-                      className={`px-5 py-5 text-left ${
-                        p.highlight ? 'text-ember-soft' : 'text-ink'
-                      }`}
-                    >
-                      <span className="block text-sm text-ink">{p.name}</span>
-                      <span className="micro mt-1.5 block text-ash3">
-                        ₹{p.price.toLocaleString('en-IN')}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARE_ROWS.map((row, i) => (
-                  <tr
-                    key={row.k}
-                    className="border-b border-rule-faint transition-colors last:border-b-0 hover:bg-white/[0.012]"
-                  >
-                    <td className="px-5 py-4 text-sm text-ash2">{row.k}</td>
-                    {row.v.map((cell, j) => (
-                      <td key={j} className="px-5 py-4">
-                        {cell === true ? (
-                          <span className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-mint/15">
-                            <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
-                              <path d="m2.5 6.2 2.2 2.2L9.5 3.6" stroke="#4fd1a5" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </span>
-                        ) : cell === false ? (
-                          <span className="text-base leading-none text-ash3">—</span>
-                        ) : (
-                          <span className="text-sm leading-[1.45] text-ash">{cell}</span>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Reveal>
-
-        <Reveal delay={200} className="mt-8">
-          <div className="flex flex-col items-start gap-4 rounded-lg border border-rule bg-coal p-7 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-base text-ink">Still not sure which fits?</p>
-              <p className="mt-1.5 text-sm text-ash2">
-                Tell us what the business does and we will tell you which one — or that none of
-                them is worth paying for right now.
-              </p>
-            </div>
-            <Button
-              href={whatsappLink(ENQUIRY_MESSAGES.general)}
-              variant="primary"
-              size="md"
-              className="shrink-0"
-            >
-              <WhatsAppGlyph className="h-3.5 w-3.5" />
-              Ask on WhatsApp
-            </Button>
-          </div>
-        </Reveal>
-      </div>
-    </section>
   )
 }

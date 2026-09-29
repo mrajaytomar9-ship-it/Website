@@ -1,7 +1,7 @@
 # Nextera Solution — website
 
 A premium, multi-page marketing site for **Nextera Solution** — website, WhatsApp
-enquiry path and Google Business Profile work for hotels and clinics in Agra.
+enquiry path, automation and online presence work for businesses across India.
 
 Built with **Vite + React 18 + Tailwind CSS v4 + React Router**.
 
@@ -20,7 +20,7 @@ npm run preview  # serve the built bundle locally
 ```
 
 ```bash
-npm test         # 62 assertions: 33 calculator engine + 29 report engine
+npm test         # 78 assertions: 33 calculator + 29 report + 9 contact + 7 catalogue
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -58,26 +58,40 @@ Both values are currently **placeholders**. Your business requirements (BR-013,
 and `SALES-002` in the Sales SOP) explicitly forbid publishing invented contact
 details, so these must be real before the site goes live.
 
-### 2.2 Prices  ⚠️ CHECK BEFORE PUBLISHING
+### 2.2 Services, bundles and prices
 
-All three package prices in `src/lib/content.js` → `PACKAGES` come from the
-**proposed** figures in your service catalogue:
+The whole catalogue now comes from one document: **"Nextera Solution — Services &
+Pricing" v1.1, 29 September 2026**. Every field in `SERVICES`, `PACKAGES`,
+`ADD_ONS`, `SUPPORT_PLANS`, `COMPONENT_VALUES`, `GROWTH_FRAMEWORK`,
+`PRICING_FAQS`, `PAYMENT_TERMS` and `WHAT_HAPPENS_NEXT` is transcribed from it.
+Nothing on those pages is invented.
 
-| Package | Price | Source |
-|---|---|---|
-| Presence Pilot | ₹6,000 one-time | `PKG-PILOT-01` |
-| Presence Foundation | ₹15,000 one-time | `PKG-FOUNDATION-01` |
-| Care & Presence | ₹4,000 / month | `PKG-CARE-01` |
+| Bundle | Price | List value | You save |
+|---|---|---|---|
+| Silver | ₹42,000 one-time | — | — |
+| Gold (best value) | ₹85,000 one-time | ₹91,500 | ₹6,500 |
+| Platinum | ₹1,05,000 one-time | ₹1,11,500 | ₹6,500 |
 
-These are marked `commercial_status: PROPOSED` in
-`07_SERVICE_CATALOGUE_AND_PRICING.md`, tied to `DEC-035`, which is **not yet
-approved**. Either get `DEC-035` approved, or edit the `price` fields here before
-publishing. They appear in four places, all driven from the same object:
+They appear in four places, all driven from the same objects:
 
-- home page package preview
-- `/pricing` cards
-- the `/pricing` comparison table
-- the contact page package chips
+- home page service + bundle previews
+- `/pricing` bundle cards, the §4 component-value table, category starting points,
+  add-ons, support plans, pricing FAQ and payment terms
+- `/services` — one long-form section per service
+- the contact page bundle chips
+
+`content.test.mjs` asserts the titles, the three prices, both list-value/savings
+pairs, the section lengths, and that every service and bundle has a WhatsApp
+enquiry message — so a typo cannot quietly change a published price.
+
+> **One discrepancy in the source document, left as written.** §3 gives Platinum a
+> list value of ₹1,11,500, but the seven component values in §4 sum to ₹1,31,500.
+> Both agree on what you pay (₹1,05,000, save ₹6,500). The site reproduces §3's
+> figures on the bundle card and shows the §4 components in the transparency
+> table. If the intent was ₹1,31,500, change `listValue` on Platinum.
+
+Individual service categories are all **"Custom quote"** — the document
+deliberately does not publish per-category prices.
 
 ### 2.3 Work examples
 
@@ -119,9 +133,17 @@ touch a component to change a price, a feature list or a FAQ.
 
 ### Adding a service
 
-Append to `SERVICES` with a unique `id`, then add a matching entry to
-`SERVICE_META` in `src/pages/Services.jsx` and a `<ServiceSection>` call. Icons come
-from `src/components/ServiceIcon.jsx` — add a new path there if you need one.
+Append to `SERVICES` in `src/lib/content.js` with a unique `id` and these fields —
+`src/pages/Services.jsx` maps over the array, so no page edit is needed:
+
+`id, icon, title, lede, body, audience[], includes[] (10), process[] (5),
+faqs[{q,a}] (2), notIncluded[], startingPoint`
+
+Also add a matching key to `ENQUIRY_MESSAGES` (the WhatsApp button reads
+`ENQUIRY_MESSAGES[service.id]`), an entry in the `MOCKS` array in `Services.jsx`
+at the same index, and a footer link to `/services#<id>`. Icons come from
+`src/components/ServiceIcon.jsx`. `content.test.mjs` will fail until the field
+counts and the enquiry message are in place.
 
 ---
 
@@ -407,10 +429,9 @@ Every claim on the site traces to your business documents:
 
 | Site content | Source document |
 |---|---|
-| Positioning, Agra focus, hotel/clinic niches | `05_BRD.md` §1, §5 · `03_DECISION_REGISTER.md` §6.1 |
-| Packages, prices, inclusions, exclusions | `07_SERVICE_CATALOGUE_AND_PRICING.md` §5–7 |
-| Service definitions | `07_SERVICE_CATALOGUE_AND_PRICING.md` §4 |
-| Hotel / clinic boundaries | `07_SERVICE_CATALOGUE_AND_PRICING.md` §8 |
+| Positioning, hotel/clinic niches | `05_BRD.md` §1, §5 · `03_DECISION_REGISTER.md` §6.1 |
+| Services, bundles, add-ons, support plans, pricing FAQ | `Services & Pricing` v1.1 (29 Sep 2026) §2–§10 |
+| Hotel / clinic sector boundaries | `07_SERVICE_CATALOGUE_AND_PRICING.md` §8 |
 | Revision + payment terms | `07_SERVICE_CATALOGUE_AND_PRICING.md` §9, §10, §12 |
 | Sales process steps | `13_SALES_SOP.md` §5–14 |
 | "No guaranteed outcomes" language | `13_SALES_SOP.md` §2 (`SALES-003`) |

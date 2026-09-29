@@ -29,7 +29,7 @@
   --color-ash2: #6e6e6d;
   --color-ash3: #454544;
 
-  /* Brand — saffron/amber (Agra, hospitality, warmth) used sparingly */
+  /* Brand — saffron/amber (hospitality, warmth) used sparingly */
   --color-ember: #e8922f;
   --color-ember-soft: #f4b866;
   --color-mint: #4fd1a5;
@@ -70,7 +70,7 @@
 
   html {
     scroll-behavior: smooth;
-    /* keeps hash targets (#pilot, #profit-engine) clear of the fixed header
+    /* keeps hash targets (#silver, #profit-engine) clear of the fixed header
        even where a component has no scroll-mt of its own */
     scroll-padding-top: 96px;
     -webkit-text-size-adjust: 100%;

@@ -50,7 +50,7 @@ function Hero() {
           <Reveal delay={60}>
             <div className="inline-flex items-center gap-2.5 rounded-full border border-rule bg-white/[0.025] px-4 py-2">
               <ServiceIcon name="pin" className="h-3.5 w-3.5 shrink-0 text-ash2" />
-              <span className="micro text-ash2">Agra · Hotels & Clinics</span>
+              <span className="micro text-ash2">India · Hotels · Clinics · Restaurants · Institutes</span>
             </div>
           </Reveal>
 
@@ -128,7 +128,7 @@ function Problems() {
           <Reveal>
             <SectionHead
               eyebrow="The usual problem"
-              sub="Most Agra businesses we audit are not short of customers. They are short of a clear, current, trustworthy way to receive the ones already looking."
+              sub="Most businesses we audit are not short of customers. They are short of a clear, current, trustworthy way to receive the ones already looking."
             >
               Found on Google.
               <br />
@@ -187,8 +187,8 @@ function ServicesGrid() {
                 </p>
 
                 <ul className="mt-8 flex flex-1 flex-col gap-4">
-                  {s.points.map((p) => (
-                    <li key={p.t} className="flex gap-3">
+                  {s.includes.slice(0, 5).map((x) => (
+                    <li key={x} className="flex gap-3">
                       <svg viewBox="0 0 16 16" fill="none" className="mt-[5px] h-3 w-3 shrink-0">
                         <path
                           d="m3 8.4 3 3L13 4.6"
@@ -198,9 +198,7 @@ function ServicesGrid() {
                           strokeLinejoin="round"
                         />
                       </svg>
-                      <span className="text-sm leading-[1.6] text-ash">
-                        <span className="text-ink">{p.t}.</span> {p.d}
-                      </span>
+                      <span className="text-sm leading-[1.6] text-ash">{x}</span>
                     </li>
                   ))}
                 </ul>
@@ -436,7 +434,7 @@ function WorkExamples() {
         <Reveal>
           <SectionHead
             eyebrow="Recent work"
-            sub="Three recent builds in Agra. Each one is a different shape of problem — a tight budget, a sensitive sector, and a site that needed keeping alive."
+            sub="Three recent builds. Each one is a different shape of problem — a tight budget, a sensitive sector, and a site that needed keeping alive."
           >
             Three deliveries
             <br />
@@ -766,7 +764,7 @@ function PricingPreview() {
               >
                 {p.highlight && (
                   <span className="absolute right-6 top-6 rounded-full border border-ember/35 bg-ember/10 px-2.5 py-1 micro text-ember-soft">
-                    Most chosen
+                    {p.badge || 'Most chosen'}
                   </span>
                 )}
 
@@ -778,10 +776,18 @@ function PricingPreview() {
                   <span className="font-display text-3xl leading-none tracking-[-0.045em] text-ink">
                     ₹{p.price.toLocaleString('en-IN')}
                   </span>
-                  <span className="text-sm text-ash3">/ {p.priceNote}</span>
+                  <span className="text-sm text-ash3">{p.priceNote}</span>
                 </div>
 
-                <p className="mt-5 text-sm leading-[1.6] text-ash2 text-pretty">{p.tagline}</p>
+                <p className="mt-5 text-sm leading-[1.6] text-ash2 text-pretty">
+                  {p.bestFor}
+                </p>
+                {p.listValue ? (
+                  <p className="mt-2 text-xs text-ash3">
+                    List value ₹{p.listValue.toLocaleString('en-IN')} ·{' '}
+                    <span className="text-mint">you save ₹{p.save.toLocaleString('en-IN')}</span>
+                  </p>
+                ) : null}
 
                 <div className="mt-6 flex items-center gap-2.5 rounded-md border border-rule-faint bg-white/[0.02] px-3.5 py-2.5">
                   <ServiceIcon name="clock" className="h-3.5 w-3.5 shrink-0 text-ash2" />
@@ -910,7 +916,7 @@ function Faq() {
 export default function Home() {
   useMeta(
     null,
-    'Nextera Solution builds affordable-premium websites, WhatsApp enquiry paths and Google Business Profile setups for hotels and clinics in Agra. Clear scope, tested enquiry paths, no guaranteed rankings.',
+    'Nextera Solution builds affordable-premium websites, WhatsApp enquiry paths and website, automation, online presence and WhatsApp growth systems for businesses across India. Clear scope, tested enquiry paths, no guaranteed rankings.',
   )
 
   return (

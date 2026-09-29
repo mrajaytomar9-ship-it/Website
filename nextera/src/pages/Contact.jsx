@@ -52,7 +52,7 @@ function buildMessage({ name, business, interest, budget, timeline, note, packag
 export default function Contact() {
   useMeta(
     'Request a free audit',
-    'Request a free website and Google Business Profile audit for your Agra business. No obligation, no cost — usually replied to within one working day.',
+    'Request a free website and Google Business Profile audit for your business. No obligation, no cost — usually replied to within one working day.',
   )
 
   const [form, setForm] = useState({
@@ -96,7 +96,7 @@ export default function Contact() {
           { l: 'Response time', v: '1 working day' },
           { l: 'Cost of the audit', v: 'Free' },
           { l: 'Obligation', v: 'None' },
-          { l: 'Coverage', v: 'Agra' },
+          { l: 'Coverage', v: 'India' },
         ]}
       />
 

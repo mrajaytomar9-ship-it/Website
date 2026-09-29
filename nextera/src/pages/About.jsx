@@ -21,7 +21,7 @@ const PRINCIPLES = [
   {
     n: '03',
     t: 'Narrow, and staying narrow',
-    d: 'Hotels and clinics in Agra. Not fifty cities, not twelve industries. The reason is simple: we would rather be genuinely useful in a small lane than vaguely capable in a large one.',
+    d: 'Hotels, clinics, restaurants, institutes and service businesses across India. Not twelve industries — the ones where a website and a fast reply actually change the month.',
   },
   {
     n: '04',
@@ -42,7 +42,7 @@ const PRINCIPLES = [
 
 const FIT = {
   good: [
-    'An owner-operated hotel, homestay, clinic or practice in Agra',
+    'An owner-operated hotel, homestay, clinic, restaurant or practice in India',
     'You already get some customers, but not from your website',
     'You can name one person who approves content quickly',
     'You want a real quote for real work, not a discovery call that goes nowhere',
@@ -60,7 +60,7 @@ const FIT = {
 export default function About() {
   useMeta(
     'About',
-    'A founder-led studio building websites and enquiry paths for hotels and clinics in Agra. Narrow focus, honest scope, and no guarantees we cannot keep.',
+    'A founder-led studio building websites, automation and online presence for ambitious Indian businesses. Honest scope, and no guarantees we cannot keep.',
   )
 
   return (
@@ -69,7 +69,7 @@ export default function About() {
         eyebrow="About"
         line1="A small studio"
         line2="with a clear lane."
-        sub="Nextera Solution builds the website and enquiry path for hotels and clinics across Agra. We are deliberately narrow, deliberately priced in rupees, and deliberately honest about the things we cannot promise you."
+        sub="Nextera Solution builds the website, automation and online presence for ambitious businesses across India. We are deliberately honest about scope, deliberately priced in rupees, and deliberately honest about the things we cannot promise you."
         meta={[
           { l: 'Based in', v: CONTACT_DETAILS.city },
           { l: 'Focus', v: 'Hotels & clinics' },
@@ -93,7 +93,7 @@ export default function About() {
             <Reveal delay={120}>
               <div className="flex flex-col gap-6 text-base leading-[1.7] text-ash text-pretty">
                 <p>
-                  Most small businesses in Agra are not invisible. They are findable and
+                  Most small businesses in India are not invisible. They are findable and
                   then unusable — a listing with old hours, a website that takes nine seconds
                   to load on a phone, a contact route that asks someone to fill in a form
                   nobody reads.

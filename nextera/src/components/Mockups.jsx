@@ -64,7 +64,7 @@ export function AuditMockup() {
           </p>
         </div>
         <div className="text-right">
-          <p className="micro mb-2.5 text-ash3">Fixed by Pilot</p>
+          <p className="micro mb-2.5 text-ash3">Fixed by Silver</p>
           <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">4</p>
         </div>
       </div>
@@ -209,7 +209,7 @@ export function ProfileMockup() {
           <p className="truncate font-display text-lg tracking-[-0.02em] text-ink">
             Guest House Taj View
           </p>
-          <p className="mt-1 text-xs text-ash2">Guest house · Agra, Uttar Pradesh</p>
+          <p className="mt-1 text-xs text-ash2">Guest house · India</p>
           <div className="mt-2.5 flex items-center gap-2.5">
             <span className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((i) => (
@@ -258,7 +258,7 @@ const STAGES = [
 
 export function DeliveryMockup() {
   return (
-    <MockFrame label="Delivery board" meta="Presence Foundation">
+    <MockFrame label="Delivery board" meta="Gold bundle">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
         {STAGES.map((s, i) => (
           <div key={s.k} className="relative">

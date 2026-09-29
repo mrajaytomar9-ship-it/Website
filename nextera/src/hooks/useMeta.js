@@ -8,7 +8,7 @@ const SITE = 'Nextera Solution'
  */
 export default function useMeta(title, description) {
   useEffect(() => {
-    const full = title ? `${title} — ${SITE}` : `${SITE} — Websites & enquiry journeys for Agra hotels and clinics`
+    const full = title ? `${title} — ${SITE}` : `${SITE} — Websites, automation & online presence for ambitious businesses in India`
     document.title = full
 
     if (description) {
