@@ -262,6 +262,17 @@ light would silently vanish from any card that also got a sweep. `Shine` and
 pseudo-element and fails if any element in `src/` carries two of them on the
 same one.
 
+**The artefact mockups read as running systems.** The audit, enquiry path,
+listing, delivery board and care report (`src/components/Mockups.jsx`) are the
+closest thing this site has to a product demo, so each carries a live cue: a
+radar line sweeping the audit and listing panels, progress bars that re-scan
+(`.bar-live`, `scaleX` from 0 to a `--w` custom property on a staggered loop),
+radiating live dots, a WhatsApp typing indicator, flowing dashes on the active
+delivery stage, and care ticks that light up in sequence. Every one is transform
+or opacity only, and the CSS collapses all of it to a static read under
+`prefers-reduced-motion` (bars and ticks sit at their final value, the scan and
+typing dots disappear).
+
 **Gradient-clipped text needs an escape hatch.** `.fade-line` and
 `.text-shimmer` both paint text with a clipped background and set the colour to
 `transparent`. Printers skip backgrounds by default and forced-colors mode drops

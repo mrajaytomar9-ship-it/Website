@@ -1,4 +1,5 @@
 import { Dot } from './ui/Primitives'
+import { CountUp } from './ui/Motion'
 import { WhatsAppGlyph } from './Navbar'
 
 /* =============================================================================
@@ -56,16 +57,26 @@ const SEV = {
 export function AuditMockup() {
   return (
     <MockFrame label="Website & listing audit" meta="Sample">
+      {/* a radar sweep reading the page */}
+      <span aria-hidden="true" className="scan-y">
+        <i />
+      </span>
+
       <div className="flex items-baseline justify-between">
         <div>
-          <p className="micro mb-2.5 text-ash3">Issues found</p>
+          <p className="micro mb-2.5 flex items-center gap-2 text-ash3">
+            <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-mint text-mint" />
+            Issues found · live scan
+          </p>
           <p className="font-display text-3xl leading-none tracking-[-0.04em] text-ink">
-            6
+            <CountUp value={6} />
           </p>
         </div>
         <div className="text-right">
           <p className="micro mb-2.5 text-ash3">Fixed by Basic</p>
-          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">4</p>
+          <p className="font-display text-3xl leading-none tracking-[-0.04em] text-mint">
+            <CountUp value={4} />
+          </p>
         </div>
       </div>
 
@@ -89,16 +100,11 @@ export function AuditMockup() {
               </span>
             </div>
             <p className="mt-1.5 pl-[14px] text-xs text-ash3">{r.detail}</p>
-            <div className="mt-2 ml-[14px] h-[3px] w-full overflow-hidden rounded-full bg-white/[0.055]">
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${r.pct}%`,
-                  background: SEV[r.sev].color,
-                  opacity: 0.85,
-                  transition: `width 1.2s var(--ease-out-expo) ${i * 90}ms`,
-                }}
-              />
+            <div
+              className="bar-live mt-2 ml-[14px] h-[3px] w-full rounded-full bg-white/[0.055]"
+              style={{ '--w': `${r.pct}%`, '--c': SEV[r.sev].color, '--d': `${i * 0.5}s` }}
+            >
+              <i />
             </div>
           </div>
         ))}
@@ -160,7 +166,10 @@ export function EnquiryMockup() {
             </span>
             <div className="min-w-0">
               <p className="truncate text-xs text-ink">Guest House Taj View</p>
-              <p className="text-xs text-ash3">Online now</p>
+              <p className="flex items-center gap-1.5 text-xs text-ash3">
+                <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-mint text-mint" />
+                Online now
+              </p>
             </div>
           </div>
 
@@ -173,6 +182,14 @@ export function EnquiryMockup() {
             </div>
             <div className="max-w-[86%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-xs leading-[1.5] text-ash">
               Namaste! Let me check with the front desk and confirm.
+            </div>
+            {/* the owner is always mid-reply */}
+            <div className="max-w-[46%] rounded-md rounded-bl-sm border border-rule bg-white/[0.045] px-3 py-2 text-mint">
+              <span className="typing" aria-label="typing">
+                <i />
+                <i />
+                <i />
+              </span>
             </div>
           </div>
 
@@ -199,6 +216,9 @@ export function ProfileMockup() {
 
   return (
     <MockFrame label="Google Business Profile" meta="Authorised changes">
+      <span aria-hidden="true" className="scan-y scan-y-ember">
+        <i />
+      </span>
       <div className="flex items-start gap-4">
         <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md border border-rule bg-gradient-to-br from-ember/25 to-ember/5">
           <div className="flex h-full items-center justify-center font-display text-lg text-ember-soft">
@@ -237,7 +257,9 @@ export function ProfileMockup() {
                   <path d="m2.5 6.2 2.2 2.2L9.5 3.6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               )}
-              {r.good === false && <span className="h-1 w-1 rounded-full bg-ember" />}
+              {r.good === false && (
+                <span className="live-dot inline-block h-1 w-1 rounded-full bg-ember text-ember" />
+              )}
               {r.v}
             </span>
           </div>
@@ -263,7 +285,11 @@ export function DeliveryMockup() {
         {STAGES.map((s, i) => (
           <div key={s.k} className="relative">
             <div className="mb-2.5 flex items-center gap-1.5">
-              <Dot tone={s.done ? 'mint' : s.active ? 'ember' : 'ink'} />
+              {s.active ? (
+                <span className="live-dot inline-block h-2 w-2 rounded-full bg-ember text-ember" />
+              ) : (
+                <Dot tone={s.done ? 'mint' : 'ink'} />
+              )}
               <span
                 className={`text-xs font-medium tracking-[0.02em] ${
                   s.done || s.active ? 'text-ink' : 'text-ash3'
@@ -291,15 +317,22 @@ export function DeliveryMockup() {
             {i < STAGES.length - 1 && (
               <span
                 aria-hidden="true"
-                className="absolute -right-1 top-[7px] hidden h-px w-2 sm:block"
-                style={{ background: s.done ? 'rgba(79,209,165,0.45)' : 'rgba(255,255,255,0.1)' }}
+                className={`absolute -right-1 top-[7px] hidden h-px w-2 sm:block ${
+                  s.active ? 'flow-dash w-3' : ''
+                }`}
+                style={
+                  s.active
+                    ? undefined
+                    : { background: s.done ? 'rgba(79,209,165,0.45)' : 'rgba(255,255,255,0.1)' }
+                }
               />
             )}
           </div>
         ))}
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-4 border-t border-rule pt-4 sm:grid-cols-4">
+      <div className="flow-dash mt-5 h-px w-full" aria-hidden="true" />
+      <div className="mt-5 grid grid-cols-2 gap-4 pt-0 sm:grid-cols-4">
         {[
           { l: 'Planning range', v: '7–10 days' },
           { l: 'Revision rounds', v: '2 included' },
@@ -331,15 +364,19 @@ export function CareMockup() {
         <div>
           <p className="micro mb-2 text-ash3">Allowance used</p>
           <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
-            7<span className="text-ash3">/12</span>
+            <CountUp value={7} />
+            <span className="text-ash3">/12</span>
           </p>
         </div>
         <div className="flex gap-1.5">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
             <span
               key={i}
-              className="h-6 w-[3px] rounded-full"
-              style={{ background: i < 7 ? '#4fd1a5' : 'rgba(255,255,255,0.1)' }}
+              className={i < 7 ? 'tick-live h-6 w-[3px] rounded-full' : 'h-6 w-[3px] rounded-full'}
+              style={{
+                background: i < 7 ? '#4fd1a5' : 'rgba(255,255,255,0.1)',
+                '--d': `${i * 0.18}s`,
+              }}
             />
           ))}
         </div>
@@ -355,15 +392,15 @@ export function CareMockup() {
                 <span className="text-ash3"> / {r.max}</span>
               </span>
             </div>
-            <div className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-white/[0.055]">
-              <div
-                className="h-full rounded-full bg-mint"
-                style={{
-                  width: `${(r.v / r.max) * 100}%`,
-                  opacity: 0.8,
-                  transition: `width 1.1s var(--ease-out-expo) ${i * 80}ms`,
-                }}
-              />
+            <div
+              className="bar-live mt-2 h-[3px] w-full rounded-full bg-white/[0.055]"
+              style={{
+                '--w': `${(r.v / r.max) * 100}%`,
+                '--c': '#4fd1a5',
+                '--d': `${i * 0.4}s`,
+              }}
+            >
+              <i />
             </div>
           </div>
         ))}
