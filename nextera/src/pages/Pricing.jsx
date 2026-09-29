@@ -24,7 +24,7 @@ import Button from '../components/ui/Button'
 import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
 import { SectionHead } from '../components/ui/Primitives'
-import { Spotlight } from '../components/ui/Motion'
+import { Cascade, Spotlight } from '../components/ui/Motion'
 import useMeta from '../hooks/useMeta'
 
 const Tick = ({ tone = '#4fd1a5' }) => (
@@ -107,8 +107,10 @@ export default function Pricing() {
                   id={p.id}
                   ember={p.highlight}
                   tilt={3}
-                  className={`lit lit-hover relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
-                    p.highlight ? 'border-ember/35 bg-ember/[0.04] glow-ember' : 'border-rule bg-void'
+                  className={`lit lit-hover edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                    p.highlight
+                      ? 'ring-pulse border-ember/35 bg-ember/[0.04]'
+                      : 'border-rule bg-void'
                   }`}
                 >
                   {p.badge && (
@@ -208,8 +210,10 @@ export default function Pricing() {
                   id={a.id}
                   ember={a.highlight}
                   tilt={3}
-                  className={`lit lit-hover relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
-                    a.highlight ? 'border-ember/35 bg-ember/[0.04] glow-ember' : 'border-rule bg-void'
+                  className={`lit lit-hover edge-light relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                    a.highlight
+                      ? 'ring-pulse border-ember/35 bg-ember/[0.04]'
+                      : 'border-rule bg-void'
                   }`}
                 >
                   {a.badge && (
@@ -374,10 +378,11 @@ export default function Pricing() {
             <div id="addons" className="scroll-mt-28">
               <p className="micro mb-5 text-ash3">5. One-time add-on services</p>
               <div className="grid gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-3">
+                <Cascade step={45} className="contents">
                 {ADD_ONS.map((a) => (
                   <div
                     key={a.t}
-                    className="flex h-full flex-col justify-between gap-4 bg-void p-6"
+                    className="flex h-full flex-col justify-between gap-4 bg-void p-6 transition-colors duration-500 hover:bg-coal"
                   >
                     <p className="text-sm leading-[1.5] text-ash">{a.t}</p>
                     <p className="text-sm text-ink">
@@ -386,6 +391,7 @@ export default function Pricing() {
                     </p>
                   </div>
                 ))}
+                </Cascade>
               </div>
               <p className="mt-5 text-xs text-ash3">
                 All add-on prices include 18% GST where applicable.

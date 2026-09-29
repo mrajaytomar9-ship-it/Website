@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Reveal from './ui/Reveal'
+import { Cascade, SplitLines } from './ui/Motion'
 
 /**
  * PageHero — the interior-page masthead. Same grammar as the home hero so the
@@ -29,17 +30,16 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
             </Reveal>
           )}
 
-          <Reveal delay={120}>
-            <h1 className="t-page text-balance font-medium text-ink">
-              {line1}
-              {line2 && (
-                <>
-                  <br />
-                  <span className="fade-line">{line2}</span>
-                </>
-              )}
-            </h1>
-          </Reveal>
+          {/* SplitLines carries its own entrance, so it is not wrapped in
+              Reveal — two overlapping reveals read as a stutter, not polish. */}
+          <SplitLines
+            as="h1"
+            className="t-page text-balance font-medium text-ink"
+            stagger={110}
+            lines={[line1, line2 ? <span className="fade-line">{line2}</span> : null].filter(
+              Boolean,
+            )}
+          />
 
           {sub && (
             <Reveal delay={220}>
@@ -56,18 +56,19 @@ export default function PageHero({ eyebrow, line1, line2, sub, children, meta })
           )}
 
           {meta && (
-            <Reveal delay={400}>
-              <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-4">
+            <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-4">
+              <Cascade step={80} className="contents">
                 {meta.map((m) => (
-                  <div key={m.l} className="bg-void px-5 py-6">
+                  <div
+                    key={m.l}
+                    className="lit bg-void px-5 py-6 transition-colors duration-500 hover:bg-coal"
+                  >
                     <dt className="micro mb-2.5 text-ash3">{m.l}</dt>
-                    <dd className="font-display text-lg tracking-[-0.03em] text-ink">
-                      {m.v}
-                    </dd>
+                    <dd className="font-display text-lg tracking-[-0.03em] text-ink">{m.v}</dd>
                   </div>
                 ))}
-              </dl>
-            </Reveal>
+              </Cascade>
+            </dl>
           )}
         </div>
       </div>

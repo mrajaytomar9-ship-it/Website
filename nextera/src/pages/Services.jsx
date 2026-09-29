@@ -12,7 +12,7 @@ import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
 import ServiceIcon from '../components/ServiceIcon'
 import { SectionHead } from '../components/ui/Primitives'
-import { Spotlight } from '../components/ui/Motion'
+import { Cascade, Spotlight } from '../components/ui/Motion'
 import {
   EnquiryMockup,
   ProfileMockup,
@@ -68,7 +68,7 @@ export default function Services() {
           { l: 'Free first step', v: '30-min consultation' },
         ]}
       >
-        <div className="flex flex-wrap gap-2">
+        <Cascade as="div" step={55} className="flex flex-wrap gap-2">
           {SERVICES.map((s) => (
             <a
               key={s.id}
@@ -79,7 +79,7 @@ export default function Services() {
               {s.title.split(' & ')[0]}
             </a>
           ))}
-        </div>
+        </Cascade>
       </PageHero>
 
       {SERVICES.map((service, i) => (

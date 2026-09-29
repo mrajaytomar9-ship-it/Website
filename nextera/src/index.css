@@ -379,6 +379,81 @@
     animation: hairlineFlow 7s linear infinite;
   }
 
+  /* ---------- Masked line reveal ----------
+     Each line sits in a clipping wrapper; the inner span starts below the
+     clip and rises into it. Only transform and opacity animate, and the text
+     is never removed, so the headline stays real for every reader. */
+  .reveal-line {
+    overflow: hidden;
+    /* a hair of padding so descenders are not clipped at the mask edge */
+    padding-block: 0.055em;
+    margin-block: -0.055em;
+  }
+  .reveal-lines.is-masked .reveal-line > span {
+    transform: translateY(108%);
+    opacity: 0;
+    transition:
+      transform 1.05s var(--ease-out-expo),
+      opacity 0.85s var(--ease-out-expo);
+    will-change: transform;
+  }
+  .reveal-lines.is-on .reveal-line > span {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ---------- Cascade ----------
+     One observer on the container; the children take their delay from --i. */
+  .cascade.is-masked > div {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.8s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * var(--step, 70ms));
+    will-change: transform;
+  }
+  .cascade.is-on > div {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---------- Breathing ember ring ----------
+     For the one card that should read as the recommendation. */
+  .ring-pulse {
+    animation: ringPulse 4.6s ease-in-out infinite;
+  }
+
+  /* ---------- Edge light ----------
+     A highlight that runs along the top edge of a surface on hover. */
+  .edge-light {
+    position: relative;
+  }
+  .edge-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    );
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 0.5s var(--ease-out-expo),
+      transform 0.7s var(--ease-out-expo);
+  }
+  .edge-light:hover::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
   /* Figures that change should not jitter horizontally. */
   .num-tab {
     font-variant-numeric: tabular-nums;
@@ -683,6 +758,20 @@
     transform: translate3d(0, -26px, 0) scale(1.06);
   }
 }
+@keyframes ringPulse {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-ember),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(232, 146, 47, 0.4),
+      0 22px 62px -20px rgba(232, 146, 47, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
 @keyframes softPulse {
   0%,
   100% {
@@ -725,11 +814,24 @@
   .spotlight::after,
   .sheen::before,
   .hairline-flow::after,
+  .edge-light::before,
   .orb {
     display: none;
   }
   .lit-hover:hover,
   .tilt {
     transform: none;
+  }
+  /* Reveals resolve to their final state rather than animating into it, so
+     nothing is ever stuck invisible for a reader who asked for calm. */
+  .reveal-lines.is-masked .reveal-line > span,
+  .cascade.is-masked > div {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+  .ring-pulse {
+    animation: none;
+    box-shadow: var(--shadow-ember);
   }
 }

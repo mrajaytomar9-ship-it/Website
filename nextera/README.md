@@ -21,7 +21,7 @@ npm run preview  # serve the built bundle locally
 
 ```bash
 npm test         # 80 assertions: 33 calculator + 29 report + 18 contact & rate card
-npm run test:motion   # 12 checks: motion mounts, reduced-motion collapses, SSR is honest
+npm run test:motion   # 24 checks: motion mounts, reduced-motion collapses, SSR is honest
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -231,10 +231,27 @@ used by `.glow-ember`). Each is layered — two tight shadows plus a wide soft o
 | `.tilt` | 3D tilt, driven by `--rx`/`--ry` |
 | `.orb` + `.anim-orb` | slow-drifting ambient background glow |
 | `.hairline-flow` | a gradient travelling along a 1px rule |
+| `.reveal-line` / `.reveal-lines` | headline lines rising out from behind a mask |
+| `.cascade` | children arriving one after another |
+| `.ring-pulse` | breathing ember ring on the recommended card |
+| `.edge-light` | a highlight running along a surface's top edge on hover |
 | `.num-tab` | tabular figures, so animating numbers do not jitter |
 
 The React side lives in `src/components/ui/Motion.jsx`: `Spotlight`, `CountUp`,
-`ScrollProgress`, `Ambient` and the `useReducedMotion` hook.
+`ScrollProgress`, `Ambient`, `SplitLines`, `Cascade`, `Magnetic`, `Parallax`,
+`CursorGlow` and the `useReducedMotion` / `useInView` hooks.
+
+`CursorGlow` only mounts on `(hover: hover) and (pointer: fine)` — on touch there
+is nothing to trail and the frame cost buys nothing. `Magnetic` pulls about 0.22
+of the cursor offset; past roughly 10px it stops feeling responsive and starts
+feeling drunk.
+
+**Masked reveals can never trap content.** `SplitLines` and `Cascade` hide their
+content until it is on screen, so an observer that never reports would leave a
+headline permanently invisible — a worse failure than a headline that simply
+appears without animating. Two guards: `useInView` forces `true` after 1.5s, and
+neither component applies its masking class until after mount, so the server,
+the printed page and a no-JS reader all get plain visible text.
 
 **Two rules, both enforced:**
 
@@ -252,10 +269,17 @@ mismatch for reduced-motion users, whose client tree omits it. `CountUp`
 likewise starts at its final value, so the server, the printed page and a
 no-JS reader all see the real price rather than a zero.
 
-`npm run test:motion` (12 checks, part of `npm run check`) verifies all of it:
+`npm run test:motion` (24 checks, part of `npm run check`) verifies all of it:
 that the effects mount and carry their classes, that reduced motion collapses
-every one of them, and that SSR prints the true figure and no scroll bar. It
-caught the SSR bug above on its first run.
+every one of them, and that SSR prints the true figure, the true headline and no
+scroll bar. It caught both SSR bugs above on its first run, and later caught
+`useReducedMotion` reading a captured `MediaQueryList` instead of the change
+event — the event is the canonical source and the only value that is definitely
+correct at the moment the preference flips.
+
+The test's `matchMedia` stub fires `change` notifications. A stub that swaps the
+function silently does not: components already mounted keep the value they read
+at mount, and the test ends up measuring the stub rather than the code.
 
 ---
 

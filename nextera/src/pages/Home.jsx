@@ -27,7 +27,13 @@ import {
 } from '../components/Mockups'
 import { WhatsAppGlyph } from '../components/Navbar'
 import ServiceIcon from '../components/ServiceIcon'
-import { Ambient, CountUp } from '../components/ui/Motion'
+import {
+  Ambient,
+  CountUp,
+  Magnetic,
+  Parallax,
+  SplitLines,
+} from '../components/ui/Motion'
 import { Meter } from '../components/tools/fields'
 import useMeta from '../hooks/useMeta'
 
@@ -36,15 +42,17 @@ function Hero() {
   return (
     <section className="relative overflow-hidden pt-[124px] md:pt-[150px]">
       <Ambient />
-      {/* focal glow behind the headline */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[560px]"
-        style={{
-          background:
-            'radial-gradient(52% 46% at 50% 22%, rgba(255,255,255,0.075) 0%, transparent 66%)',
-        }}
-      />
+      {/* focal glow behind the headline, drifting against the scroll */}
+      <Parallax speed={0.09} className="pointer-events-none absolute inset-x-0 top-0">
+        <div
+          aria-hidden="true"
+          className="h-[560px]"
+          style={{
+            background:
+              'radial-gradient(52% 46% at 50% 22%, rgba(255,255,255,0.075) 0%, transparent 66%)',
+          }}
+        />
+      </Parallax>
 
       <div className="shell relative">
         <div className="flex flex-col items-center text-center">
@@ -57,13 +65,12 @@ function Hero() {
           </Reveal>
 
           {/* Headline */}
-          <Reveal delay={150}>
-            <h1 className="t-hero mt-9 text-balance font-medium text-ink">
-              {HERO.line1}
-              <br />
-              <span className="fade-line">{HERO.line2}</span>
-            </h1>
-          </Reveal>
+          <SplitLines
+            as="h1"
+            className="t-hero mt-9 text-balance font-medium text-ink"
+            stagger={120}
+            lines={[HERO.line1, <span className="fade-line">{HERO.line2}</span>]}
+          />
 
           <Reveal delay={260}>
             <p className="mx-auto mt-8 max-w-2xl text-base leading-[1.65] text-ash text-pretty md:text-lg">
@@ -74,9 +81,11 @@ function Hero() {
           {/* CTAs */}
           <Reveal delay={360}>
             <div className="mt-11 flex flex-col items-center gap-3 sm:flex-row">
-              <Button to={HERO.primary.to} variant="primary" size="lg">
-                {HERO.primary.label}
-              </Button>
+              <Magnetic>
+                <Button to={HERO.primary.to} variant="primary" size="lg">
+                  {HERO.primary.label}
+                </Button>
+              </Magnetic>
               <Button to={HERO.secondary.to} variant="secondary" size="lg">
                 {HERO.secondary.label}
               </Button>
@@ -87,7 +96,10 @@ function Hero() {
           <Reveal delay={470} className="mt-20 w-full">
             <div className="mx-auto grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-3">
               {HERO.stats.map((s) => (
-                <div key={s.label} className="bg-void px-6 py-7 text-center">
+                <div
+                  key={s.label}
+                  className="lit edge-light bg-void px-6 py-7 text-center"
+                >
                   <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
                     {Number.isFinite(s.count) ? (
                       <CountUp
