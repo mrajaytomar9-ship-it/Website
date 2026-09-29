@@ -60,6 +60,13 @@
   --radius-card: 16px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Shadow scale — three steps, all of them consumed. Layered rather than a single blur, because one
+     large shadow reads as a smudge on a black canvas; two tight ones plus a
+     wide soft one read as an object sitting above the page. */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.55), 0 18px 44px -18px rgba(0, 0, 0, 0.85);
+  --shadow-ember: 0 0 0 1px rgba(232, 146, 47, 0.22), 0 18px 50px -22px rgba(232, 146, 47, 0.45);
 }
 
 /* ---------- Base ---------- */
@@ -248,9 +255,134 @@
   }
 
   .glow-ember {
+    box-shadow: var(--shadow-ember);
+  }
+
+  /* ---------- Light, shadow and depth ---------- */
+
+  /* A card that looks lit from above: hairline highlight along the top edge,
+     a faint inner glow, and a layered drop shadow underneath. */
+  .lit {
     box-shadow:
-      0 0 0 1px rgba(232, 146, 47, 0.28),
-      0 0 34px -6px rgba(232, 146, 47, 0.34);
+      var(--shadow-soft),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
+    transition:
+      box-shadow 0.5s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo),
+      border-color 0.5s var(--ease-out-expo);
+  }
+  .lit-hover:hover {
+    box-shadow:
+      var(--shadow-lift),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    transform: translateY(-3px);
+  }
+
+  /* Cursor-tracked light. Motion.jsx writes --mx/--my as the pointer moves;
+     the gradient follows without a repaint of the card's contents. */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-out-expo);
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(255, 255, 255, 0.075),
+      transparent 62%
+    );
+    z-index: 1;
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+  /* Ember variant for the highlighted package. */
+  .spotlight-ember::after {
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(232, 146, 47, 0.14),
+      transparent 62%
+    );
+  }
+
+  /* A single light sweep across the surface on hover. */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .sheen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 45%;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.13),
+      transparent
+    );
+    transform: skewX(-14deg);
+    opacity: 0;
+  }
+  .sheen:hover::before {
+    animation: sheenSweep 0.95s var(--ease-out-expo);
+  }
+
+  /* Subtle 3D tilt. Motion.jsx sets --rx/--ry; the perspective lives here so
+     the value is identical everywhere. */
+  .tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  /* Ambient background glow. Slow drift, transform-only. */
+  .orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+    will-change: transform;
+  }
+  .orb-ember {
+    background: radial-gradient(circle, rgba(232, 146, 47, 0.3), transparent 68%);
+  }
+  .orb-cool {
+    background: radial-gradient(circle, rgba(95, 179, 240, 0.16), transparent 68%);
+  }
+
+  /* Animated hairline: a gradient that travels along a 1px rule. */
+  .hairline-flow {
+    position: relative;
+    height: 1px;
+    background: var(--color-rule);
+    overflow: hidden;
+  }
+  .hairline-flow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(232, 146, 47, 0.85),
+      transparent
+    );
+    animation: hairlineFlow 7s linear infinite;
+  }
+
+  /* Figures that change should not jitter horizontally. */
+  .num-tab {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
   }
 
   .text-balance {
@@ -521,6 +653,45 @@
     stroke-dashoffset: 0;
   }
 }
+@keyframes sheenSweep {
+  0% {
+    left: -60%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    left: 130%;
+    opacity: 0;
+  }
+}
+@keyframes hairlineFlow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -26px, 0) scale(1.06);
+  }
+}
+@keyframes softPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
 .anim-rise {
   animation: riseIn 0.85s var(--ease-out-expo) both;
@@ -539,4 +710,26 @@
 }
 .anim-scan {
   animation: scanLine 5.5s ease-in-out infinite;
+}
+.anim-orb {
+  animation: orbFloat 17s ease-in-out infinite;
+}
+.anim-soft-pulse {
+  animation: softPulse 3.4s ease-in-out infinite;
+}
+
+/* Motion is decoration here, never information. Anything the eye has to track
+   stops for users who ask the system to reduce it — including the CSS-variable
+   driven spotlight and tilt, which the global duration reset cannot reach. */
+@media (prefers-reduced-motion: reduce) {
+  .spotlight::after,
+  .sheen::before,
+  .hairline-flow::after,
+  .orb {
+    display: none;
+  }
+  .lit-hover:hover,
+  .tilt {
+    transform: none;
+  }
 }

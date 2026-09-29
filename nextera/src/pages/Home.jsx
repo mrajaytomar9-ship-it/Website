@@ -27,6 +27,7 @@ import {
 } from '../components/Mockups'
 import { WhatsAppGlyph } from '../components/Navbar'
 import ServiceIcon from '../components/ServiceIcon'
+import { Ambient, CountUp } from '../components/ui/Motion'
 import { Meter } from '../components/tools/fields'
 import useMeta from '../hooks/useMeta'
 
@@ -34,6 +35,7 @@ import useMeta from '../hooks/useMeta'
 function Hero() {
   return (
     <section className="relative overflow-hidden pt-[124px] md:pt-[150px]">
+      <Ambient />
       {/* focal glow behind the headline */}
       <div
         aria-hidden="true"
@@ -87,7 +89,14 @@ function Hero() {
               {HERO.stats.map((s) => (
                 <div key={s.label} className="bg-void px-6 py-7 text-center">
                   <p className="font-display text-2xl leading-none tracking-[-0.04em] text-ink">
-                    {s.value}
+                    {Number.isFinite(s.count) ? (
+                      <CountUp
+                        value={s.count}
+                        format={(n) => `${s.prefix}${n.toLocaleString('en-IN')}`}
+                      />
+                    ) : (
+                      s.value
+                    )}
                     <span className="ml-1.5 text-base tracking-normal text-ash3">
                       {s.unit}
                     </span>

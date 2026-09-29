@@ -21,6 +21,7 @@ npm run preview  # serve the built bundle locally
 
 ```bash
 npm test         # 80 assertions: 33 calculator + 29 report + 18 contact & rate card
+npm run test:motion   # 12 checks: motion mounts, reduced-motion collapses, SSR is honest
 npm run test:ui  # mounts the real /tools page in jsdom and types into it
 npm run smoke    # server-renders every route and checks the tools page output
 npm run check:scale # type/radius steps stay inside their budget
@@ -212,6 +213,49 @@ Utility classes worth knowing:
 viewport. If you put a `.t-h2`/`.t-h3` inside a flex child that can shrink, add
 `cq-wrap` to that child or give it a `flex-1` basis — otherwise the container can
 collapse to zero width.
+
+### Light, shadow and motion
+
+Three shadow steps, all of them consumed: `--shadow-soft` (resting card),
+`--shadow-lift` (hovered card), `--shadow-ember` (the highlighted package, also
+used by `.glow-ember`). Each is layered — two tight shadows plus a wide soft one
+— because a single large blur reads as a smudge on a black canvas.
+
+| Class | What it does |
+|---|---|
+| `.lit` | resting shadow + a hairline highlight along the top edge |
+| `.lit-hover` | lifts 3px and deepens the shadow on hover |
+| `.spotlight` | radial light that follows the cursor (`--mx`/`--my`) |
+| `.spotlight-ember` | same, tinted for the highlighted card |
+| `.sheen` | a single diagonal light sweep on hover (used by `Button`) |
+| `.tilt` | 3D tilt, driven by `--rx`/`--ry` |
+| `.orb` + `.anim-orb` | slow-drifting ambient background glow |
+| `.hairline-flow` | a gradient travelling along a 1px rule |
+| `.num-tab` | tabular figures, so animating numbers do not jitter |
+
+The React side lives in `src/components/ui/Motion.jsx`: `Spotlight`, `CountUp`,
+`ScrollProgress`, `Ambient` and the `useReducedMotion` hook.
+
+**Two rules, both enforced:**
+
+1. **Motion is decoration, never information.** Everything collapses to a static
+   state under `prefers-reduced-motion` — the CSS effects via a media query, and
+   `ScrollProgress` and `Ambient` by rendering nothing at all.
+2. **Transform and opacity only.** Anything animating layout repaints every
+   frame, which is where a "premium" site starts to feel cheap on a mid-range
+   phone.
+
+**Nothing renders before mount.** `useReducedMotion` can only read the media
+query in an effect, so on the server the preference is unknowable. Guessing
+"motion on" put a scroll bar into the static HTML *and* produced a hydration
+mismatch for reduced-motion users, whose client tree omits it. `CountUp`
+likewise starts at its final value, so the server, the printed page and a
+no-JS reader all see the real price rather than a zero.
+
+`npm run test:motion` (12 checks, part of `npm run check`) verifies all of it:
+that the effects mount and carry their classes, that reduced motion collapses
+every one of them, and that SSR prints the true figure and no scroll bar. It
+caught the SSR bug above on its first run.
 
 ---
 

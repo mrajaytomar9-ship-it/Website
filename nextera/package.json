@@ -8,10 +8,11 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --test src/lib/*.test.mjs",
-    "check": "npm run test && npm run test:ui && npm run build && node scripts/class-check.mjs && node scripts/scale-check.mjs && npm run smoke",
+    "check": "npm run test && npm run test:ui && npm run test:motion && npm run build && node scripts/class-check.mjs && node scripts/scale-check.mjs && npm run smoke",
     "smoke": "vite build --ssr scripts/ssr-smoke.jsx --outDir .ssr-tmp --emptyOutDir --logLevel warn && node .ssr-tmp/ssr-smoke.js && rm -rf .ssr-tmp",
     "check:css": "vite build >/dev/null && node scripts/class-check.mjs",
     "test:ui": "vite build --ssr scripts/interaction-test.jsx --outDir .itest-tmp --emptyOutDir --logLevel warn && node .itest-tmp/interaction-test.js && rm -rf .itest-tmp",
+    "test:motion": "vite build --ssr scripts/motion-test.jsx --outDir .motion-tmp --emptyOutDir --logLevel warn && node .motion-tmp/motion-test.js && rm -rf .motion-tmp",
     "check:scale": "vite build >/dev/null && node scripts/scale-check.mjs"
   },
   "dependencies": {

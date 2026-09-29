@@ -12,6 +12,7 @@ import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
 import ServiceIcon from '../components/ServiceIcon'
 import { SectionHead } from '../components/ui/Primitives'
+import { Spotlight } from '../components/ui/Motion'
 import {
   EnquiryMockup,
   ProfileMockup,
@@ -292,7 +293,7 @@ function ServiceSection({ service, index, mock, flip = false }) {
               <div className="lg:sticky lg:top-28">
                 {mock}
 
-                <div className="mt-6 rounded-md border border-rule bg-white/[0.02] p-5">
+                <Spotlight className="lit mt-6 rounded-md border border-rule bg-white/[0.02] p-5">
                   <p className="micro text-ash3">Starting point</p>
                   <p className="mt-2 font-display text-xl tracking-[-0.03em] text-ink">
                     {service.startingPoint}
@@ -301,7 +302,7 @@ function ServiceSection({ service, index, mock, flip = false }) {
                     Including 18% GST where applicable. Also available inside a package — see the
                     pricing page for the full rate card.
                   </p>
-                </div>
+                </Spotlight>
 
                 <div className="mt-6 flex flex-col gap-3">
                   <Button href={whatsappLink(message)} variant="secondary" size="md" className="w-full">

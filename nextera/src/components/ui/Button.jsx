@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2.5 rounded-full text-sm font-medium tracking-[-0.01em] transition-all duration-300 will-change-transform active:scale-[0.975]'
+  'sheen group relative inline-flex items-center justify-center gap-2.5 rounded-full text-sm font-medium tracking-[-0.01em] transition-all duration-300 will-change-transform active:scale-[0.975]'
 
 const sizes = {
   sm: 'h-9 px-5',

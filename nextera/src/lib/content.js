@@ -123,9 +123,9 @@ export const HERO = {
   primary: { label: 'See the pricing', to: '/pricing#basic' },
   secondary: { label: 'Request a free audit', to: '/contact' },
   stats: [
-    { value: '₹23,600', unit: 'from', label: 'Basic website, including GST' },
+    { value: '₹23,600', count: 23600, prefix: '₹', unit: 'from', label: 'Basic website, including GST' },
     { value: '1–2', unit: 'weeks', label: 'Typical website delivery, by scope' },
-    { value: '₹1,499', unit: 'per month', label: 'Website maintenance from' },
+    { value: '₹1,499', count: 1499, prefix: '₹', unit: 'per month', label: 'Website maintenance from' },
   ],
 }
 

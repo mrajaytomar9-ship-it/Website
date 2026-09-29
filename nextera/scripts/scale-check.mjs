@@ -79,6 +79,10 @@ const radii = new Set()
 for (const m of css.matchAll(/border-radius:\s*([^;}]+)/g)) {
   const v = m[1].trim()
   if (v === '0' || v === '0px') continue /* no radius is not a step */
+  /* `inherit` takes the parent's corner rather than introducing a new one —
+     the .spotlight overlay uses it to match whatever card it sits on. Same
+     reasoning the font-size scan above already applies. */
+  if (v === 'inherit') continue
   /* Tailwind spells `full` as infinity, hand-written CSS as 9999px — one step */
   radii.add(/^(9999px|3\.40282e38px)$/.test(v) ? 'full' : v.replace(/\s+/g, ''))
 }

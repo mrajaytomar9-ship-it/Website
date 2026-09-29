@@ -24,6 +24,7 @@ import Button from '../components/ui/Button'
 import Reveal from '../components/ui/Reveal'
 import CtaBand from '../components/CtaBand'
 import { SectionHead } from '../components/ui/Primitives'
+import { Spotlight } from '../components/ui/Motion'
 import useMeta from '../hooks/useMeta'
 
 const Tick = ({ tone = '#4fd1a5' }) => (
@@ -101,10 +102,13 @@ export default function Pricing() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {PACKAGES.map((p, i) => (
               <Reveal key={p.id} delay={i * 110}>
-                <article
+                <Spotlight
+                  as="article"
                   id={p.id}
-                  className={`relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
-                    p.highlight ? 'border-ember/35 bg-ember/[0.04]' : 'border-rule bg-void'
+                  ember={p.highlight}
+                  tilt={3}
+                  className={`lit lit-hover relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                    p.highlight ? 'border-ember/35 bg-ember/[0.04] glow-ember' : 'border-rule bg-void'
                   }`}
                 >
                   {p.badge && (
@@ -172,7 +176,7 @@ export default function Pricing() {
                   >
                     {p.cta.label}
                   </Button>
-                </article>
+                </Spotlight>
               </Reveal>
             ))}
           </div>
@@ -199,10 +203,13 @@ export default function Pricing() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {AI_VOICE.map((a, i) => (
               <Reveal key={a.id} delay={i * 110}>
-                <article
+                <Spotlight
+                  as="article"
                   id={a.id}
-                  className={`relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
-                    a.highlight ? 'border-ember/35 bg-ember/[0.04]' : 'border-rule bg-void'
+                  ember={a.highlight}
+                  tilt={3}
+                  className={`lit lit-hover relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-xl border p-7 ${
+                    a.highlight ? 'border-ember/35 bg-ember/[0.04] glow-ember' : 'border-rule bg-void'
                   }`}
                 >
                   {a.badge && (
@@ -258,7 +265,7 @@ export default function Pricing() {
                   >
                     {a.cta.label}
                   </Button>
-                </article>
+                </Spotlight>
               </Reveal>
             ))}
           </div>
@@ -293,9 +300,10 @@ export default function Pricing() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {MAINTENANCE_PLANS.map((p, i) => (
               <Reveal key={p.id} delay={i * 100}>
-                <div
+                <Spotlight
+                  as="div"
                   id={p.id}
-                  className="flex h-full scroll-mt-28 flex-col rounded-xl border border-rule bg-void p-7"
+                  className="lit lit-hover flex h-full scroll-mt-28 flex-col rounded-xl border border-rule bg-void p-7"
                 >
                   <h3 className="font-display text-xl tracking-[-0.03em] text-ink">{p.name}</h3>
                   <p className="mt-3 text-sm leading-[1.6] text-ash2 text-pretty">{p.best}</p>
@@ -321,7 +329,7 @@ export default function Pricing() {
                   >
                     {p.cta.label} →
                   </a>
-                </div>
+                </Spotlight>
               </Reveal>
             ))}
           </div>

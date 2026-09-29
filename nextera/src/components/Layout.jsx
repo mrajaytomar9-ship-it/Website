@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import Grain, { PageFrame } from './ui/Primitives'
+import { ScrollProgress } from './ui/Motion'
 
 /** Scroll to top on route change, or to the hash target if one is present. */
 function ScrollManager() {
@@ -36,6 +37,7 @@ export default function Layout() {
   return (
     <div className="relative min-h-screen bg-void">
       <ScrollManager />
+      <ScrollProgress />
       <Grain />
       <PageFrame />
 
@@ -45,7 +47,7 @@ export default function Layout() {
         className="pointer-events-none fixed inset-0 z-0"
         style={{
           background:
-            'radial-gradient(70% 48% at 50% -8%, rgba(255,255,255,0.055) 0%, transparent 62%), radial-gradient(46% 34% at 88% 8%, rgba(232,146,47,0.05) 0%, transparent 70%)',
+            'radial-gradient(70% 48% at 50% -8%, rgba(255,255,255,0.06) 0%, transparent 62%), radial-gradient(46% 34% at 88% 8%, rgba(232,146,47,0.06) 0%, transparent 70%), radial-gradient(38% 30% at 6% 62%, rgba(95,179,240,0.035) 0%, transparent 72%)',
         }}
       />
 
