@@ -4,6 +4,8 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import Grain, { PageFrame } from './ui/Primitives'
 import { CursorGlow, ScrollProgress } from './ui/Motion'
+import { SmoothScroll } from './ui/Cinema'
+import { LazyMotion, domAnimation } from 'framer-motion'
 
 /** Scroll to top on route change, or to the hash target if one is present. */
 function ScrollManager() {
@@ -17,14 +19,20 @@ function ScrollManager() {
         const el = document.getElementById(id)
         if (el) {
           const top = el.getBoundingClientRect().top + window.scrollY - 88
-          window.scrollTo({ top, behavior: 'smooth' })
+          if (window.__lenis) window.__lenis.scrollTo(top)
+          else window.scrollTo({ top, behavior: 'smooth' })
+        } else if (window.__lenis) {
+          window.__lenis.scrollTo(0, { immediate: true })
         } else {
           window.scrollTo({ top: 0 })
         }
       })
       return () => cancelAnimationFrame(raf)
     }
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
+    // Route changes must land instantly, not glide: nobody wants to watch the
+    // previous page scroll away.
+    if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
+    else window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' })
   }, [pathname, hash])
 
   return null
@@ -35,6 +43,12 @@ function ScrollManager() {
 
 export default function Layout() {
   return (
+    /* LazyMotion + the `m` components instead of `motion.*`: it loads only the
+       animation features this site uses, which is roughly half the bundle.
+       `strict` makes any stray `motion.*` throw rather than silently pull the
+       full engine back in. */
+    <LazyMotion features={domAnimation} strict>
+      <SmoothScroll>
     <div className="relative min-h-screen bg-void">
       <ScrollManager />
       <ScrollProgress />
@@ -60,5 +74,7 @@ export default function Layout() {
         <Footer />
       </div>
     </div>
+      </SmoothScroll>
+    </LazyMotion>
   )
 }

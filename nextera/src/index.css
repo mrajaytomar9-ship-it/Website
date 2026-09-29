@@ -294,7 +294,7 @@
     transition: opacity 0.45s var(--ease-out-expo);
     background: radial-gradient(
       420px circle at var(--mx, 50%) var(--my, 0%),
-      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.22),
       transparent 62%
     );
     z-index: 1;
@@ -327,7 +327,7 @@
     background: linear-gradient(
       100deg,
       transparent,
-      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.30),
       transparent
     );
     transform: skewX(-14deg);
@@ -490,9 +490,9 @@
     background: linear-gradient(
       100deg,
       transparent,
-      rgba(255, 255, 255, 0.05),
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.34),
+      rgba(255, 255, 255, 0.16),
       transparent
     );
     transform: translateX(-160%) skewX(-12deg);
@@ -520,7 +520,7 @@
     pointer-events: none;
     background: radial-gradient(
       58% 58% at 50% 46%,
-      rgba(232, 146, 47, 0.13),
+      rgba(232, 146, 47, 0.30),
       transparent 72%
     );
     filter: blur(34px);
@@ -606,9 +606,9 @@
     background: linear-gradient(
       180deg,
       transparent,
-      rgba(79, 209, 165, 0.06) 34%,
-      rgba(79, 209, 165, 0.16) 50%,
-      rgba(79, 209, 165, 0.06) 66%,
+      rgba(79, 209, 165, 0.16) 34%,
+      rgba(79, 209, 165, 0.42) 50%,
+      rgba(79, 209, 165, 0.16) 66%,
       transparent
     );
     animation: scanY 5.6s linear infinite;
@@ -617,9 +617,9 @@
     background: linear-gradient(
       180deg,
       transparent,
-      rgba(232, 146, 47, 0.06) 34%,
-      rgba(232, 146, 47, 0.15) 50%,
-      rgba(232, 146, 47, 0.06) 66%,
+      rgba(232, 146, 47, 0.16) 34%,
+      rgba(232, 146, 47, 0.40) 50%,
+      rgba(232, 146, 47, 0.16) 66%,
       transparent
     );
   }
@@ -636,7 +636,7 @@
     width: var(--w, 50%);
     border-radius: inherit;
     background: var(--c, #4fd1a5);
-    opacity: 0.85;
+    opacity: 1;
     animation: barScan 6.4s var(--ease-out-expo) infinite;
     animation-delay: var(--d, 0s);
     position: relative;
@@ -647,11 +647,11 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    right: -2px;
-    width: 3px;
+    right: -3px;
+    width: 5px;
     background: #fff;
-    opacity: 0.5;
-    filter: blur(1px);
+    opacity: 0.9;
+    filter: blur(1.5px);
   }
 
   /* A live status dot with a radiating ring. */

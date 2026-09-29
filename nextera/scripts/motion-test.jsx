@@ -63,6 +63,15 @@ async function main() {
     Shine,
     DriftLight,
   } = await import('../src/components/ui/Motion.jsx')
+  const {
+    CineReveal,
+    EmberField,
+    HeroAurora,
+    Scramble,
+    SmoothScroll,
+    Tilt,
+    WordReveal,
+  } = await import('../src/components/ui/Cinema.jsx')
 
   const host = dom.window.document.getElementById('root')
   const root = createRoot(host)
@@ -210,6 +219,98 @@ async function main() {
   )
   check('SSR prints the headline unmasked', !ssrHeadline.includes('is-masked'), ssrHeadline.slice(0, 200))
   check('SSR headline keeps both lines', ssrHeadline.includes('Scoped in writing.'), ssrHeadline.slice(0, 200))
+
+
+  /* ------------------------------------------- 4. the cinema layer (Cinema.jsx)
+     Spring physics, pointer tracking and canvas. Same three rules as the CSS
+     layers: they mount, they collapse under reduced motion, and they never put
+     a placeholder in front of a crawler. */
+  const SCRAMBLE_TEXT = 'AUDIT ENGINE ONLINE — 6 CHECKS RUNNING'
+
+  setReducedMotion(false)
+  await mount(React.createElement(SmoothScroll, null, React.createElement('p', null, 'wrapped')))
+  check('SmoothScroll renders its children', html().includes('wrapped'), html().slice(0, 160))
+
+  await mount(React.createElement(CineReveal, null, React.createElement('p', null, 'arrives')))
+  check('CineReveal renders its child', html().includes('arrives'), html().slice(0, 160))
+
+  await mount(
+    React.createElement(WordReveal, { text: 'Your business is easy to find.' }),
+  )
+  check(
+    'WordReveal keeps every word in the DOM',
+    ['Your', 'business', 'easy', 'find.'].every((w) => html().includes(w)),
+    html().slice(0, 200),
+  )
+
+  await mount(React.createElement(EmberField))
+  check('EmberField mounts a canvas', html().includes('<canvas'), html().slice(0, 160))
+
+  await mount(React.createElement(Tilt, null, React.createElement('p', null, 'tilts')))
+  check('Tilt renders its child', html().includes('tilts'), html().slice(0, 160))
+
+  await mount(React.createElement(HeroAurora))
+  check('HeroAurora mounts colour fields', html().includes('radial-gradient'), html().slice(0, 200))
+
+  /* The one that actually matters: a decode effect that stopped mid-scramble
+     would leave noise on the page, and one that scrambled during server
+     rendering would hand that noise to a crawler. */
+  const ssrScramble = renderToStaticMarkup(
+    React.createElement(Scramble, { text: SCRAMBLE_TEXT }),
+  )
+  check(
+    'SSR prints the scramble target verbatim, never glyph noise',
+    ssrScramble.includes(SCRAMBLE_TEXT),
+    ssrScramble.slice(0, 200),
+  )
+
+  const ssrWord = renderToStaticMarkup(
+    React.createElement(WordReveal, { text: 'Hard to contact.' }),
+  )
+  check(
+    'SSR keeps every masked word reachable',
+    ['Hard', 'to', 'contact.'].every((w) => ssrWord.includes(w)),
+    ssrWord.slice(0, 200),
+  )
+
+  const ssrReveal = renderToStaticMarkup(
+    React.createElement(CineReveal, null, React.createElement('p', null, 'readable')),
+  )
+  check(
+    'SSR renders a reveal already visible (readable with JS off)',
+    ssrReveal.includes('readable') && !ssrReveal.includes('opacity:0'),
+    ssrReveal.slice(0, 200),
+  )
+
+  setReducedMotion(true)
+  await mount(React.createElement(Scramble, { text: SCRAMBLE_TEXT }))
+  check(
+    'Scramble prints the real text when motion is reduced',
+    html().includes(SCRAMBLE_TEXT),
+    html().slice(0, 200),
+  )
+
+  await mount(React.createElement(WordReveal, { text: 'Hard to contact.' }))
+  check(
+    'WordReveal keeps the full text when motion is reduced',
+    ['Hard', 'contact.'].every((w) => html().includes(w)),
+    html().slice(0, 200),
+  )
+
+  await mount(React.createElement(CineReveal, null, React.createElement('p', null, 'static')))
+  check(
+    'CineReveal renders its final state when motion is reduced',
+    html().includes('static') && !html().includes('blur(10px)'),
+    html().slice(0, 200),
+  )
+
+  await mount(React.createElement(HeroAurora))
+  check('HeroAurora still renders under reduced motion', html().includes('radial-gradient'), html().slice(0, 200))
+
+  await mount(React.createElement(EmberField))
+  check('EmberField keeps its canvas under reduced motion', html().includes('<canvas'), html().slice(0, 160))
+
+  setReducedMotion(false)
 
   await act(async () => root.unmount())
 }

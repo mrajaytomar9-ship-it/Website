@@ -1,9 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import { m } from 'framer-motion'
+import { useReducedMotion } from './Motion'
 
-/**
- * Reveal — fades + lifts children into view once, on intersection.
- * Respects prefers-reduced-motion via CSS.
- */
+/* --------------------------------------------------------------------------
+   Reveal — lifts children into view once, on intersection.
+
+   Same API and same call sites as the CSS-transition version it replaces; the
+   difference is the physics. A spring overshoots slightly and settles, which
+   is what makes an entrance read as an object arriving rather than a fade
+   completing. The blur is the other half: a sharp element sliding in looks
+   mechanical, a soft one resolving into focus looks filmed.
+
+   Motion is decoration, never information — under prefers-reduced-motion this
+   renders its final state with no animation at all. Before mount (and
+   therefore in the server-rendered HTML) it also renders the final state, so
+   the page is readable with JavaScript off.
+   -------------------------------------------------------------------------- */
+
+const SPRING = { type: 'spring', stiffness: 90, damping: 18, mass: 0.8 }
+
 export default function Reveal({
   children,
   delay = 0,
@@ -13,48 +27,21 @@ export default function Reveal({
   once = true,
   threshold = 0.12,
 }) {
-  const ref = useRef(null)
-  const [shown, setShown] = useState(false)
-
-  useEffect(() => {
-    const node = ref.current
-    if (!node) return
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setShown(true)
-      return
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setShown(true)
-            if (once) io.unobserve(e.target)
-          } else if (!once) {
-            setShown(false)
-          }
-        })
-      },
-      { threshold, rootMargin: '0px 0px -8% 0px' },
-    )
-
-    io.observe(node)
-    return () => io.disconnect()
-  }, [once, threshold])
+  const { mounted, reduced } = useReducedMotion()
+  const off = !mounted || reduced
+  const M = m[Tag] || m.div
 
   return (
-    <Tag
-      ref={ref}
+    <M
       className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? 'translateY(0)' : `translateY(${y}px)`,
-        transition: `opacity 0.9s var(--ease-out-expo) ${delay}ms, transform 0.9s var(--ease-out-expo) ${delay}ms`,
-        willChange: 'opacity, transform',
-      }}
+      initial={off ? false : { opacity: 0, y, filter: 'blur(10px)', scale: 0.99 }}
+      whileInView={
+        off ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }
+      }
+      viewport={{ once, amount: threshold }}
+      transition={{ ...SPRING, delay: delay / 1000 }}
     >
       {children}
-    </Tag>
+    </M>
   )
 }

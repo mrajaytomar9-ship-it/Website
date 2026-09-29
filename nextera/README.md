@@ -324,6 +324,56 @@ The test's `matchMedia` stub fires `change` notifications. A stub that swaps the
 function silently does not: components already mounted keep the value they read
 at mount, and the test ends up measuring the stub rather than the code.
 
+### Layer 5 — physics (`ui/Cinema.jsx`)
+
+Layers 1–4 are CSS keyframes. They are cheap and declarative, but there are
+four things CSS cannot do: spring physics, pointer tracking, scroll-linked
+transforms, and canvas. Those live in `ui/Cinema.jsx`, built on
+**Framer Motion** with **Lenis** for smooth scroll.
+
+| Export | What it does |
+| --- | --- |
+| `SmoothScroll` | Lenis eased scroll. Loaded with a dynamic `import()` so it is a separate 5.7 kB chunk, and not loaded at all under reduced motion. Publishes its instance on `window.__lenis` so `Layout`'s `ScrollManager` can route hash and route-change scrolls through it — writing straight to `window.scrollTo` while Lenis owns the wheel makes the page jump and then correct itself. |
+| `Reveal` (rewritten) | Same API and the same 93 call sites, but the entrance is now a spring with a 10px blur resolving to focus. Upgrading the primitive upgraded every page at once. |
+| `CineReveal` | The same spring reveal for new call sites that want explicit control. |
+| `WordReveal` | Each word rises out of its own `overflow-hidden` mask — a curtain, not a fade. |
+| `Scramble` | Text decoding from noise. **One** per page; the effect spends attention fast. |
+| `Tilt` | Pointer-driven 3D tilt on a spring, with a light that tracks across the face. Takes a `radius` prop rather than `rounded-[inherit]`, which `scale-check` rejects as a one-off radius. |
+| `EmberField` | Canvas embers. One canvas rather than 40 composited divs; pauses via `IntersectionObserver` when the section is offscreen. |
+| `HeroAurora` | Three colour fields drifting against each other at 11s / 19s / 23s. The mismatched periods are the point — synchronised fields read as one blob. |
+| `ScrollParallax` | Scroll-linked translate, proportional to the section's own travel. |
+| `useScrollSkew` | Leans the marquee by scroll **velocity** (the delta between events, not the absolute position). |
+
+**Opacity was the real bug behind "the site looks the same."** Every ambient
+effect in layers 1–4 peaked between alpha `0.022` and `0.16` — below the
+threshold at which a slow animation on a near-black background registers at all.
+The spotlight is now `0.22`, the sheen `0.30`, the shine sweep `0.34`, the radar
+sweep `0.42`, the cursor glow `0.17`. Borders and dividers were deliberately left
+alone; only the moving light got louder.
+
+**`LazyMotion` + `m` instead of `motion.*`.** Framer Motion is the largest single
+addition this site has taken, and this is a site whose own audit flags "4.8s on a
+4G connection" as a defect — shipping it to the audience it audits would be a
+joke. `LazyMotion features={domAnimation} strict` in `Layout` loads only the
+features in use. Main bundle went 137 kB → **124 kB gzip**, against 89 kB before
+the layer existed. `strict` is deliberate: a stray `motion.*` throws instead of
+silently pulling the full engine back in.
+
+**jsdom needed three things it does not have.** `IntersectionObserver` (Framer's
+`whileInView`), `ResizeObserver` (`EmberField`), and the `Window` *constructor* —
+Lenis does `this.wrapper instanceof Window`, and copying `window` onto the global
+is not the same as copying `Window`. All three are stubbed in
+`scripts/jsdom-setup.mjs`. The observer stubs fire **synchronously**, because a
+deferred callback leaves every reveal stranded at opacity 0 until a timer runs,
+and the `SplitLines reveals without an IntersectionObserver` check asserts
+against the committed DOM.
+
+`motion-test` covers the layer with 14 checks, including the one that matters
+most: `Scramble` must print its target verbatim in server-rendered HTML and
+under reduced motion. A decode effect that stopped halfway would leave glyph
+noise on the page, and one that scrambled during SSR would hand that noise to a
+crawler.
+
 ---
 
 ## 5. Project structure

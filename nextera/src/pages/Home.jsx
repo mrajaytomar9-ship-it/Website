@@ -33,8 +33,15 @@ import {
   Magnetic,
   Parallax,
   Shine,
-  SplitLines,
 } from '../components/ui/Motion'
+import {
+  CineReveal,
+  EmberField,
+  HeroAurora,
+  Scramble,
+  Tilt,
+  WordReveal,
+} from '../components/ui/Cinema'
 import { Meter } from '../components/tools/fields'
 import useMeta from '../hooks/useMeta'
 
@@ -42,6 +49,10 @@ import useMeta from '../hooks/useMeta'
 function Hero() {
   return (
     <section className="relative overflow-hidden pt-[124px] md:pt-[150px]">
+      {/* three colour fields drifting against each other, and embers rising
+          through them — the depth the flat wash was missing */}
+      <HeroAurora />
+      <EmberField className="pointer-events-none absolute inset-0 h-full w-full" count={38} />
       <Ambient />
       {/* focal glow behind the headline, drifting against the scroll */}
       <Parallax speed={0.09} className="pointer-events-none absolute inset-x-0 top-0">
@@ -58,31 +69,41 @@ function Hero() {
       <div className="shell relative">
         <div className="flex flex-col items-center text-center">
           {/* Eyebrow */}
-          <Reveal delay={60}>
+          <CineReveal delay={60} y={18}>
             <div className="inline-flex items-center gap-2.5 rounded-full border border-rule bg-white/[0.025] px-4 py-2">
+              <span className="live-dot inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-mint text-mint" />
               <ServiceIcon name="pin" className="h-3.5 w-3.5 shrink-0 text-ash2" />
               <span className="micro text-shimmer">
                 India · Hotels · Clinics · Restaurants · Institutes
               </span>
             </div>
-          </Reveal>
+          </CineReveal>
 
           {/* Headline */}
-          <SplitLines
-            as="h1"
-            className="t-hero mt-9 text-balance font-medium text-ink"
-            stagger={120}
-            lines={[HERO.line1, <span className="fade-line">{HERO.line2}</span>]}
-          />
+          <h1 className="t-hero mt-9 text-balance font-medium text-ink">
+            <span className="block">
+              <WordReveal as="span" text={HERO.line1} delay={180} />
+            </span>
+            <span className="fade-line block">
+              <WordReveal as="span" text={HERO.line2} delay={520} />
+            </span>
+          </h1>
 
-          <Reveal delay={260}>
+          <CineReveal delay={880} y={20}>
             <p className="mx-auto mt-8 max-w-2xl text-base leading-[1.65] text-ash text-pretty md:text-lg">
               {HERO.sub}
             </p>
-          </Reveal>
+          </CineReveal>
+
+          {/* reads as a running engine rather than a static strapline */}
+          <CineReveal delay={1000} y={14}>
+            <p className="micro mt-6 text-ash3">
+              <Scramble text="AUDIT ENGINE ONLINE — 6 CHECKS RUNNING" />
+            </p>
+          </CineReveal>
 
           {/* CTAs */}
-          <Reveal delay={360}>
+          <CineReveal delay={1100} y={22}>
             <div className="mt-11 flex flex-col items-center gap-3 sm:flex-row">
               <Magnetic>
                 <Button to={HERO.primary.to} variant="primary" size="lg">
@@ -93,10 +114,10 @@ function Hero() {
                 {HERO.secondary.label}
               </Button>
             </div>
-          </Reveal>
+          </CineReveal>
 
           {/* Stats */}
-          <Reveal delay={470} className="mt-20 w-full">
+          <CineReveal delay={1220} y={30} className="mt-20 w-full">
             <div className="mx-auto grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-lg border border-rule bg-rule sm:grid-cols-3">
               {HERO.stats.map((s) => (
                 <div
@@ -122,7 +143,7 @@ function Hero() {
                 </div>
               ))}
             </div>
-          </Reveal>
+          </CineReveal>
         </div>
       </div>
 
@@ -314,15 +335,18 @@ function Showcase() {
           </Reveal>
 
           <Reveal delay={140}>
-            <div
-              key={panels[active].key}
-              id="sample-panel"
-              role="tabpanel"
-              aria-labelledby={`sample-tab-${panels[active].key}`}
-              className="anim-rise"
-            >
-              {panels[active].node}
-            </div>
+            {/* the panel tilts toward the cursor and re-rises on every tab change */}
+            <Tilt max={5} scale={1.006} radius="rounded-xl">
+              <div
+                key={panels[active].key}
+                id="sample-panel"
+                role="tabpanel"
+                aria-labelledby={`sample-tab-${panels[active].key}`}
+                className="anim-rise"
+              >
+                {panels[active].node}
+              </div>
+            </Tilt>
           </Reveal>
         </div>
       </div>

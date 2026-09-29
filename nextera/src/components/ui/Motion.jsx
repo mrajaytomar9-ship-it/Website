@@ -427,7 +427,7 @@ export function CursorGlow() {
       className="pointer-events-none fixed left-0 top-0 z-[5] h-[640px] w-[640px] will-change-transform"
       style={{
         background:
-          'radial-gradient(circle, rgba(232,146,47,0.075) 0%, rgba(232,146,47,0.03) 34%, transparent 66%)',
+          'radial-gradient(circle, rgba(232,146,47,0.17) 0%, rgba(232,146,47,0.07) 34%, transparent 66%)',
         transform: 'translate3d(-9999px,-9999px,0)',
       }}
     />
