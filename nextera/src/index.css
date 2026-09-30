@@ -83,6 +83,13 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /* A stray wide glow must never widen the page: clip at the root. clip,
+     unlike hidden, does not turn the element into a scroll container and so
+     cannot interfere with position:sticky descendants. */
+  html {
+    overflow-x: clip;
+  }
+
   body {
     background-color: var(--color-void);
     color: var(--color-ink);

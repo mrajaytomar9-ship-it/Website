@@ -118,7 +118,7 @@ export function Segmented({ label, options, value, onChange }) {
   return (
     <fieldset>
       <legend className="mb-2.5 micro text-ash2">{label}</legend>
-      <div className="inline-flex w-full rounded-full border border-rule bg-white/[0.02] p-1 sm:w-auto">
+      <div className="flex w-full flex-wrap rounded-full border border-rule bg-white/[0.02] p-1 sm:w-auto sm:flex-nowrap">
         {options.map((o) => {
           const active = value === o.value
           return (
@@ -127,7 +127,7 @@ export function Segmented({ label, options, value, onChange }) {
               type="button"
               onClick={() => onChange(o.value)}
               aria-pressed={active}
-              className={`flex-1 whitespace-nowrap rounded-full px-4 py-2.5 text-xs transition-colors duration-200 sm:flex-none ${
+              className={`min-w-0 flex-1 rounded-full px-3 py-2.5 text-center text-xs transition-colors duration-200 sm:flex-none sm:px-4 ${
                 active ? 'bg-ink text-void' : 'text-ash hover:text-ink'
               }`}
             >

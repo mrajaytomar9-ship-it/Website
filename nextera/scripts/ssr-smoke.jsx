@@ -1,6 +1,6 @@
 /* Temporary render smoke test — executes every page's real render path. */
 import { renderToStaticMarkup } from 'react-dom/server'
-import { StaticRouter } from 'react-router-dom/server'
+import { StaticRouter } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../src/components/Layout'
 import Home from '../src/pages/Home'

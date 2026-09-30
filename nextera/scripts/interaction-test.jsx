@@ -8,7 +8,7 @@ async function main() {
    its legacy input handling and onChange never fires */
 const { act } = await import('react')
 const { createRoot } = await import('react-dom/client')
-const { StaticRouter } = await import('react-router-dom/server')
+const { StaticRouter } = await import('react-router-dom')
 const { default: Tools } = await import('../src/pages/Tools')
 const { BUSINESS_TYPES, computeMetrics, formatINR } = await import('../src/lib/calculator')
 
